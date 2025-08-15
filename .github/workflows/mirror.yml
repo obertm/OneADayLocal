@@ -1,0 +1,31 @@
+name: Mirror to OneADayLocal
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Configure git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Push mirror to OneADayLocal
+        env:
+          MIRROR_TOKEN: ${{ secrets.ONEADAYLOCAL_PAT }}
+        run: |
+          if [ -z "$MIRROR_TOKEN" ]; then
+            echo "Secret ONEADAYLOCAL_PAT is not set" >&2
+            exit 1
+          fi
+          git remote add mirror https://x-access-token:${MIRROR_TOKEN}@github.com/obertm/OneADayLocal.git
+          # Mirror all refs (branches and tags), pruning removed refs
+          git push mirror --prune --mirror
