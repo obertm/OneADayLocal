@@ -15,11 +15,13 @@ public final class EulerRunner {
         final String className;
         final boolean hasSource;
         final boolean hasClass;
-        ProblemInfo(int number, boolean hasSource, boolean hasClass) {
+        final boolean isTodo;
+        ProblemInfo(int number, boolean hasSource, boolean hasClass, boolean isTodo) {
             this.number = number;
             this.className = String.format("Euler%03d", number);
             this.hasSource = hasSource;
             this.hasClass = hasClass;
+            this.isTodo = isTodo;
         }
     }
 
@@ -29,15 +31,16 @@ public final class EulerRunner {
             interactive();
             return;
         }
-        switch (args[0]) {
+    switch (args[0]) {
             case "list":
-                listCmd();
+        listCmd();
                 break;
             case "run":
-                runCmd(Arrays.copyOfRange(args, 1, args.length));
+        runCmd(Arrays.copyOfRange(args, 1, args.length));
                 break;
             case "all":
-                runAllCmd();
+        boolean includeTodo = args.length > 1 && "--include-todo".equals(args[1]);
+        runAllCmd(includeTodo);
                 break;
             case "help":
             case "-h":
@@ -48,11 +51,11 @@ public final class EulerRunner {
     }
 
     private static void printHelp() {
-        System.out.println("Usage: java EulerRunner [command] [args]\n" +
+    System.out.println("Usage: java EulerRunner [command] [args]\n" +
                 "Commands:\n" +
                 "  list                List discovered Euler problems.\n" +
-                "  run <N> [args...]    Run Euler problem N with optional args.\n" +
-                "  all                 Run all discovered Euler problems.\n" +
+        "  run <N> [args...]    Run Euler problem N with optional args.\n" +
+        "  all [--include-todo] Run all discovered Euler problems (skip TODOs by default).\n" +
                 "  help                Show this help.\n" +
                 "If no command is provided, interactive mode starts.");
     }
@@ -62,9 +65,9 @@ public final class EulerRunner {
             while (true) {
                 System.out.println();
                 System.out.println("== Project Euler Runner ==");
-                System.out.println("1) List problems");
+        System.out.println("1) List problems");
                 System.out.println("2) Run a problem");
-                System.out.println("3) Run all");
+        System.out.println("3) Run all (skip TODOs)");
                 System.out.println("q) Quit");
                 System.out.print("> ");
                 String line = sc.nextLine().trim();
@@ -81,7 +84,7 @@ public final class EulerRunner {
                         }
                         break;
                     case "3":
-                        runAllCmd();
+            runAllCmd(false);
                         break;
                     default:
                         System.out.println("Unknown option.");
@@ -104,7 +107,16 @@ public final class EulerRunner {
                 ProblemInfo prev = map.get(n);
                 boolean hasSource = isJava || (prev != null && prev.hasSource);
                 boolean hasClass = isClass || (prev != null && prev.hasClass);
-                map.put(n, new ProblemInfo(n, hasSource, hasClass));
+                boolean isTodo = false;
+                if (isJava) {
+                    try {
+                        String src = Files.readString(Path.of(f.getName()));
+                        isTodo = src.contains("TODO");
+                    } catch (Exception ignore) {}
+                } else if (prev != null) {
+                    isTodo = prev.isTodo;
+                }
+                map.put(n, new ProblemInfo(n, hasSource, hasClass, isTodo));
             }
         }
         return new ArrayList<>(map.values());
@@ -116,13 +128,15 @@ public final class EulerRunner {
             System.out.println("No Euler problems found in current directory.");
             return;
         }
-        System.out.println("Discovered problems:");
-        for (ProblemInfo p : problems) {
-            System.out.printf("- %03d: %s [source:%s, class:%s]%n",
-                    p.number, p.className,
-                    p.hasSource ? "yes" : "no",
-                    p.hasClass ? "yes" : "no");
-        }
+    System.out.println("Discovered problems:");
+    for (ProblemInfo p : problems) {
+        String status = p.isTodo ? "todo" : "ok";
+        System.out.printf("- %03d: %s [source:%s, class:%s, status:%s]%n",
+            p.number, p.className,
+            p.hasSource ? "yes" : "no",
+            p.hasClass ? "yes" : "no",
+            status);
+    }
     }
 
     private static void runCmd(String[] args) {
@@ -144,6 +158,9 @@ public final class EulerRunner {
             return;
         }
         String className = String.format("Euler%03d", n);
+        if (isTodoSource(className)) {
+            System.out.println("Warning: " + className + " appears to be TODO.");
+        }
         if (!ensureClassAvailable(className)) {
             System.out.println("Problem class not found and could not compile: " + className);
             return;
@@ -165,13 +182,14 @@ public final class EulerRunner {
         }
     }
 
-    private static void runAllCmd() {
+    private static void runAllCmd(boolean includeTodo) {
         List<ProblemInfo> problems = discoverProblems();
         if (problems.isEmpty()) {
             System.out.println("No Euler problems found in current directory.");
             return;
         }
         for (ProblemInfo p : problems) {
+            if (!includeTodo && p.isTodo) continue;
             runNumber(Integer.toString(p.number), new String[0]);
         }
     }
@@ -192,6 +210,17 @@ public final class EulerRunner {
             Class.forName(className);
             return true;
         } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    private static boolean isTodoSource(String className) {
+        Path source = Path.of(className + ".java");
+        if (!Files.exists(source)) return false;
+        try {
+            String src = Files.readString(source);
+            return src.contains("TODO");
+        } catch (Exception e) {
             return false;
         }
     }
