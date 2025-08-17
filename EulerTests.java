@@ -105,6 +105,36 @@ public final class EulerTests {
         EXPECTED_DEFAULT.put(18, "1074");
         EXPECTED_DEFAULT.put(19, "171");
         EXPECTED_DEFAULT.put(20, "648");
+    EXPECTED_DEFAULT.put(21, "31626");
+    // 22 requires external data file; skip
+    EXPECTED_DEFAULT.put(23, "4179871");
+    EXPECTED_DEFAULT.put(24, "2783915460");
+    EXPECTED_DEFAULT.put(25, "4782");
+    EXPECTED_DEFAULT.put(26, "983");
+    EXPECTED_DEFAULT.put(27, "-59231");
+    EXPECTED_DEFAULT.put(28, "669171001");
+    EXPECTED_DEFAULT.put(29, "9183");
+    EXPECTED_DEFAULT.put(30, "443839");
+    EXPECTED_DEFAULT.put(31, "73682");
+    EXPECTED_DEFAULT.put(32, "45228");
+    EXPECTED_DEFAULT.put(33, "100");
+    EXPECTED_DEFAULT.put(34, "40730");
+    EXPECTED_DEFAULT.put(35, "55");
+    EXPECTED_DEFAULT.put(36, "872187");
+    EXPECTED_DEFAULT.put(37, "748317");
+    EXPECTED_DEFAULT.put(38, "932718654");
+    EXPECTED_DEFAULT.put(39, "840");
+    EXPECTED_DEFAULT.put(40, "210");
+    EXPECTED_DEFAULT.put(41, "7652413");
+    // 42 requires external data file; skip
+    // EXPECTED_DEFAULT.put(43, "16695334890"); // heavy generation; optional
+    EXPECTED_DEFAULT.put(44, "5482660");
+    EXPECTED_DEFAULT.put(45, "1533776805");
+    EXPECTED_DEFAULT.put(46, "5777");
+    EXPECTED_DEFAULT.put(47, "134043");
+    EXPECTED_DEFAULT.put(48, "9110846700");
+    EXPECTED_DEFAULT.put(49, "296962999629");
+    EXPECTED_DEFAULT.put(50, "997651");
     }
 
     private static boolean classExists(String className) {
