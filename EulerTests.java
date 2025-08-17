@@ -126,7 +126,7 @@ public final class EulerTests {
     EXPECTED_DEFAULT.put(39, "840");
     EXPECTED_DEFAULT.put(40, "210");
     EXPECTED_DEFAULT.put(41, "7652413");
-    // 42 requires external data file; skip
+    EXPECTED_DEFAULT.put(42, "162");
     // EXPECTED_DEFAULT.put(43, "16695334890"); // heavy generation; optional
     EXPECTED_DEFAULT.put(44, "5482660");
     EXPECTED_DEFAULT.put(45, "1533776805");
