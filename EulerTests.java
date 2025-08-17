@@ -135,6 +135,27 @@ public final class EulerTests {
     EXPECTED_DEFAULT.put(48, "9110846700");
     EXPECTED_DEFAULT.put(49, "296962999629");
     EXPECTED_DEFAULT.put(50, "997651");
+    // 51–70
+    EXPECTED_DEFAULT.put(51, "121313");
+    EXPECTED_DEFAULT.put(52, "142857");
+    EXPECTED_DEFAULT.put(53, "4075");
+    EXPECTED_DEFAULT.put(54, "DATA_FILE_NOT_FOUND"); // poker dataset not yet included
+    EXPECTED_DEFAULT.put(55, "249");
+    EXPECTED_DEFAULT.put(56, "972");
+    EXPECTED_DEFAULT.put(57, "153");
+    EXPECTED_DEFAULT.put(58, "26241");
+    EXPECTED_DEFAULT.put(59, "DATA_FILE_NOT_FOUND"); // cipher dataset not yet included
+    EXPECTED_DEFAULT.put(60, "26033");
+    EXPECTED_DEFAULT.put(61, "28684");
+    EXPECTED_DEFAULT.put(62, "127035954683");
+    EXPECTED_DEFAULT.put(63, "49");
+    EXPECTED_DEFAULT.put(64, "1322");
+    EXPECTED_DEFAULT.put(65, "272");
+    EXPECTED_DEFAULT.put(66, "661");
+    EXPECTED_DEFAULT.put(67, "DATA_FILE_NOT_FOUND"); // triangle dataset not yet included
+    EXPECTED_DEFAULT.put(68, "6531031914842725");
+    EXPECTED_DEFAULT.put(69, "510510");
+    EXPECTED_DEFAULT.put(70, "8319823");
     }
 
     private static boolean classExists(String className) {
@@ -217,8 +238,9 @@ public final class EulerTests {
         tests.forEach(Runnable::run);
         long t1 = System.nanoTime();
 
-    // Generic default-output checks for 001..050
+    // Generic default-output checks for 001..050 and 051..070
     testExpectedDefaultsRange(1, 50);
+    testExpectedDefaultsRange(51, 70);
 
     System.out.printf("\nTests: %d passed, %d failed, %d skipped (%.3f ms)\n", passed, failed, skipped, (t1 - t0) / 1_000_000.0);
         if (failed > 0) System.exit(1);
