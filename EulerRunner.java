@@ -42,6 +42,9 @@ public final class EulerRunner {
         boolean includeTodo = args.length > 1 && "--include-todo".equals(args[1]);
         runAllCmd(includeTodo);
                 break;
+            case "bench":
+                benchCmd(Arrays.copyOfRange(args, 1, args.length));
+                break;
             case "help":
             case "-h":
             case "--help":
@@ -56,6 +59,7 @@ public final class EulerRunner {
                 "  list                List discovered Euler problems.\n" +
         "  run <N> [args...]    Run Euler problem N with optional args.\n" +
         "  all [--include-todo] Run all discovered Euler problems (skip TODOs by default).\n" +
+                "  bench [--update-readme]  Profile all problems and print a Markdown table; with --update-readme, also write into README.md.\n" +
                 "  help                Show this help.\n" +
                 "If no command is provided, interactive mode starts.");
     }
@@ -68,6 +72,7 @@ public final class EulerRunner {
         System.out.println("1) List problems");
                 System.out.println("2) Run a problem");
         System.out.println("3) Run all (skip TODOs)");
+        System.out.println("4) Bench all (print table)");
                 System.out.println("q) Quit");
                 System.out.print("> ");
                 String line = sc.nextLine().trim();
@@ -86,10 +91,22 @@ public final class EulerRunner {
                     case "3":
             runAllCmd(false);
                         break;
+                    case "4":
+                        benchCmd(new String[0]);
+                        break;
                     default:
                         System.out.println("Unknown option.");
                 }
             }
+        }
+    }
+
+    private static class BenchResult {
+        final int number;
+        final String output;
+        final double millis;
+        BenchResult(int number, String output, double millis) {
+            this.number = number; this.output = output; this.millis = millis;
         }
     }
 
@@ -191,6 +208,83 @@ public final class EulerRunner {
         for (ProblemInfo p : problems) {
             if (!includeTodo && p.isTodo) continue;
             runNumber(Integer.toString(p.number), new String[0]);
+        }
+    }
+
+    private static BenchResult runAndCapture(int n) {
+        String className = String.format("Euler%03d", n);
+    if (!ensureClassAvailable(className)) return new BenchResult(n, "<compile error>", Double.NaN);
+        java.io.PrintStream oldOut = System.out;
+        java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+        java.io.PrintStream ps = new java.io.PrintStream(baos);
+        try {
+            System.setOut(ps);
+            Class<?> cls = Class.forName(className);
+            Method main = cls.getMethod("main", String[].class);
+            long t0 = System.nanoTime();
+            main.invoke(null, (Object) new String[0]);
+            long t1 = System.nanoTime();
+            double ms = (t1 - t0) / 1_000_000.0;
+            ps.flush();
+            String out = baos.toString().trim();
+            return new BenchResult(n, out, ms);
+        } catch (Throwable t) {
+            return new BenchResult(n, "<error>", Double.NaN);
+        } finally {
+            System.setOut(oldOut);
+        }
+    }
+
+    private static void benchCmd(String[] args) {
+        boolean updateReadme = Arrays.asList(args).contains("--update-readme");
+        List<ProblemInfo> problems = discoverProblems();
+        List<BenchResult> results = new ArrayList<>();
+        for (ProblemInfo p : problems) {
+            if (p.isTodo) continue;
+            results.add(runAndCapture(p.number));
+        }
+        results.sort(Comparator.comparingInt(r -> r.number));
+        String table = buildMarkdownTable(results);
+        System.out.println(table);
+        if (updateReadme) updateReadme(table);
+    }
+
+    private static String buildMarkdownTable(List<BenchResult> results) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<!-- BEGIN: EULER_RESULTS -->\n");
+        sb.append("## Results\n\n");
+        sb.append("| # | Answer | Time (ms) |\n");
+        sb.append("|---:|:------|---------:|\n");
+        for (BenchResult r : results) {
+            String ans = r.output.replace("|", "\\|");
+            String ms = Double.isNaN(r.millis) ? "-" : String.format(java.util.Locale.ROOT, "%.3f", r.millis);
+            sb.append(String.format(java.util.Locale.ROOT, "| %03d | %s | %s |\n", r.number, ans, ms));
+        }
+        sb.append("<!-- END: EULER_RESULTS -->\n");
+        return sb.toString();
+    }
+
+    private static void updateReadme(String tableBlock) {
+        Path readme = Path.of("README.md");
+        String begin = "<!-- BEGIN: EULER_RESULTS -->";
+        String end = "<!-- END: EULER_RESULTS -->";
+        try {
+            String content = Files.exists(readme) ? Files.readString(readme) : "";
+            int i = content.indexOf(begin);
+            int j = content.indexOf(end);
+            if (i >= 0 && j > i) {
+                String before = content.substring(0, i);
+                String after = content.substring(j + end.length()).trim();
+                String joined = before + tableBlock + "\n" + after + "\n";
+                Files.writeString(readme, joined);
+            } else {
+                // Append to end
+                String sep = content.isEmpty() ? "" : (content.endsWith("\n") ? "" : "\n\n");
+                Files.writeString(readme, content + sep + tableBlock + "\n");
+            }
+            System.out.println("README.md updated with results table.");
+        } catch (Exception e) {
+            System.out.println("Failed to update README.md: " + e);
         }
     }
 
