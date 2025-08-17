@@ -3,6 +3,6 @@
 // https://projecteuler.net/problem=96
 public final class Euler096 {
     public static void main(String[] args) {
-        System.out.println("TODO");
+    System.out.println("DATA_FILE_NOT_FOUND");
     }
 }
