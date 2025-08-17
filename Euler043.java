@@ -23,6 +23,8 @@ public final class Euler043 {
     }
 
     public static void main(String[] args) {
+        // Ensure clean state if called multiple times in same JVM (test harness)
+        sum = 0L;
         char[] digits = {'0','1','2','3','4','5','6','7','8','9'};
         perm(digits, 0, digits.length - 1);
         System.out.println(sum);

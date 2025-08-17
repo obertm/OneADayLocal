@@ -14,7 +14,7 @@ public final class Euler063 {
             for (int n = 1; ; n++) {
                 val = val.multiply(base);
                 int digits = val.toString().length();
-                if (digits == n) total++; else if (digits > n) break; // will only grow faster
+                if (digits == n) total++; else if (digits < n) break; // for base 1..9, digits grows slower than n
             }
         }
         return total;

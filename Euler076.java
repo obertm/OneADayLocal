@@ -3,6 +3,15 @@
 // https://projecteuler.net/problem=76
 public final class Euler076 {
     public static void main(String[] args) {
-        System.out.println("TODO");
+        int N = 100;
+        long[] ways = new long[N + 1];
+        ways[0] = 1;
+        for (int coin = 1; coin <= N; coin++) {
+            for (int s = coin; s <= N; s++) {
+                ways[s] += ways[s - coin];
+            }
+        }
+        // Exclude the single term 100 itself
+        System.out.println(ways[N] - 1);
     }
 }
