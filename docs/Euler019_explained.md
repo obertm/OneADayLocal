@@ -2,21 +2,42 @@
 
 Count how many Sundays fell on the first of the month during a given date range (e.g., 1901-01-01 to 2000-12-31).
 
-## Approach
+## Problem statement
+
+Given a start date and end date, count months whose first day is a Sunday within the inclusive range. Euler uses 1901-01-01 to 2000-12-31.
+
+## Step-by-step reasoning
 
 1) Day-of-week engine
-- Either implement Zeller’s congruence or iterate dates using a day counter.
-- Handle leap years: year divisible by 4, except centuries not divisible by 400.
+- Implement Zeller’s congruence (or Doomsday) to compute weekday for any Y-M-D.
+- Alternatively, iterate months and track weekday offsets with leap-year rules.
 
-2) Count condition
-- For each month in the range, compute the day-of-week of the 1st; if Sunday, increment.
+2) Leap years (Gregorian)
+- Year divisible by 4 is leap, except if divisible by 100, unless divisible by 400.
 
-3) Complexity
-- O(number of months) with congruence; O(number of days) if naive (still OK for a century).
+3) Iterate months
+- For each month in the range, compute weekday of the 1st; if Sunday, increment.
 
-## Real-world analogues and impact
-- Calendar logic for scheduling/reporting systems.
-  - Impact: Correctness in compliance and planning tools.
+4) Complexity
+- O(#months) with congruence; trivial for century spans.
 
-## Takeaways
-- Use proven congruences or library functions where allowed; watch leap-year rules.
+## Reusable template (for similar problems)
+
+Calendar queries over ranges:
+- Use a proven congruence to avoid per-day iteration.
+- Encapsulate leap-year and month-length logic in helpers.
+
+## Practical examples and business impact
+
+- Scheduling/reporting pipelines
+  - Compute month-aligned events and counts reliably.
+  - Impact: Correct compliance reports and predictable automation.
+
+- Capacity planning for month-start workloads
+  - Anticipate spikes that fall on specific weekdays.
+  - Impact: Better staffing and SLA adherence.
+
+## Key takeaways
+
+- Prefer closed-form weekday calculations for speed and correctness.
+- Keep leap-year and month-length rules centralized and tested.
