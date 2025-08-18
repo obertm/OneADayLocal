@@ -236,17 +236,51 @@ public final class EulerRunner {
     }
 
     private static void benchCmd(String[] args) {
-        boolean updateReadme = Arrays.asList(args).contains("--update-readme");
+        // Options: --update-readme, --range A-B, --only n1,n2,...
+        boolean updateReadme = false;
+        int rangeStart = -1, rangeEnd = -1;
+        Set<Integer> only = new TreeSet<>();
+        for (String a : args) {
+            if ("--update-readme".equals(a)) { updateReadme = true; }
+            else if (a.startsWith("--range")) {
+                String[] parts = a.split("=", 2);
+                if (parts.length == 2) {
+                    String[] ab = parts[1].split("-", 2);
+                    try {
+                        rangeStart = Integer.parseInt(ab[0]);
+                        rangeEnd = Integer.parseInt(ab[1]);
+                    } catch (Exception ignore) {}
+                }
+            } else if (a.startsWith("--only")) {
+                String[] parts = a.split("=", 2);
+                if (parts.length == 2) {
+                    for (String s : parts[1].split(",")) {
+                        try { only.add(Integer.parseInt(s)); } catch (Exception ignore) {}
+                    }
+                }
+            }
+        }
+
         List<ProblemInfo> problems = discoverProblems();
         List<BenchResult> results = new ArrayList<>();
         for (ProblemInfo p : problems) {
             if (p.isTodo) continue;
+            if (rangeStart != -1 && rangeEnd != -1) {
+                if (p.number < rangeStart || p.number > rangeEnd) continue;
+            }
+            if (!only.isEmpty() && !only.contains(p.number)) continue;
             results.add(runAndCapture(p.number));
         }
         results.sort(Comparator.comparingInt(r -> r.number));
         String table = buildMarkdownTable(results);
         System.out.println(table);
-        if (updateReadme) updateReadme(table);
+        if (updateReadme) {
+            if (rangeStart != -1 || !only.isEmpty()) {
+                updateReadmeMerged(results);
+            } else {
+                updateReadme(table);
+            }
+        }
     }
 
     private static String buildMarkdownTable(List<BenchResult> results) {
@@ -286,6 +320,80 @@ public final class EulerRunner {
         } catch (Exception e) {
             System.out.println("Failed to update README.md: " + e);
         }
+    }
+
+    private static void updateReadmeMerged(List<BenchResult> newResults) {
+        Path readme = Path.of("README.md");
+        String begin = "<!-- BEGIN: EULER_RESULTS -->";
+        String end = "<!-- END: EULER_RESULTS -->";
+        try {
+            String content = Files.exists(readme) ? Files.readString(readme) : "";
+            Map<Integer, String[]> existing = parseResultsBlock(content);
+            for (BenchResult r : newResults) {
+                String ans = r.output.replace("|", "\\|");
+                String ms = Double.isNaN(r.millis) ? "-" : String.format(java.util.Locale.ROOT, "%.3f", r.millis);
+                existing.put(r.number, new String[]{ans, ms});
+            }
+            // Build merged table sorted by problem number
+            List<Integer> keys = new ArrayList<>(existing.keySet());
+            Collections.sort(keys);
+            StringBuilder sb = new StringBuilder();
+            sb.append("<!-- BEGIN: EULER_RESULTS -->\n");
+            sb.append("## Results\n\n");
+            sb.append("| # | Answer | Time (ms) |\n");
+            sb.append("|---:|:------|---------:|\n");
+            for (int k : keys) {
+                String[] v = existing.get(k);
+                sb.append(String.format(java.util.Locale.ROOT, "| %03d | %s | %s |\n", k, v[0], v[1]));
+            }
+            sb.append("<!-- END: EULER_RESULTS -->\n");
+
+            // Replace or append block
+            int i = content.indexOf(begin);
+            int j = content.indexOf(end);
+            String newBlock = sb.toString();
+            if (i >= 0 && j > i) {
+                String before = content.substring(0, i);
+                String after = content.substring(j + end.length()).trim();
+                String joined = before + newBlock + "\n" + after + "\n";
+                Files.writeString(readme, joined);
+            } else {
+                String sep = content.isEmpty() ? "" : (content.endsWith("\n") ? "" : "\n\n");
+                Files.writeString(readme, content + sep + newBlock + "\n");
+            }
+            System.out.println("README.md incrementally updated with results.");
+        } catch (Exception e) {
+            System.out.println("Failed to incrementally update README.md: " + e);
+        }
+    }
+
+    private static Map<Integer, String[]> parseResultsBlock(String content) {
+        Map<Integer, String[]> map = new TreeMap<>();
+        String begin = "<!-- BEGIN: EULER_RESULTS -->";
+        String end = "<!-- END: EULER_RESULTS -->";
+        int i = content.indexOf(begin);
+        int j = content.indexOf(end);
+        if (i >= 0 && j > i) {
+            String block = content.substring(i, j);
+            Scanner sc = new Scanner(block);
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine().trim();
+                if (line.startsWith("| ")) {
+                    // Expect: | NNN | Answer | Time |
+                    String[] parts = line.split("\\|", -1);
+                    if (parts.length >= 4) {
+                        try {
+                            int num = Integer.parseInt(parts[1].trim());
+                            String ans = parts[2].trim();
+                            String ms = parts[3].trim();
+                            map.put(num, new String[]{ans, ms});
+                        } catch (Exception ignore) {}
+                    }
+                }
+            }
+            sc.close();
+        }
+        return map;
     }
 
     private static boolean ensureClassAvailable(String className) {
