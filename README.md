@@ -137,6 +137,16 @@ java EulerRunner run 4      # 906609
   - [Euler078 – Coin partitions divisible by one million](docs/Euler078_explained.md)
   - [Euler079 – Passcode derivation](docs/Euler079_explained.md)
   - [Euler080 – Square root digital expansion](docs/Euler080_explained.md)
+  - [Euler081 – Path sum: two ways](docs/Euler081_explained.md)
+  - [Euler082 – Path sum: three ways](docs/Euler082_explained.md)
+  - [Euler083 – Path sum: four ways](docs/Euler083_explained.md)
+  - [Euler084 – Monopoly odds](docs/Euler084_explained.md)
+  - [Euler085 – Counting rectangles](docs/Euler085_explained.md)
+  - [Euler086 – Cuboid route](docs/Euler086_explained.md)
+  - [Euler087 – Prime power triples](docs/Euler087_explained.md)
+  - [Euler088 – Product-sum numbers](docs/Euler088_explained.md)
+  - [Euler089 – Roman numerals](docs/Euler089_explained.md)
+  - [Euler090 – Cube digit pairs](docs/Euler090_explained.md)
 <!-- BEGIN: EULER_RESULTS -->
 ## Results
 
