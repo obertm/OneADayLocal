@@ -10,9 +10,18 @@ Find the smallest odd composite that cannot be written as prime + 2×square.
 ## Complexity
 - Prime sieve O(N log log N); each n checks primes up to n with early breaks; practical.
 
-## Real-world analogues and impact
-- Detecting absence of a proposed decomposition.
-  - Impact: Validates or rejects heuristics in data approximations.
+## Practical examples and business impact
+
+- Model falsification: search for counterexamples when a dataset is claimed to decompose into (prime-like + twice-square-like) parts.
+- Compression heuristics: detect values that cannot be represented as “small core + structured noise,” rejecting the codec choice.
+- Anomaly detection: flag records that don’t admit expected decomposition (baseline + 2×feature^2) in monitoring.
+- Security: identify inputs that evade approximate decompositions in filters (e.g., sum of baseline and quadratic term).
+- Finance modeling: test if odd transaction aggregates fit a prime-plus-quadratic adjustment; counterexamples prompt rule changes.
+- Education: teach constructive counterexample search for conjectures using sieve + fast membership.
+- Simulation: evaluate robustness of decomposition pipelines by injecting values that break assumed forms.
+- ETL quality: validate transformation that assumes values split into two components; surface violations.
+- Hardware DSP: sanity-check that signals follow decompositions; detect cases where quadratic compensation can’t explain residuals.
+- Research prototyping: quickly probe the boundary where a heuristic decomposition stops working.
 
 ## Takeaways
 - Precompute primes; test the square condition for differences.

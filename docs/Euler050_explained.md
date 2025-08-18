@@ -51,12 +51,34 @@ When searching for the longest run with constraints over a sequence:
 ## Practical examples and business impact
 
 - Longest streak analytics with membership filters
-  - E.g., in event streams, find the longest consecutive subsequence whose aggregate stays below a threshold and where the aggregate meets a property.
-  - Impact: Prefix sums and O(1) set membership enable near-real-time analytics without heavy infrastructure.
+  - In event streams, find the longest consecutive subsequence whose aggregate stays below a threshold and meets a property; prefix sums + membership lookup enable real-time answers.
 
 - Budget windows over daily costs
-  - Find longest consecutive days whose cumulative spend is below cap and meets a score criterion.
-  - Impact: Efficient planning and alerting with predictable compute.
+  - Find longest consecutive days with cumulative spend under a cap and satisfying a KPI threshold; supports planning/alerts.
+
+- Reliability windows
+  - Longest consecutive period where failure counts remain below a limit and period endpoints meet SLA properties.
+
+- Retail demand runs
+  - Longest run of days where sales totals remain within budget and the day-sum is in a target set (e.g., prime/holiday-like label).
+
+- Network throughput
+  - Longest contiguous window where throughput sum stays under quota and is in an allowed class; plan throttling.
+
+- Finance backtests
+  - Longest streak of returns whose cumulative sum is under VaR and in a target membership (e.g., prime bucket for toy labeling).
+
+- Manufacturing yield
+  - Longest consecutive batch window with defect counts under cap and meeting a membership rule; informs maintenance.
+
+- Education analytics
+  - Longest run of student scores under an intervention budget and with passing labels; guides scheduling.
+
+- Simulation harness
+  - Benchmark window-search algorithms using prefix sums and set membership with synthetic sequences.
+
+- Observability
+  - Longest alert-free window whose event-sum remains below a cap and fits an SLO class membership; capacity planning.
 
 ## Key takeaways
 

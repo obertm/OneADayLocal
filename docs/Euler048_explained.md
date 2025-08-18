@@ -10,9 +10,18 @@ Compute the last 10 digits of Σ_{i=1..N} i^i with N=1000.
 ## Complexity
 - O(N log i) exponentiation steps; trivial for N=1000.
 
-## Real-world analogues and impact
-- Modular arithmetic for checksums and rolling signatures.
-  - Impact: Efficient tail-digit computations without big integers in memory.
+## Practical examples and business impact
+
+- Rolling checksums: compute tail digits via modular arithmetic for streaming integrity.
+- Blockchain/light clients: verify tails of state accumulators without full data.
+- Telemetry signatures: per-sensor self-powers modulo M for quick identity checks.
+- Database sharding: use mod tails of aggregates to place data predictably.
+- Privacy-preserving analytics: compare modulo-reduced aggregates without exposing full values.
+- Embedded systems: keep only last k digits to fit memory constraints.
+- Load testing: synthesize massive sums while tracking only modulo tails for progress metrics.
+- Security tokens: generate deterministic yet bounded-size token fragments via mod exponentiation.
+- Simulation: explore wrap-around behavior in modular arithmetic with growing exponents.
+- Education: teach fast powmod and modular summation patterns.
 
 ## Takeaways
 - Apply mod 10^10 throughout; sum modulo M to keep numbers small.

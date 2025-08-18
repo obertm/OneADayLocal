@@ -11,9 +11,18 @@ Find the first integer of the first run of K consecutive integers with exactly K
 ## Complexity
 - O(N) with spf sieve and O(log n) factorization per n; very fast for the bounds.
 
-## Real-world analogues and impact
-- Property runs in sequences with factor-based features.
-  - Impact: Linear-time detection of structured streaks.
+## Practical examples and business impact
+
+- Production lines: detect runs of items with exactly K defect categories for root-cause analysis.
+- Network telemetry: windows of hosts with exactly K distinct alert classes, triggering tiered responses.
+- Genomics: consecutive positions with exactly K distinct motif factors for candidate region detection.
+- Finance: runs of days with exactly K market regime signals active for strategy gating.
+- Retail: streaks of baskets with exactly K unique promo types for campaign analysis.
+- Manufacturing: K distinct machine states across consecutive shifts for maintenance planning.
+- Education analytics: runs of questions tagged with exactly K concepts for adaptive testing.
+- Logging: consecutive log windows with exactly K error codes to auto-scale responders.
+- Simulation: synthetic streams with controlled factor-count streaks for benchmarking detectors.
+- Data quality: find streaks where exactly K validation rules fired to prioritize fixes.
 
 ## Takeaways
 - Use spf sieve to get distinct-factor counts cheaply; maintain a consecutive-run counter.

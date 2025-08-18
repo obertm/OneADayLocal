@@ -11,9 +11,18 @@ Find a 12-digit number formed by concatenating three 4-digit primes that are per
 ## Complexity
 - Sieve + grouping O(N); triple search per group is small.
 
-## Real-world analogues and impact
-- Pattern mining within equivalence classes under permutation.
-  - Impact: Simple grouping enables efficient structure discovery.
+## Practical examples and business impact
+
+- Fraud detection: group by digit-signature and find arithmetic patterns in transactions.
+- Inventory: product codes permuted by warehouse conventions; detect evenly spaced series within groups.
+- Cryptanalysis toys: permutation-equivalence classes with linear gaps as proxy structure.
+- Time-series bins: reorder-invariant buckets; search arithmetic spacing for signal.
+- Education: show the power of signature grouping before structure mining.
+- Compression: identify permutable symbol blocks with regular gaps for model tuning.
+- A/B testing IDs: ensure evenly spaced IDs within signature groups for fair sampling.
+- Data quality: detect accidental permutations of fields forming suspicious progressions.
+- Scheduling: job IDs permuted per site; detect arithmetic cadence within equivalence groups.
+- Benchmarking: compare naive all-pairs vs. signature-then-gap search performance.
 
 ## Takeaways
 - Group by digit signature; look for arithmetic triplets inside groups.
