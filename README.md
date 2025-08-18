@@ -97,6 +97,16 @@ java EulerRunner run 4      # 906609
   - [Euler038 – Pandigital concatenated product](docs/Euler038_explained.md)
   - [Euler039 – Integer right triangles](docs/Euler039_explained.md)
   - [Euler040 – Champernowne’s constant digits](docs/Euler040_explained.md)
+  - [Euler041 – Pandigital prime](docs/Euler041_explained.md)
+  - [Euler042 – Coded triangle numbers](docs/Euler042_explained.md)
+  - [Euler043 – Sub-string divisibility](docs/Euler043_explained.md)
+  - [Euler044 – Pentagon numbers](docs/Euler044_explained.md)
+  - [Euler045 – Triangular, pentagonal, hexagonal](docs/Euler045_explained.md)
+  - [Euler046 – Goldbach’s other conjecture](docs/Euler046_explained.md)
+  - [Euler047 – Distinct prime factors (run of K)](docs/Euler047_explained.md)
+  - [Euler048 – Self powers (last 10 digits)](docs/Euler048_explained.md)
+  - [Euler049 – Prime permutations in arithmetic progression](docs/Euler049_explained.md)
+  - [Euler050 – Consecutive prime sum](docs/Euler050_explained.md)
 <!-- BEGIN: EULER_RESULTS -->
 ## Results
 
