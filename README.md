@@ -117,6 +117,16 @@ java EulerRunner run 4      # 906609
   - [Euler058 – Spiral primes ratio](docs/Euler058_explained.md)
   - [Euler059 – XOR decryption](docs/Euler059_explained.md)
   - [Euler060 – Prime pair sets](docs/Euler060_explained.md)
+  - [Euler061 – Cyclical figurate numbers](docs/Euler061_explained.md)
+  - [Euler062 – Cubic permutations](docs/Euler062_explained.md)
+  - [Euler063 – Powerful digit counts](docs/Euler063_explained.md)
+  - [Euler064 – Odd period square roots](docs/Euler064_explained.md)
+  - [Euler065 – Convergents of e](docs/Euler065_explained.md)
+  - [Euler066 – Diophantine equation (Pell)](docs/Euler066_explained.md)
+  - [Euler067 – Maximum path sum II](docs/Euler067_explained.md)
+  - [Euler068 – Magic 5-gon ring](docs/Euler068_explained.md)
+  - [Euler069 – Totient maximum](docs/Euler069_explained.md)
+  - [Euler070 – Totient permutation](docs/Euler070_explained.md)
 <!-- BEGIN: EULER_RESULTS -->
 ## Results
 
