@@ -147,6 +147,16 @@ java EulerRunner run 4      # 906609
   - [Euler088 – Product-sum numbers](docs/Euler088_explained.md)
   - [Euler089 – Roman numerals](docs/Euler089_explained.md)
   - [Euler090 – Cube digit pairs](docs/Euler090_explained.md)
+  - [Euler091 – Right triangles with integer coordinates](docs/Euler091_explained.md)
+  - [Euler092 – Square digit chains](docs/Euler092_explained.md)
+  - [Euler093 – Arithmetic expressions using four digits](docs/Euler093_explained.md)
+  - [Euler094 – Almost equilateral triangles](docs/Euler094_explained.md)
+  - [Euler095 – Amicable chains](docs/Euler095_explained.md)
+  - [Euler096 – Su Doku](docs/Euler096_explained.md)
+  - [Euler097 – Large non-Mersenne prime](docs/Euler097_explained.md)
+  - [Euler098 – Anagramic squares](docs/Euler098_explained.md)
+  - [Euler099 – Largest exponential](docs/Euler099_explained.md)
+  - [Euler100 – Arranged probability](docs/Euler100_explained.md)
 <!-- BEGIN: EULER_RESULTS -->
 ## Results
 
