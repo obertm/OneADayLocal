@@ -2,32 +2,60 @@
 
 Find the first triangular number with over D divisors.
 
-## Steps you can reuse
+## Problem statement
 
-1) Model
-- n-th triangular number: T_n = n(n+1)/2.
-- We need the smallest n such that divCount(T_n) > D.
+Given an integer threshold D, find the smallest triangular number T_n = n(n+1)/2 that has more than D positive divisors, and return T_n.
 
-2) Factorization trick
-- n and n+1 are coprime, so factor T_n by factoring n and (n+1) separately, then subtract a factor 2 from one side.
-  - If n is even, T_n = (n/2)·(n+1). Else T_n = n·((n+1)/2).
-  - Count divisors via prime exponents: if T_n = ∏ p_i^{e_i}, then divCount = ∏ (e_i+1).
+## Step-by-step reasoning
 
-3) Implementation outline
-- Increment n from 1 upward.
-- Factor a and b where {a,b} = {n/2, n+1} (or {n, (n+1)/2}).
-- Merge prime exponents and compute divisor count; stop when > D.
-- Use a prime list (sieve) up to √max(T_n) seen so far; or factor on the fly up to √x.
+1) Structure of T_n
+- T_n = n(n+1)/2. The numbers n and n+1 are coprime, so their prime factorizations don’t share primes.
+- Move the factor 2 onto the even side: if n is even, T_n = (n/2)·(n+1); else T_n = n·((n+1)/2).
 
-4) Complexity
-- Dominated by repeated small factorizations up to roughly O(n √n) naïvely; prime caching/sieving helps a lot.
+2) Divisor count from prime exponents
+- If x = Π p_i^{e_i}, then the number of divisors d(x) = Π (e_i + 1).
+- Therefore factor a and b where {a,b} = {n/2, n+1} (or {n, (n+1)/2}), merge exponents, and compute Π (e_i+1).
 
-## Real-world analogues and impact
-- Decomposing products of near-coprime terms comes up in scheduling and CRT-like systems.
-  - Impact: Faster property checks by splitting co-prime parts.
-- Divisor counts tie to factor structure; used in bucketing and canonicalization tasks.
-  - Impact: Better indexing and join performance.
+3) Iterative search for n
+- For n from 1 upward:
+  - Compute a,b as above.
+  - Factor a and b using trial division by primes ≤ √max(a,b) (maintain a small prime list).
+  - Combine exponents and compute d(T_n).
+  - If d(T_n) > D, return T_n.
 
-## Takeaways
-- Use T_n structure to halve the work.
-- Count divisors from prime exponents; stop as soon as threshold exceeded.
+4) Java building blocks
+- Prime list via sieve up to a moving bound, or trial division on the fly.
+- HashMap<Prime,Integer> for exponents; multiply (e+1) in long.
+
+5) Complexity
+- Dominated by repeated small factorizations. With prime caching, this runs fast for Euler-scale D (e.g., D=500).
+
+6) Edge cases
+- D < 1 → T_1 = 1 qualifies.
+- Watch for overflow when forming T_n; use long for n and T_n.
+
+7) Testing mindset
+- Spot checks: D=1 → 3 (T_2); D=5 → 28; Euler asks D=500 → 76576500.
+
+## Reusable template (for similar problems)
+
+When you need divisor counts of structured numbers:
+- Decompose into coprime factors to simplify factoring (like n and n+1).
+- Count divisors from prime exponents using Π (e+1).
+- Cache primes or small factors to amortize cost across many queries.
+
+## Practical examples and business impact
+
+- Co-prime decomposition in scheduling/CRT-like systems
+  - Split near-coprime components to analyze properties cheaply.
+  - Impact: Faster feasibility checks and capacity planning.
+
+- Indexing and bucketing by factor structure
+  - Buckets keyed by divisor counts or factor signatures can improve join/selectivity estimation.
+  - Impact: Better query plans and cache efficiency.
+
+## Key takeaways
+
+- Use T_n’s coprime structure to halve the work.
+- Convert factorization to exponent counts → multiplicative divisor function.
+- Cache primes; stop as soon as the threshold is exceeded.
