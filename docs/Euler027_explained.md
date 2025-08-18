@@ -1,37 +1,41 @@
 # Euler027 — Quadratic primes
 
-Find coefficients a and b for n^2 + a n + b that produce the longest run of consecutive primes starting at n=0, with |a|<A, |b|≤B.
+## Problem statement
 
-## Practical strategy
+Find integers a and b such that the quadratic n^2 + a·n + b produces the longest run of consecutive primes starting at n = 0, given bounds |a| < A and |b| ≤ B.
+
+## Step-by-step reasoning
 
 1) Constrain b
-- At n=0, value = b must be prime (and positive). Precompute primes up to B.
+- At n = 0, the value equals b, so b must be prime (and positive). This prunes the search dramatically.
 
-2) Scan a
-- Iterate a in [-(A-1)..A-1]. For each (a,b), count consecutive n where the polynomial yields a prime.
+2) Scan a for each candidate b
+- Iterate a in [−(A−1) .. (A−1)]. For each (a, b), count consecutive n starting at 0 for which the polynomial yields a prime.
 
-3) Prime testing
-- Use a sieve-generated prime set and trial division up to √value.
+3) Fast primality checks
+- Use a simple trial division up to √value (or a sieve-backed lookup for speed) to test primality of each generated value.
 
-## Complexity
-- O(A·B·L) where L is avg run length; manageable with pruning (b prime).
+## Reusable template (for constrained parameter searches)
 
-## Real-world analogues and impact
-- Parameter search with domain constraints to reduce compute.
-  - Impact: Dramatically smaller search space with simple necessary conditions.
+- Use necessary conditions derived from boundary cases to prune candidates.
+- Iterate over remaining parameters and evaluate an objective function (run length here).
+- Keep the arg-max and its value.
 
-## Takeaways
-- b must be prime; then brute-force a and count runs using a fast primality check.
+## Practical examples and business impact
+
+- Hyperparameter sweeps: prune combinations with simple feasibility checks before costly evaluation.
+- Optimization with constraints: necessary conditions can cut compute by orders of magnitude.
+
+## Key takeaways
+
+- The n=0 constraint implies b is prime; this is the dominant pruning lever.
+- With pruning, a direct search is fast and clear to implement.
 
 ## Java implementation (Euler027.java)
 
-We scan a in [-999..999] and b among primes in [-1000..1000] and count consecutive primes from n=0.
+We scan a in [−999..999] and b among primes where |b| ≤ 1000, counting consecutive primes from n = 0.
 
-- Primality: `isPrime(int n)` handles small n, rejects evens > 2, and tests divisibility up to √n by odd numbers.
-- Candidate b: build a list of b where `isPrime(|b|)` holds; at n=0 the value equals b, so b must be prime (and positive for a strictly prime value—using |b| gives a slight over-approximation that still works with the downstream check).
-- Counting run: for each (a,b), increment n while `isPrime(n*n + a*n + b)`.
-- Track best length and coefficients, then print `a*b`.
-
-Classroom notes:
-- The n=0 constraint is a key pruning insight; it reduces search dramatically.
-- For production-scale searches, use a sieve for primes and cache factorizations for speed.
+- Primality: `isPrime(int n)` handles small cases, rejects evens > 2, and tests divisibility by odd numbers up to √n.
+- Candidate b: preselect values with `isPrime(|b|)`; downstream primality checks filter any non-positive/invalid cases.
+- Counting run: for each (a, b), increment n while `isPrime(n*n + a*n + b)` remains true.
+- Track best run length and corresponding (a, b), then output `a*b` as required by the problem.

@@ -1,33 +1,36 @@
 # Euler029 — Distinct powers
 
-Count distinct terms of a^b for 2 ≤ a ≤ A and 2 ≤ b ≤ B.
+## Problem statement
 
-## Simple and safe
+How many distinct values are in the set { a^b | 2 ≤ a ≤ A, 2 ≤ b ≤ B }?
 
-1) Big integers
-- Compute BigInteger.valueOf(a).pow(b) and insert into a HashSet.
+## Step-by-step reasoning
 
-2) Optional math optimization
-- Normalize perfect powers by prime factorization to avoid duplicates analytically, but BigInteger+Set is sufficient here.
+1) Use exact big integers
+- Compute BigInteger.valueOf(a).pow(b) and store results in a hash set to deduplicate.
 
-## Complexity
-- O(A·B) big-int exponentiations and hashing; fine for A=B=100.
+2) Optional normalization
+- You can normalize perfect powers by factoring a (e.g., 4^3 = 2^6) to reduce duplicates analytically, but it’s unnecessary for A = B = 100.
 
-## Real-world analogues and impact
-- Canonicalization of exponentiated terms (e.g., deduplicating generated keys/signatures).
-  - Impact: Reliable uniqueness with exact arithmetic.
+## Reusable template (for exact-value deduping)
 
-## Takeaways
-- Exact exponentiation + hash set deduplication is clear and robust for these bounds.
+- Choose an exact arithmetic type to represent the values.
+- Generate results and insert into a set keyed by value.
+- Return the set size.
+
+## Practical examples and business impact
+
+- Deduplication of generated keys, signatures, or hashes where collisions are mathematical equivalences.
+- Confidence via exact arithmetic avoids subtle overflow/rounding issues.
+
+## Key takeaways
+
+- BigInteger + HashSet is clear, correct, and fast at this scale.
 
 ## Java implementation (Euler029.java)
 
-We enumerate a and b, compute exact powers, and deduplicate via a hash set.
+We enumerate a and b, exponentiate exactly, and deduplicate with a hash set.
 
-- State: parse optional four args (aMin, aMax, bMin, bMax) or default to 2..100 for both.
-- Core: nested loops over a and b. For each, compute `BigInteger.valueOf(a).pow(b)` and `set.add(...)`.
+- Args: optional (aMin, aMax, bMin, bMax), defaults to 2..100.
+- Core: nested loops compute `BigInteger.valueOf(a).pow(b)` and add to `Set<BigInteger>`.
 - Output: print `set.size()`.
-
-Classroom notes:
-- BigInteger is required to avoid overflow; a^b grows quickly.
-- HashSet<BigInteger> handles equality by value; no normalization is needed at this scale.

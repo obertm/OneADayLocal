@@ -1,37 +1,39 @@
 # Euler028 — Number spiral diagonals
 
-Sum numbers on the diagonals in an n×n spiral built by starting at 1 and moving to the right in a clockwise spiral.
+## Problem statement
 
-## Closed form
+Sum the numbers on both diagonals in an n×n spiral formed by starting at 1 in the center and moving to the right in a clockwise spiral (n is odd).
 
-1) Layer formula
-- For layer k (side length s=2k+1), the four corners sum to 4s^2 - 6(s-1).
+## Step-by-step reasoning
 
-2) Sum layers
-- Total = 1 + Σ_{k=1..m} [4(2k+1)^2 - 6·2k] where n=2m+1.
+1) Corner formula per layer
+- For layer k with side length s = 2k + 1, the four corner values sum to 4s^2 − 6(s − 1).
+
+2) Sum across layers
+- For n = 2m + 1, total = 1 + Σ_{k=1..m} [4(2k+1)^2 − 6·(2k)]. This yields an O(m) loop, or a closed-form polynomial if desired.
 
 3) Complexity
-- O(m) arithmetic or derive a polynomial closed form; trivial compute.
+- O(m) arithmetic, m ≈ n/2. Negligible cost for typical n.
 
-## Real-world analogues and impact
-- Recognizing and exploiting structure avoids simulation.
-  - Impact: Orders-of-magnitude faster computations for patterned data.
+## Reusable template (for layered grid sums)
 
-## Takeaways
-- Use the corner formula per layer; sum layers; or apply the known polynomial result.
+- Identify layer-wise patterns and express per-layer contribution.
+- Sum contributions rather than simulating the whole grid.
+- Optionally algebraically simplify to a polynomial.
+
+## Practical examples and business impact
+
+- Structured data analytics: when values follow a pattern, compute aggregates analytically instead of iterating all cells.
+- Performance: Avoids O(n^2) grid work by exploiting geometry.
+
+## Key takeaways
+
+- Use the corner formula per layer; summing layers is simple and precise.
 
 ## Java implementation (Euler028.java)
 
-We simulate the corner accumulation by layers.
+We accumulate corner values layer by layer.
 
-- Core: `diagonalSum(int n)`
-  - Start with `sum = 1` and `current = 1`.
-  - For each layer from 1 to (n-1)/2:
-    - `step = layer * 2` is the difference between successive corners.
-    - Add four corners by repeating `current += step; sum += current` four times.
-  - Return `sum`.
-- CLI: reads odd `n` (default 1001) and prints the diagonal sum.
-
-Classroom notes:
-- This loop mirrors the closed-form derivation; it’s easy to follow and validate with small n.
-- You can also hard-code the polynomial for constant-time evaluation, but the layered loop is more illustrative.
+- Core: `diagonalSum(int n)` maintains `current` and adds four corners per layer with step = 2·layer.
+- Start from sum=1 at the center; loop layer=1..(n-1)/2 and add four corners each time.
+- CLI reads odd n (default 1001) and prints the diagonal sum.
