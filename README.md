@@ -87,6 +87,16 @@ java EulerRunner run 4      # 906609
   - [Euler028 – Number spiral diagonals](docs/Euler028_explained.md)
   - [Euler029 – Distinct powers](docs/Euler029_explained.md)
   - [Euler030 – Digit fifth powers](docs/Euler030_explained.md)
+  - [Euler031 – Coin sums](docs/Euler031_explained.md)
+  - [Euler032 – Pandigital products](docs/Euler032_explained.md)
+  - [Euler033 – Digit cancelling fractions](docs/Euler033_explained.md)
+  - [Euler034 – Digit factorials](docs/Euler034_explained.md)
+  - [Euler035 – Circular primes](docs/Euler035_explained.md)
+  - [Euler036 – Double-base palindromes](docs/Euler036_explained.md)
+  - [Euler037 – Truncatable primes](docs/Euler037_explained.md)
+  - [Euler038 – Pandigital concatenated product](docs/Euler038_explained.md)
+  - [Euler039 – Integer right triangles](docs/Euler039_explained.md)
+  - [Euler040 – Champernowne’s constant digits](docs/Euler040_explained.md)
 <!-- BEGIN: EULER_RESULTS -->
 ## Results
 
