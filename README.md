@@ -107,6 +107,16 @@ java EulerRunner run 4      # 906609
   - [Euler048 – Self powers (last 10 digits)](docs/Euler048_explained.md)
   - [Euler049 – Prime permutations in arithmetic progression](docs/Euler049_explained.md)
   - [Euler050 – Consecutive prime sum](docs/Euler050_explained.md)
+  - [Euler051 – Prime digit replacements](docs/Euler051_explained.md)
+  - [Euler052 – Permuted multiples](docs/Euler052_explained.md)
+  - [Euler053 – Combinatoric selections](docs/Euler053_explained.md)
+  - [Euler054 – Poker hands](docs/Euler054_explained.md)
+  - [Euler055 – Lychrel numbers (reverse-and-add)](docs/Euler055_explained.md)
+  - [Euler056 – Powerful digit sum](docs/Euler056_explained.md)
+  - [Euler057 – Square root convergents](docs/Euler057_explained.md)
+  - [Euler058 – Spiral primes ratio](docs/Euler058_explained.md)
+  - [Euler059 – XOR decryption](docs/Euler059_explained.md)
+  - [Euler060 – Prime pair sets](docs/Euler060_explained.md)
 <!-- BEGIN: EULER_RESULTS -->
 ## Results
 
