@@ -45,12 +45,54 @@ When you need to aggregate over primes below a bound:
 ## Practical examples and business impact
 
 - Security keyspace and sampling (toy scale)
-  - Efficiently enumerate primes below a threshold for experiments or teaching; sieve is the gold standard.
-  - Impact: Fast prototyping without heavy libraries.
+  - Problem: Enumerate primes below a bound for demos/tests.
+  - Model: Sieve for fast generation.
+  - Impact: Rapid prototyping.
 
 - Analytics over sparse sets
-  - Sieve-like prefilters generalize to many sparse selection tasks where you eliminate multiples quickly.
-  - Impact: Lower compute by avoiding unnecessary checks.
+  - Problem: Filter out obvious non‑candidates en masse.
+  - Model: Sieve‑like marking of multiples/blocks.
+  - Impact: Lower compute and I/O.
+
+- Feature selection at scale
+  - Problem: Remove features that are multiples of others (redundant).
+  - Model: Sieve out dominated features by rules.
+  - Impact: Faster training.
+
+- Network scanning
+  - Problem: Skip known non‑responsive ranges quickly.
+  - Model: Mark and skip ranges like sieve multiples.
+  - Impact: Faster scans.
+
+- Compiler dead‑code elimination
+  - Problem: Remove code known to be unreachable/redundant.
+  - Model: Iterative marking akin to sieving.
+  - Impact: Smaller binaries.
+
+- Document retrieval
+  - Problem: Exclude documents by broad rules first.
+  - Model: Bulk marking and later precise checks.
+  - Impact: Snappy search.
+
+- Scheduling with exclusion lists
+  - Problem: Exclude dates/slots by recurrence patterns.
+  - Model: Pre‑mark excluded slots; process remainder.
+  - Impact: Efficient calendars.
+
+- ETL prefilters
+  - Problem: Drop rows matching broad filters early.
+  - Model: Sieve‑style pass before expensive transforms.
+  - Impact: Cheaper pipelines.
+
+- Education tooling
+  - Problem: Teach sieving visually and interactively.
+  - Model: Show marking from p*p and skip even steps.
+  - Impact: Better intuition.
+
+- Database cleanup
+  - Problem: Remove redundant keys/rows in bulk.
+  - Model: Mark‑and‑sweep style sieve pass.
+  - Impact: Healthier datasets.
 
 ## Key takeaways
 

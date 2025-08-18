@@ -46,12 +46,54 @@ When you see sums of simple powers or polynomials over 1..n:
 ## Practical examples and business impact
 
 - Analytics variance and second moments
-  - Many KPIs can be derived from two aggregates: sum and sum of squares. Δ mirrors the core of variance. 
-  - Impact: Maintain just two counters per stream and compute variance offline cheaply.
+  - Problem: Estimate variance/standard deviation from streaming data.
+  - Model: Maintain sum and sum of squares; compute Δ to derive variance.
+  - Impact: Accurate metrics with constant memory.
 
 - Capacity planning and forecasting
-  - When formulas exist for cumulative metrics, use them to produce instant what-if analyses without scanning data.
-  - Impact: Lower compute costs; faster iteration with product and finance stakeholders.
+  - Problem: Answer what‑if questions on cumulative metrics instantly.
+  - Model: Use closed forms instead of scanning datasets.
+  - Impact: Lower compute; faster planning.
+
+- A/B test analysis
+  - Problem: Compute pooled variance for experiment arms quickly.
+  - Model: Aggregate sum/sum‑of‑squares per arm; compute Δ per arm and combined.
+  - Impact: Rapid significance checks.
+
+- Monitoring SLO drift
+  - Problem: Track dispersion (variance) of latency without full histograms.
+  - Model: Keep per‑window sum and sum‑of‑squares; alert on Δ changes.
+  - Impact: Low‑cost observability.
+
+- Risk budgeting
+  - Problem: Approximate portfolio variance from returns stream.
+  - Model: Δ over returns gives unscaled variance proxy.
+  - Impact: Faster risk dashboards.
+
+- Education/grading normalization
+  - Problem: Normalize scores across classes.
+  - Model: Compute mean/variance via Δ from two aggregates.
+  - Impact: Fair grading with minimal data.
+
+- Physics/engineering sums
+  - Problem: Compute moments of inertia for discrete masses 1..n.
+  - Model: Sum of squares closed form provides instant results.
+  - Impact: Quick design iterations.
+
+- Finance tax/progressive brackets
+  - Problem: Model cumulative cost functions with polynomial pieces.
+  - Model: Replace loops with closed‑form sums over ranges.
+  - Impact: Faster simulations.
+
+- ML feature engineering
+  - Problem: Standardize features with mean/variance at scale.
+  - Model: Track sum and sum‑of‑squares per feature.
+  - Impact: Efficient preprocessing.
+
+- Database rollups
+  - Problem: Provide approximate variance in OLAP cubes.
+  - Model: Store and merge sum/sum‑of‑squares; compute Δ on demand.
+  - Impact: Fast BI queries.
 
 ## Key takeaways
 

@@ -31,12 +31,54 @@ Given a digit string S and window length k, compute max over all windows of leng
 ## Practical examples and business impact
 
 - Fraud/risk detection over rolling windows
-  - Maintain a rolling score over k recent events; reset segments at blockers (e.g., high-severity alerts).
-  - Impact: O(n) processing with constant memory in streaming analytics.
+  - Problem: Maintain rolling risk over k events with resets on triggers.
+  - Model: Sliding window; split on blockers (zeros) to avoid wasted work.
+  - Impact: O(n) streaming with O(1) state.
 
 - Forecasting with windowed features
-  - Compute features like moving products/sums efficiently.
-  - Impact: Lower latency and compute costs in real-time models.
+  - Problem: Compute moving statistics efficiently.
+  - Model: Sliding window products/sums; constant updates.
+  - Impact: Lower latency feature pipelines.
+
+- Time‑series anomaly detection
+  - Problem: Flag windows with unusually high multiplicative interactions.
+  - Model: Track max product across windows.
+  - Impact: Early detection of compounding risks.
+
+- E‑commerce conversion funnels
+  - Problem: Score k‑step funnels; drop sessions with hard resets.
+  - Model: Segment by resets; rolling computation per segment.
+  - Impact: Faster funnel analytics.
+
+- Network throughput monitoring
+  - Problem: Track worst/best k‑second bandwidth windows.
+  - Model: Sliding window aggregates.
+  - Impact: Real‑time capacity insights.
+
+- Audio/signal processing
+  - Problem: Compute sliding energy/envelope with resets at silence.
+  - Model: Segment on zeros; windowed products/sums.
+  - Impact: Efficient analysis.
+
+- Manufacturing SPC (statistical process control)
+  - Problem: Monitor k‑unit rolling stability; reset on faults.
+  - Model: Sliding window over defect indicators.
+  - Impact: Quick response to drift.
+
+- Edge device telemetry
+  - Problem: Do windowed computations on constrained hardware.
+  - Model: O(1) updates; skip zeroed segments.
+  - Impact: Battery‑friendly analytics.
+
+- Portfolio risk windows
+  - Problem: Evaluate k‑day compounding risk bands.
+  - Model: Sliding multiplicative window.
+  - Impact: Faster risk reporting.
+
+- Log analytics
+  - Problem: Track rolling error density with resets on deploys.
+  - Model: Split by deploy markers; sliding counts per segment.
+  - Impact: Fast incident triage.
 
 ## Key takeaways
 - Use sliding windows; reset at zeros.

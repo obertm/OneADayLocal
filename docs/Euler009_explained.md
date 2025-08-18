@@ -30,12 +30,49 @@ Given a target sum S, find a Pythagorean triple (a,b,c) with a+b+c=S and a^2 + b
 ## Practical examples and business impact
 
 - Geometry and lattice problems
-  - Parametric generation using number-theory formulas replaces cubic brute force.
-  - Impact: Orders-of-magnitude speedups in constraint generation tasks.
+  - Problem: Generate integer solutions under algebraic constraints.
+  - Model: Use parametric forms (like Euclid’s) instead of brute force.
+  - Impact: Massive speedups.
 
 - Signal layouts and integer grids
-  - When constraints are algebraic, derive parametric forms first.
-  - Impact: Faster solvers and reduced infrastructure costs.
+  - Problem: Place components on integer grids with sum constraints.
+  - Model: Parametric generation + divisibility pruning.
+  - Impact: Faster layout.
+
+- Resource allocation with fixed totals
+  - Problem: Find triple allocations meeting total S with structural constraints.
+  - Model: Parametric solutions + scaling factor.
+  - Impact: Efficient feasible‑set exploration.
+
+- Cryptarithms and puzzles
+  - Problem: Solve puzzles with algebraic patterns.
+  - Model: Parameterize variables to reduce the search.
+  - Impact: Faster solver runtimes.
+
+- Computer graphics (Pythagorean triples)
+  - Problem: Construct right triangles with integer edges.
+  - Model: Euclid’s formula for primitive + scaled triples.
+  - Impact: Deterministic geometry generation.
+
+- Testing math libraries
+  - Problem: Need large sets of Pythagorean triples.
+  - Model: Use parametric enumeration; verify a^2+b^2=c^2.
+  - Impact: Robust test data quickly.
+
+- Education demos
+  - Problem: Show structure behind Diophantine solutions.
+  - Model: Live parametric generation.
+  - Impact: Better understanding.
+
+- Optimization warm‑starts
+  - Problem: Need feasible starting points that meet constraints.
+  - Model: Parametric construction to seed solvers.
+  - Impact: Faster convergence.
+
+- Embedded systems
+  - Problem: Compute candidate triples under tight CPU budgets.
+  - Model: Parametric formulas avoid cubic brute force.
+  - Impact: Real‑time feasibility.
 
 ## Key takeaways
 - Use parametric forms + divisibility to prune the search.
