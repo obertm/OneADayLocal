@@ -37,16 +37,54 @@ Why this works: whenever a composite factor appears, you strip it out. The remai
 ## Practical examples and business impact
 
 - Ratio simplification / canonical forms
-  - Factorization lets you reduce fractions or normalize ratios. This is useful in data deduplication where canonical keys matter.
-  - Impact: Better cache keys and join performance by working with reduced forms.
+  - Problem: Reduce fractions or normalize ratios in data pipelines.
+  - Model: Factor numerator/denominator; divide by gcd to canonicalize.
+  - Impact: Better cache keys and join performance.
 
 - Scheduling and tiling cycles
-  - Prime factors of cycle lengths determine when processes align. Computing largest/specific prime factors helps choose co-prime periods to minimize collisions.
-  - Impact: Fewer collisions in task schedulers, smoother traffic shaping.
+  - Problem: Align periodic tasks to minimize collisions.
+  - Model: Use prime factors of cycle lengths; select co‑prime periods.
+  - Impact: Smoother traffic shaping and fewer clashes.
 
 - Cryptography hygiene (sanity checks)
-  - While real keys are too large, factorization logic is still used in small-scale tests and property checks.
-  - Impact: Quick validation pipelines without heavy math libraries.
+  - Problem: Verify small synthetic keys or test vectors.
+  - Model: Factor small integers; assert properties quickly.
+  - Impact: Fast validation with lightweight code.
+
+- Database sharding diagnostics
+  - Problem: Diagnose hotspotting due to poorly chosen shard counts.
+  - Model: Inspect prime factors of table sizes and shard counts.
+  - Impact: Pick co‑prime partitions; reduce contention.
+
+- Signal processing and FFT sizes
+  - Problem: Choose transform sizes for speed.
+  - Model: Prefer sizes with small prime factors (radix‑friendly); detect largest factor to decide plan.
+  - Impact: Faster pipelines and lower latency.
+
+- Manufacturing batch decomposition
+  - Problem: Split a batch into prime‑sized sub‑batches for QA sampling.
+  - Model: Factor batch size; largest factor bounds sub‑batch sizes.
+  - Impact: Predictable sampling effort.
+
+- Security auditing of IDs
+  - Problem: Detect weak ID schemes where counts share large factors with cycle lengths.
+  - Model: Factor counts; adjust modulo schemes.
+  - Impact: Lower collision risk.
+
+- Compression block sizing
+  - Problem: Choose block sizes with favorable factorization for parallel merge/split.
+  - Model: Use largest prime factor to avoid pathological splits.
+  - Impact: Higher throughput.
+
+- Education/demonstration tooling
+  - Problem: Teach factorization visually with immediate feedback.
+  - Model: Run trial division up to sqrt(n) and highlight factors.
+  - Impact: Better understanding; quick correctness checks.
+
+- Finance settlement cycles
+  - Problem: Align settlement windows across systems with different cycle lengths.
+  - Model: Analyze prime factors; plan co‑prime adjustments.
+  - Impact: Fewer reconciliation conflicts.
 
 ## Java implementation (Euler003.java)
 

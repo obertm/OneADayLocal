@@ -103,34 +103,59 @@ static long sumMultiples3or5Below_formula(long n) {
 
 Both methods should return the same answers for all N ≥ 0.
 
-## Practical examples from the real world (where this pattern shows up)
+## Practical examples and business impact
 
-These are real or realistic scenarios where “sum/count items divisible by a set of factors” appears. The same loop-or-formula approach applies.
+These real scenarios use the same modulo + inclusion–exclusion pattern; use the loop for clarity or the O(1) formula for planning at scale.
 
 - Marketing promotions scheduling
-    - Problem: Trigger a promo or email campaign for customers on a repeating cadence (e.g., every 3rd or 5th day since signup) without double-contacting on overlaps.
-    - Model: Let d be “days since signup.” Customers with d % 3 == 0 or d % 5 == 0 are eligible; if both, count once (use inclusion–exclusion if using closed form). 
-    - Impact: Predictable pacing, coverage measurement, and budget control. The closed-form can estimate daily send volumes quickly for planning.
+    - Problem: Trigger a promo/email campaign on a cadence (every 3rd or 5th day since signup) without double-contacting on overlaps.
+    - Model: Day d qualifies if d % 3 == 0 or d % 5 == 0; use inclusion–exclusion for forecasts.
+    - Impact: Predictable pacing and budget control; closed-form gives instant volume estimates.
 
 - Subscription billing cycles and proration buckets
-    - Problem: Bucket accounts into recurring billing cycles (e.g., triweekly or on days divisible by 5) and forecast load on billing infrastructure.
-    - Model: Count users whose cycle day satisfies day % 3 == 0 or day % 5 == 0; use the O(1) formula for instant capacity planning per time window.
-    - Impact: Avoids over-provisioning and reduces compute by using formulas instead of scanning all accounts.
+    - Problem: Bucket accounts into recurring billing cycles and forecast billing-system load.
+    - Model: Count users with cycle day meeting modulo rules; use O(1) formula for capacity planning.
+    - Impact: Avoids over-provisioning and expensive scans.
 
 - Manufacturing quality checks
-    - Problem: Inspect every 3rd or 5th item on a production line, aggregating the inspected count per shift.
-    - Model: For item indices i < N, filter i % 3 == 0 || i % 5 == 0; sum counts per shift. Use inclusion–exclusion to forecast inspections for target throughput N.
-    - Impact: Ensures consistent QA coverage and accurate staffing forecasts.
+    - Problem: Inspect every 3rd or 5th item; plan inspector staffing per shift.
+    - Model: Filter indices by modulo; apply inclusion–exclusion to avoid double counting.
+    - Impact: Consistent QA coverage and accurate staffing forecasts.
 
 - Data engineering bucketing and sampling
-    - Problem: Create deterministic samples or shards (e.g., keep rows where id % 5 == 0) and project sample sizes without scanning.
-    - Model: Use modulo filters (single or combined) and closed-form to estimate cardinalities quickly.
-    - Impact: Faster ETL planning, lower costs by avoiding full scans; predictable sample sizes for A/B tests.
+    - Problem: Deterministic sampling/sharding (e.g., id % 5 == 0) with precomputed counts.
+    - Model: Closed-form predicts cardinality without scanning.
+    - Impact: Faster ETL planning; lower compute costs.
 
 - Event analytics and rate limiting
-    - Problem: Process or throttle only requests whose sequence number hits specific cycles (e.g., audit every 5th request; deep inspect every 15th).
-    - Model: Apply modulo filters; if combining multiple rules, use inclusion–exclusion to estimate overlap and total workload.
-    - Impact: Keeps systems within SLOs and reduces unnecessary processing while maintaining statistically sound coverage.
+    - Problem: Audit every 5th request; deep-inspect every 15th.
+    - Model: Combine modulo rules; estimate workloads via inclusion–exclusion.
+    - Impact: Keeps systems within SLOs while targeting heavy checks.
+
+- Preventive maintenance scheduling
+    - Problem: Run light vs heavy maintenance on different machine cycles (e.g., every 3rd vs 10th run).
+    - Model: Model workloads by counting runs matching modulo classes; subtract overlaps.
+    - Impact: Accurate maintenance windows and minimal downtime.
+
+- IoT sensor sampling
+    - Problem: Devices report at periodic intervals (e.g., every 3 or 5 minutes); gateways must size buffers.
+    - Model: Estimate concurrent arrivals using modulo cadence math.
+    - Impact: Right-size buffers and radio airtime budgets.
+
+- Retail replenishment waves
+    - Problem: Replenish SKUs on repeating cycles (daily/weekly sub-cadences).
+    - Model: Forecast bins hitting cycle boundaries via modulo; inclusion–exclusion for overlapping waves.
+    - Impact: Smooth warehouse labor and dock scheduling.
+
+- Gaming reward schedules
+    - Problem: Grant bonuses on periodic logins (every 3rd or 5th day).
+    - Model: Use closed-form to project currency sinks/sources.
+    - Impact: Balanced economies without heavy telemetry crunching.
+
+- Course scheduling and assignments
+    - Problem: Assign tasks on deterministic cadences across cohorts.
+    - Model: Modulo filters define due dates; closed-form predicts grading load.
+    - Impact: Staff planning and SLA adherence for graders/support.
 
 Snippets to recognize/translate the pattern:
 - SQL: `SELECT COUNT(*) FROM events WHERE (seq % 3 = 0 OR seq % 5 = 0) AND seq < :N;`

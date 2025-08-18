@@ -89,24 +89,54 @@ When facing “sum elements of a recurrence sequence up to a threshold that sati
 ## Practical examples and business impact
 
 - Retry/backoff schedules with cost caps
-  - Problem: Many systems use exponential or Fibonacci‑like backoff. You may want to sum only attempts that land on “even” steps (or steps matching a cadence) to estimate cost or load until a cutoff L.
+  - Problem: Many systems use exponential or Fibonacci‑like backoff; estimate the cost of only “even” attempts up to a threshold L.
   - Model: Generate terms up to L; filter parity (or modulo class); sum costs.
-  - Impact: Accurate budget/load forecasts for SRE planning; avoids over‑provisioning.
+  - Impact: Accurate SRE budgeting; avoids over‑provisioning.
 
 - Tiered loyalty or rewards programs
-  - Problem: Award points on actions whose counts follow a growth pattern (e.g., Fibonacci milestones) but only count “even milestones” for premium tiers.
+  - Problem: Award points at Fibonacci milestones but count only even milestones for premium tiers.
   - Model: Iterate terms up to L or use the even‑only recurrence; compute sums instantly.
-  - Impact: Predictable rewards liabilities and clear tiering logic.
+  - Impact: Predictable rewards liabilities; clear tier logic.
 
 - Inventory ramp‑ups and inspection cadences
-  - Problem: When ramping production following a growth curve, sample or inspect every even milestone to maintain quality.
-  - Model: Sum metrics at selected milestones; even‑only iteration reduces computation.
-  - Impact: Ensures QA coverage with minimal processing overhead.
+  - Problem: Production grows along a curve; inspect on even milestones to maintain quality.
+  - Model: Sum metrics at even milestones with the E(n) recurrence to reduce compute.
+  - Impact: Ensures QA coverage with minimal overhead.
 
 - Streaming pipelines: selective windowing
-  - Problem: Apply heavier analytics only on windows that fall on certain indices (e.g., every 3rd or even window) while still projecting total heavy‑compute cost up to L.
+  - Problem: Apply heavy analytics only on windows that fall on certain indices while projecting total heavy‑compute cost up to L.
   - Model: Generate indices; filter by parity/modulo; sum projected costs.
   - Impact: Controls cloud costs and keeps SLAs.
+
+- Capacity planning for staged rollouts
+  - Problem: Rollouts proceed in steps (1, 2, 3, 5, 8, …) but only even steps trigger expensive migrations.
+  - Model: Sum only even steps up to L to forecast migration time/resource usage.
+  - Impact: Smooth change management and fewer surprises.
+
+- Biological growth simulations
+  - Problem: Model populations with Fibonacci‑like reproduction rates; compute resources consumed at even generations.
+  - Model: Generate sequence, filter even generations, aggregate resources.
+  - Impact: Fast scenario exploration without full simulation cost.
+
+- Edge computing duty cycles
+  - Problem: Devices wake on Fibonacci‑backoff; even wakes perform firmware checks.
+  - Model: Sum even wake energy/time costs; keep within battery budget.
+  - Impact: Longer device life; predictable maintenance windows.
+
+- Traffic shaping and burst detection
+  - Problem: Apply deep inspection on packets/windows aligned to even sequence indices.
+  - Model: Pre‑compute total deep‑inspection cost up to L.
+  - Impact: Bounded CPU usage and stable latency.
+
+- Financial DCA (dollar‑cost averaging) variants
+  - Problem: Invest on Fibonacci intervals but only execute on even‑indexed intervals under volatility caps.
+  - Model: Sum allocated amounts at even intervals.
+  - Impact: Transparent budgeting and risk control.
+
+- Education pacing plans
+  - Problem: Assign reviews at Fibonacci intervals; even intervals include comprehensive assessments.
+  - Model: Sum assessment effort/time at even milestones to plan instructor workload.
+  - Impact: Sustainable pacing with predictable workload.
 
 ## Key takeaways
 - Start with a simple generator and a filter; it’s easy, correct, and usually fast.

@@ -27,15 +27,52 @@ Find the largest palindrome number made from the product of two n-digit numbers.
 4) Reusable template
 - For “find max satisfying property over product pairs,” iterate descending, prune with best-known bounds, and test the property efficiently.
 
-## Real-world patterns and business impact
+## Practical examples and business impact
 
 - Search with symmetry and pruning
-  - Mirror-based candidate generation (palindromes) is a symmetry trick. Similar ideas apply to SKU codes, checksums, and ID formats with constraints.
-  - Impact: Faster candidate generation → less compute, quicker answers.
+  - Problem: Generate candidates that satisfy mirrored or checksum patterns (SKUs, IDs).
+  - Model: Mirror digits/characters to produce valid shapes; test constraints.
+  - Impact: Less compute; faster feasibility checks.
 
 - Bounded optimization on discrete grids
-  - Many problems are “best product/sum over a rectangle of integers.”
-  - Impact: The prune-on-upper-bound pattern generalizes to cost savings on combinatorial searches.
+  - Problem: Find best pair/product under constraints.
+  - Model: Descend from upper bounds; prune when no improvement possible.
+  - Impact: Big search‑space cuts with simple heuristics.
+
+- Image processing pattern matches
+  - Problem: Search for symmetric kernels/patterns efficiently.
+  - Model: Generate symmetric candidates first; early reject others.
+  - Impact: Faster template matching.
+
+- Inventory pairing for bundles
+  - Problem: Maximize value of product bundles from two catalogs.
+  - Model: Iterate descending by price; prune on current best.
+  - Impact: Rapid bundle recommendation.
+
+- Network design with latency budgets
+  - Problem: Choose two nodes whose combined property (e.g., latencies) is optimal and symmetric.
+  - Model: Palindrome‑like constraints act as quick filters.
+  - Impact: Feasible designs found faster.
+
+- E‑commerce coupon codes
+  - Problem: Validate codes with palindromic or mirrored sections.
+  - Model: Numeric reversal/string comparison as fast predicate.
+  - Impact: Low‑cost validation at scale.
+
+- Testing harnesses
+  - Problem: Create worst‑case inputs for palindrome detection.
+  - Model: Generate descending palindromes; check factoring.
+  - Impact: Solid regression suites.
+
+- Game design (procedural content)
+  - Problem: Create symmetric artifacts (maps, numbers) with high “score.”
+  - Model: Mirror generation + prune by best score.
+  - Impact: Quality content with less search.
+
+- Financial product combos
+  - Problem: Pair lots/contracts to maximize palindromic identifiers for audit traceability.
+  - Model: Palindrome check as compliance rule; prune pairs.
+  - Impact: Compliance‑friendly operations.
 
 ## Key takeaways
 - Start with nested loops + a fast property check.
