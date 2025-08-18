@@ -11,9 +11,18 @@ Find the next number that is triangular, pentagonal, and hexagonal after 40755.
 ## Complexity
 - O(k) iterations until the next match; constant-time membership test.
 
-## Real-world analogues and impact
-- Intersections of monotone sequences via generating the rarest sequence and testing membership.
-  - Impact: Efficient multi-constraint filtering.
+## Practical examples and business impact
+
+- Rare-event filtering: generate rare candidates and test membership in broader conditions to find intersections.
+- Time-series synthesis: intersect monotone pattern streams (e.g., peaks with specific figurate-time positions).
+- Multi-index joins: iterate the smallest index and test membership in others to accelerate joins.
+- Simulation design: rare-sequence generation guarantees minimal work to find overlaps of constraints.
+- Education: teach sequence intersections via generating the rarest and testing others by inverse formulas.
+- Search optimization: show that generating common sequences first is wasteful vs. rare-first strategies.
+- Embedded/perf: membership tests by inverse math instead of lookups to save memory.
+- Data validation: ensure values meet multiple structural constraints cheaply.
+- Analytics: exploring intersections of precomputed feature families with O(1) checks.
+- Cryptanalysis toys: seek numbers with multiple structural properties as didactic exercises.
 
 ## Takeaways
 - Generate hexagonals; test pentagonality; triangularity is implicit.

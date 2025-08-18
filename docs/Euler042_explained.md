@@ -11,9 +11,18 @@ Count how many words in a list have a letter-sum that is a triangular number.
 ## Complexity
 - O(total characters) after O(T) precompute.
 
-## Real-world analogues and impact
-- Score-to-class membership checks.
-  - Impact: Fast lookups using precomputed sets for ranges.
+## Practical examples and business impact
+
+- Feature scoring: map tokens to numeric scores and test membership in special score classes.
+- Education: show precompute+set membership as a universal trick for fast classification.
+- NLP toy models: word scores to buckets; triangle numbers as proxy labels for exercises.
+- Gaming: assign “triangle score” achievements to names/tags deterministically.
+- Data cleansing: flag strings whose letter-sum lands in suspect buckets for manual review.
+- Simulation: large-scale scans using boolean membership arrays to bound per-item cost.
+- Security: quick signature checks comparing sums to precomputed sets.
+- Embedded systems: precompute small membership arrays for O(1) checks on constrained hardware.
+- Caching strategy: demonstrate when to trade memory for speed by precomputing membership.
+- Test generation: construct inputs targeting or avoiding triangle buckets to exercise branches.
 
 ## Takeaways
 - Precompute triangle set; linear scan over words; constant-time membership.

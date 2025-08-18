@@ -11,9 +11,18 @@ Sum all 0–9 pandigital numbers with specific 3-digit substring divisibility pr
 ## Complexity
 - Small search due to tight constraints; completes quickly.
 
-## Real-world analogues and impact
-- Constraint propagation in combinatorial enumeration.
-  - Impact: Explodes much less than naïve permutation generation.
+## Practical examples and business impact
+
+- Constraint programming: teach how local divisibility constraints prune global permutations.
+- Scheduling: build timetables with local constraints (mod-like) and propagate during DFS.
+- Network design: assign IP octets/fields satisfying divisibility-like constraints; prune early.
+- Test data synthesis: generate pandigital-like records that meet substring rules to stress validators.
+- Rule engines: model forward-checking to reject partial assignments early.
+- Cryptanalysis toys: substring divisibility as a stand-in for modular constraints in key schedules.
+- Config combinatorics: enforce field-alignment divisibility constraints during enumeration.
+- Performance demos: compare 10! permutations vs. constraint-guided DFS on the same task.
+- Education: visualize constraint propagation with substring windows as local checks.
+- Monte Carlo with constraints: sample only from feasible subspace using incremental checks.
 
 ## Takeaways
 - Encode divisibility checks as early pruning; accumulate as soon as all constraints satisfied.

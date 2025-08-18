@@ -11,9 +11,18 @@ Find the largest n-digit pandigital prime.
 ## Complexity
 - Few permutations are needed before hitting the max prime; primality checks are cheap.
 
-## Real-world analogues and impact
-- Strong pruning via invariants (digit sums) before expensive tests.
-  - Impact: Large search spaces collapse to tiny candidate sets.
+## Practical examples and business impact
+
+- Candidate pruning in search: use invariants (e.g., digit sums) to eliminate impossible cases before heavy checks.
+- Cryptography toy models: teach primality with strong prefilters to reduce Miller–Rabin calls.
+- Scheduling IDs: generate pandigital-like IDs only when sums/mod constraints pass to cut invalid candidates.
+- Constraint programming: demonstrate pruning rules that shrink permutation spaces massively.
+- Benchmark harnesses: compare runtime with and without pruning to quantify impact.
+- Education: illustrate divisibility by 3/9 as a powerful invariant for digit problems.
+- Data validation: reject IDs that can’t be prime due to digit rules before database lookups.
+- Simulation: generate only feasible candidate pools to control run times in Monte Carlo experiments.
+- Security filtering: quick-reject classes of inputs that cannot pass downstream prime checks.
+- Competitive programming pattern: template for cutting search space early using arithmetic invariants.
 
 ## Takeaways
 - Use divisibility rules to prune n; permute digits descending; stop at first prime.
