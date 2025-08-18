@@ -493,7 +493,8 @@ public final class EulerTests {
     private static void test054() {
         try {
             String out = runMainCapture("Euler054");
-            if ("TODO".equals(out)) { skipped++; } else if (out.matches("\\d+")) { passed++; } else { failed++; System.out.printf("FAIL: Euler054 unexpected output=%s%n", out); }
+            // With dataset present, exact answer is 376
+            assertEquals("Euler054: Player 1 wins", "376", out);
         } catch (Exception e) { failed++; System.out.printf("FAIL: Euler054 threw %s%n", e); }
     }
 
@@ -537,7 +538,8 @@ public final class EulerTests {
     private static void test059() {
         try {
             String out = runMainCapture("Euler059");
-            if ("DATA_FILE_NOT_FOUND".equals(out) || out.matches("\\d+")) passed++; else { failed++; System.out.printf("FAIL: Euler059 unexpected output=%s%n", out); }
+            // With dataset present, exact ASCII sum is 129448
+            assertEquals("Euler059: cipher ASCII sum", "129448", out);
         } catch (Exception e) { failed++; System.out.printf("FAIL: Euler059 threw %s%n", e); }
     }
 
@@ -595,9 +597,12 @@ public final class EulerTests {
     private static void test067() {
         try {
             String out = runMainCapture("Euler067");
-            if ("TODO".equals(out) || "DATA_FILE_NOT_FOUND".equals(out)) { skipped++; } else if (out.matches("\\d+")) { passed++; } else { failed++; System.out.printf("FAIL: Euler067 unexpected output=%s%n", out); }
+            assertEquals("Euler067: maximum total", "7273", out);
         } catch (Exception e) { failed++; System.out.printf("FAIL: Euler067 threw %s%n", e); }
     }
+    private static void test081() { try { String out = runMainCaptureWithTimeout("Euler081", DEFAULT_TIMEOUT_MS); assertEquals("Euler081: minimal path sum (right/down)", "427337", out); } catch (java.util.concurrent.TimeoutException te) { if (TIMEOUT_AS_SKIP) { skipped++; System.err.printf("SKIP (timeout %d ms): Euler081%n", DEFAULT_TIMEOUT_MS); } else { failed++; System.out.printf("FAIL: Euler081 timeout%n"); } } catch (Exception e) { failed++; System.out.printf("FAIL: Euler081 threw %s%n", e); } }
+    private static void test082() { try { String out = runMainCaptureWithTimeout("Euler082", DEFAULT_TIMEOUT_MS); assertEquals("Euler082: minimal path sum (left-to-right)", "260324", out); } catch (java.util.concurrent.TimeoutException te) { if (TIMEOUT_AS_SKIP) { skipped++; System.err.printf("SKIP (timeout %d ms): Euler082%n", DEFAULT_TIMEOUT_MS); } else { failed++; System.out.printf("FAIL: Euler082 timeout%n"); } } catch (Exception e) { failed++; System.out.printf("FAIL: Euler082 threw %s%n", e); } }
+    private static void test083() { try { String out = runMainCaptureWithTimeout("Euler083", DEFAULT_TIMEOUT_MS); assertEquals("Euler083: minimal path sum (four directions)", "425185", out); } catch (java.util.concurrent.TimeoutException te) { if (TIMEOUT_AS_SKIP) { skipped++; System.err.printf("SKIP (timeout %d ms): Euler083%n", DEFAULT_TIMEOUT_MS); } else { failed++; System.out.printf("FAIL: Euler083 timeout%n"); } } catch (Exception e) { failed++; System.out.printf("FAIL: Euler083 threw %s%n", e); } }
 
     private static void test068() {
         try {
@@ -716,12 +721,12 @@ public final class EulerTests {
         EXPECTED_DEFAULT.put(51, "121313");
         EXPECTED_DEFAULT.put(52, "142857");
         EXPECTED_DEFAULT.put(53, "4075");
-        EXPECTED_DEFAULT.put(54, "DATA_FILE_NOT_FOUND"); // poker dataset not yet included
+    EXPECTED_DEFAULT.put(54, "376");
         EXPECTED_DEFAULT.put(55, "249");
         EXPECTED_DEFAULT.put(56, "972");
         EXPECTED_DEFAULT.put(57, "153");
         EXPECTED_DEFAULT.put(58, "26241");
-        EXPECTED_DEFAULT.put(59, "DATA_FILE_NOT_FOUND"); // cipher dataset not yet included
+    EXPECTED_DEFAULT.put(59, "129448");
         EXPECTED_DEFAULT.put(60, "26033");
         EXPECTED_DEFAULT.put(61, "28684");
         EXPECTED_DEFAULT.put(62, "127035954683");
@@ -729,7 +734,7 @@ public final class EulerTests {
         EXPECTED_DEFAULT.put(64, "1322");
         EXPECTED_DEFAULT.put(65, "272");
         EXPECTED_DEFAULT.put(66, "661");
-        EXPECTED_DEFAULT.put(67, "DATA_FILE_NOT_FOUND"); // triangle dataset not yet included
+    EXPECTED_DEFAULT.put(67, "7273");
         EXPECTED_DEFAULT.put(68, "6531031914842725");
         EXPECTED_DEFAULT.put(69, "510510");
         EXPECTED_DEFAULT.put(70, "8319823");
@@ -745,9 +750,9 @@ public final class EulerTests {
         EXPECTED_DEFAULT.put(79, "DATA_FILE_NOT_FOUND"); // keylog dataset not yet included
         EXPECTED_DEFAULT.put(80, "40886");
     // 81–90
-        EXPECTED_DEFAULT.put(81, "DATA_FILE_NOT_FOUND"); // 80x80 matrix dataset not yet included
-        EXPECTED_DEFAULT.put(82, "DATA_FILE_NOT_FOUND"); // matrix dataset not yet included
-        EXPECTED_DEFAULT.put(83, "DATA_FILE_NOT_FOUND"); // matrix dataset not yet included
+    EXPECTED_DEFAULT.put(81, "427337");
+    EXPECTED_DEFAULT.put(82, "260324");
+    EXPECTED_DEFAULT.put(83, "425185");
         EXPECTED_DEFAULT.put(84, "101524");
         EXPECTED_DEFAULT.put(85, "2772");
         EXPECTED_DEFAULT.put(86, "1818");
@@ -829,9 +834,6 @@ public final class EulerTests {
     }
 
     // 081–083 depend on matrix files; if not present, treat as skipped in default checks
-    private static void test081() { try { runMainCaptureWithTimeout("Euler081", DEFAULT_TIMEOUT_MS); passed++; } catch (java.util.concurrent.TimeoutException te) { if (TIMEOUT_AS_SKIP) { skipped++; System.err.printf("SKIP (timeout %d ms): Euler081%n", DEFAULT_TIMEOUT_MS); } else { failed++; System.out.printf("FAIL: Euler081 timeout%n"); } } catch (Exception e) { failed++; System.out.printf("FAIL: Euler081 threw %s%n", e); } }
-    private static void test082() { try { runMainCaptureWithTimeout("Euler082", DEFAULT_TIMEOUT_MS); passed++; } catch (java.util.concurrent.TimeoutException te) { if (TIMEOUT_AS_SKIP) { skipped++; System.err.printf("SKIP (timeout %d ms): Euler082%n", DEFAULT_TIMEOUT_MS); } else { failed++; System.out.printf("FAIL: Euler082 timeout%n"); } } catch (Exception e) { failed++; System.out.printf("FAIL: Euler082 threw %s%n", e); } }
-    private static void test083() { try { runMainCaptureWithTimeout("Euler083", DEFAULT_TIMEOUT_MS); passed++; } catch (java.util.concurrent.TimeoutException te) { if (TIMEOUT_AS_SKIP) { skipped++; System.err.printf("SKIP (timeout %d ms): Euler083%n", DEFAULT_TIMEOUT_MS); } else { failed++; System.out.printf("FAIL: Euler083 timeout%n"); } } catch (Exception e) { failed++; System.out.printf("FAIL: Euler083 threw %s%n", e); } }
 
     // 084: Monopoly modal string with two 4-sided dice
     private static void test084() {
@@ -895,6 +897,54 @@ public final class EulerTests {
             if (TIMEOUT_AS_SKIP) { skipped++; System.err.printf("SKIP (timeout %d ms): Euler088%n", DEFAULT_TIMEOUT_MS); }
             else { failed++; System.out.printf("FAIL: Euler088 timeout%n"); }
         } catch (Exception e) { failed++; System.out.printf("FAIL: Euler088 threw %s%n", e); }
+    }
+
+    // 090: Cube digit pairs
+    private static void test090() {
+        try {
+            String out = runMainCapture("Euler090");
+            assertEquals("Euler090: cube digit pairs", "1217", out);
+        } catch (Exception e) { failed++; System.out.printf("FAIL: Euler090 threw %s%n", e); }
+    }
+
+    // 091: Right triangles with integer coordinates
+    private static void test091() {
+        try {
+            String out = runMainCapture("Euler091");
+            assertEquals("Euler091: right triangles count", "14234", out);
+        } catch (Exception e) { failed++; System.out.printf("FAIL: Euler091 threw %s%n", e); }
+    }
+
+    // 092: Square digit chains
+    private static void test092() {
+        try {
+            String out = runMainCapture("Euler092");
+            assertEquals("Euler092: chains ending at 89 below 10M", "8581146", out);
+        } catch (Exception e) { failed++; System.out.printf("FAIL: Euler092 threw %s%n", e); }
+    }
+
+    // 093: Arithmetic expressions
+    private static void test093() {
+        try {
+            String out = runMainCapture("Euler093");
+            assertEquals("Euler093: best 4-digit set", "1258", out);
+        } catch (Exception e) { failed++; System.out.printf("FAIL: Euler093 threw %s%n", e); }
+    }
+
+    // 097: Non-Mersenne prime last 10 digits
+    private static void test097() {
+        try {
+            String out = runMainCapture("Euler097");
+            assertEquals("Euler097: last 10 digits", "8739992577", out);
+        } catch (Exception e) { failed++; System.out.printf("FAIL: Euler097 threw %s%n", e); }
+    }
+
+    // 100: Arranged probability
+    private static void test100() {
+        try {
+            String out = runMainCapture("Euler100");
+            assertEquals("Euler100: blue discs > 1e12", "756872327473", out);
+        } catch (Exception e) { failed++; System.out.printf("FAIL: Euler100 threw %s%n", e); }
     }
 
     // Run a class's main with a timeout. Helps avoid hangs/very slow implementations during smoke runs.
@@ -1071,6 +1121,12 @@ public final class EulerTests {
     tests.add(EulerTests::test081);
     tests.add(EulerTests::test082);
     tests.add(EulerTests::test083);
+    tests.add(EulerTests::test090);
+    tests.add(EulerTests::test091);
+    tests.add(EulerTests::test092);
+    tests.add(EulerTests::test093);
+    tests.add(EulerTests::test097);
+    tests.add(EulerTests::test100);
     tests.add(EulerTests::test084);
     tests.add(EulerTests::test085);
     tests.add(EulerTests::test086);
