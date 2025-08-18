@@ -54,6 +54,29 @@ java EulerRunner run 2 100  # 44
 java EulerRunner run 3      # 6857
 java EulerRunner run 4      # 906609
 ```
+
+## Docs index
+- Problem walkthroughs with approach, rationale, and real-world applications:
+  - [Euler001 – Sum of multiples of 3 or 5](docs/Euler001_explained.md)
+  - [Euler002 – Sum of even Fibonacci numbers](docs/Euler002_explained.md)
+  - [Euler003 – Largest prime factor](docs/Euler003_explained.md)
+  - [Euler004 – Largest palindrome product](docs/Euler004_explained.md)
+  - [Euler005 – Smallest multiple (LCM up to n)](docs/Euler005_explained.md)
+  - [Euler006 – Sum square difference](docs/Euler006_explained.md)
+  - [Euler007 – nth prime](docs/Euler007_explained.md)
+  - [Euler008 – Largest product in a series](docs/Euler008_explained.md)
+  - [Euler009 – Special Pythagorean triplet](docs/Euler009_explained.md)
+  - [Euler010 – Summation of primes below n](docs/Euler010_explained.md)
+  - [Euler011 – Largest product in a grid](docs/Euler011_explained.md)
+  - [Euler012 – Highly divisible triangular number](docs/Euler012_explained.md)
+  - [Euler013 – First ten digits of large sum](docs/Euler013_explained.md)
+  - [Euler014 – Longest Collatz sequence](docs/Euler014_explained.md)
+  - [Euler015 – Lattice paths](docs/Euler015_explained.md)
+  - [Euler016 – Power digit sum](docs/Euler016_explained.md)
+  - [Euler017 – Number letter counts](docs/Euler017_explained.md)
+  - [Euler018 – Maximum path sum I](docs/Euler018_explained.md)
+  - [Euler019 – Counting Sundays](docs/Euler019_explained.md)
+  - [Euler020 – Factorial digit sum](docs/Euler020_explained.md)
 <!-- BEGIN: EULER_RESULTS -->
 ## Results
 
