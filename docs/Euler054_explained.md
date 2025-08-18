@@ -11,9 +11,18 @@ Given many poker deals, count how many hands Player 1 wins.
 ## Complexity
 - O(#hands) with constant-time per-hand evaluation.
 
-## Real-world analogues and impact
-- Deterministic ranking engines (tournaments, leaderboards).
-  - Impact: Consistent adjudication with well-defined tie-breakers.
+## Practical examples and business impact
+
+- Tournament adjudication: deterministic ranking with exact tie-breakers.
+- Leaderboards: stable ordering under complex category-plus-kicker rules.
+- Card-game engines: reusable hand evaluators with lexicographic keys.
+- Fraud detection: spot improbable patterns in hands (collusion signals) with rank distributions.
+- Simulation: Monte Carlo over deals to validate evaluator correctness and performance.
+- Education: teaching lexicographic ranking and tie-break design.
+- Online gaming: server-side authoritative evaluation to prevent client tampering.
+- Load testing: generate massive random deals and measure throughput of evaluators.
+- Analytics: distribution of hand categories over datasets to tune AI opponents.
+- QA suites: golden-file comparisons using stable 64-bit rank keys across versions.
 
 ## Takeaways
 - Build a stable rank tuple; compare lexicographically; parse and evaluate line-by-line.

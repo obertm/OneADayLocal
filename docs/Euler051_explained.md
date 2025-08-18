@@ -11,9 +11,18 @@ Find the smallest prime that, by replacing certain repeated digits with the same
 ## Complexity
 - Manageable with pruning: only replace digits that occur ≥ 1 and avoid last-digit replacement to even/5.
 
-## Real-world analogues and impact
-- Template-based variation under constraints with membership testing.
-  - Impact: Efficient search over equivalence classes by masking.
+## Practical examples and business impact
+
+- Mask-based search: generate variants by masking positions and sweeping replacements; membership via fast tests.
+- Feature toggling: simulate flags (masked digits) applied uniformly to generate many candidates quickly.
+- A/B testing: produce cohorts by replacing masked positions and keep only those passing a property (e.g., prime-like test).
+- Security fuzzing: masked replacements probe parsers with systematic coverage.
+- Data quality: enforce “same-digit replacement” rules to create families and test validation robustness.
+- Compression testing: evaluate masked patterns to see which substitutions preserve constraints.
+- Compiler/optimizer knobs: mask config bits and replace consistently to find families satisfying performance thresholds.
+- Synthetic data: generate equivalence classes under masked replacements for model training.
+- Education: demonstrate bitmask enumeration strategies and pruning rules.
+- Search acceleration: prefilter by last-digit constraints before exploring masks to avoid even/5 endings.
 
 ## Takeaways
 - Enumerate bitmasks on repeated digits; replace and count primes; prune by obvious digit rules.

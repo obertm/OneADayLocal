@@ -10,9 +10,18 @@ Count how many nCr exceed one million for 1 ≤ n ≤ 100.
 ## Complexity
 - O(n^2) with tiny constants.
 
-## Real-world analogues and impact
-- Threshold counting for combinatorial explosion detection.
-  - Impact: Quick capacity planning and bound checks.
+## Practical examples and business impact
+
+- Capacity planning: count choose values exceeding thresholds to bound search/config spaces.
+- Feature selection: estimate when combinations exceed reviewable limits.
+- Test-case generation: stop when nCr crosses budget to cap suites.
+- Risk: identify portfolio combinations whose counts exceed a risk-screening threshold.
+- Scheduling: determine when combinations of assignments explode past feasible limits.
+- Education: show symmetry and early stopping to cut compute.
+- Simulation: log-space comparisons to avoid overflow while counting exceedances.
+- Cloud cost: bound the number of combinations worth exploring under budget caps.
+- UI design: limit multi-select combinations when nCr > limit to keep UX manageable.
+- Data pipelines: throttle combinatorial joins by pre-checking nCr against capacity.
 
 ## Takeaways
 - Use symmetry r=min(r,n−r); stop early when crossing the threshold.

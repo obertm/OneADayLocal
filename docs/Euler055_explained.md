@@ -10,9 +10,18 @@ Count how many numbers below 10,000 never form a palindrome within 50 reverse-an
 ## Complexity
 - O(10000 × 50 × digits) with small big-int overhead.
 
-## Real-world analogues and impact
-- Iterative refinement processes with stopping criteria.
-  - Impact: Bounded iteration ensures predictable runtime.
+## Practical examples and business impact
+
+- Iterative refinement: reverse-and-add as a toy for convergence vs. divergence under caps.
+- Data cleaning: iterative transformations with an iteration limit to avoid infinite loops.
+- ETL safety: cap retries of reversible ops; detect non-converging records (Lychrel-like).
+- Education: teach why iteration caps exist and how to choose them.
+- Cryptanalysis toys: explore palindromic convergence under repeated transforms.
+- Observability: dashboards that cap rollups and flag non-converging series.
+- Simulation: study distributions of steps-to-palindrome as a stochastic measure.
+- Embedded: fixed-iteration loops for deterministic timing; palindromicity checks as exits.
+- QA fuzzing: generate seeds that don’t converge under the cap to test alerting.
+- Documentation: highlight need for BigInteger when sums grow quickly.
 
 ## Takeaways
 - Use BigInteger to avoid overflow; clear iteration cap and palindrome checks.

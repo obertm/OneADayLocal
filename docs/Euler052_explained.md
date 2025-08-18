@@ -10,9 +10,18 @@ Find the smallest x such that {2x,3x,4x,5x,6x} are all permutations of x’s dig
 ## Complexity
 - O(candidates × digits), very fast with signature comparison.
 
-## Real-world analogues and impact
-- Permutation-invariance checks across scaled values (e.g., ID formats).
-  - Impact: Lightweight signature comparisons prevent expensive string work.
+## Practical examples and business impact
+
+- Scale-invariant IDs: ensure that multiples of a base ID keep digit-multiset constraints for legacy systems.
+- Billing: verify scaled charges (×2..×6) preserve reference code format by signature comparison.
+- Fraud analytics: catch cases where scaling leaves a code’s digits permuted—suspicious consistent transforms.
+- Data migration: check that scaled quantities map to the same digit signature to ensure consistent encoding.
+- Load testing: generate inputs whose multiples permute digits, stressing normalization.
+- Education: teach digit-signature hashing as a cheap equivalence test.
+- Hash bucketing: assign by digit signature to keep permutations co-located.
+- Telemetry: detect sensors with readings that are scaled copies up to permutation noise.
+- Distributed systems: sanity-check that scaling factors don’t break formatting constraints across services.
+- Simulation: explore parameter spaces where scaling preserves structure (digit multiset) and measure frequency.
 
 ## Takeaways
 - Constrain by digit-length; use frequency arrays (10-sized) for equality checks.
