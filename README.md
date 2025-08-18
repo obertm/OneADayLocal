@@ -77,6 +77,16 @@ java EulerRunner run 4      # 906609
   - [Euler018 – Maximum path sum I](docs/Euler018_explained.md)
   - [Euler019 – Counting Sundays](docs/Euler019_explained.md)
   - [Euler020 – Factorial digit sum](docs/Euler020_explained.md)
+  - [Euler021 – Amicable numbers](docs/Euler021_explained.md)
+  - [Euler022 – Names scores](docs/Euler022_explained.md)
+  - [Euler023 – Non-abundant sums](docs/Euler023_explained.md)
+  - [Euler024 – Lexicographic permutations](docs/Euler024_explained.md)
+  - [Euler025 – 1000-digit Fibonacci index](docs/Euler025_explained.md)
+  - [Euler026 – Reciprocal cycles](docs/Euler026_explained.md)
+  - [Euler027 – Quadratic primes](docs/Euler027_explained.md)
+  - [Euler028 – Number spiral diagonals](docs/Euler028_explained.md)
+  - [Euler029 – Distinct powers](docs/Euler029_explained.md)
+  - [Euler030 – Digit fifth powers](docs/Euler030_explained.md)
 <!-- BEGIN: EULER_RESULTS -->
 ## Results
 
