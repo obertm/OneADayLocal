@@ -10,9 +10,18 @@ In the first 1000 expansions of √2, count fractions where the numerator has mo
 ## Complexity
 - O(1000) BigInteger additions.
 
-## Real-world analogues and impact
-- Convergent approximations for irrationals; track quality by digit lengths.
-  - Impact: Simple recurrences produce high-precision rationals cheaply.
+## Practical examples and business impact
+
+- Convergent approximations: use recurrences to generate rational approximations for irrationals in simulations.
+- Control systems: track numerator/denominator growth in recursive filters.
+- Data compression: analyze digit-length growth in continued fraction expansions for encoding efficiency.
+- Education: teach recurrence relations and digit-length analysis.
+- Cryptography: study convergent growth for key schedule design.
+- QA: test digit-length comparison logic in BigInteger libraries.
+- Benchmarking: measure performance of recurrence-based rational generators.
+- Visualization: plot digit-length ratios over steps to reveal convergence patterns.
+- Embedded: implement recurrence-based rational approximators for resource-limited systems.
+- Simulation: model error decay in convergent expansions and digit-length crossovers.
 
 ## Takeaways
 - Use the closed recurrence for √2; count digit-length comparisons.

@@ -10,9 +10,18 @@ Build the number spiral and find the side length where the ratio of primes on th
 ## Complexity
 - O(#layers) primality checks; fast with a strong primality test.
 
-## Real-world analogues and impact
-- Monitoring the decline of a signal against total observations.
-  - Impact: Detect thresholds with incremental updates.
+## Practical examples and business impact
+
+- Threshold detection: monitor ratios (e.g., primes/total) and trigger on crossing a threshold.
+- Grid simulation: spiral or layered grid models for signal/feature density analysis.
+- Education: teach incremental ratio tracking and early stopping.
+- QA: test spiral/corner value generation and ratio logic.
+- Visualization: animate spiral growth and prime ratio decline.
+- Embedded: implement efficient spiral/corner generation for pattern recognition.
+- Simulation: model decay of “interesting” events in expanding search spaces.
+- Benchmarking: compare naive vs. direct-corner generation for grid problems.
+- Data mining: detect when rare events fall below a critical mass in streaming data.
+- Security: monitor for drop-off in “prime-like” events in rolling windows.
 
 ## Takeaways
 - Generate corner values directly; maintain running prime/total counts.
