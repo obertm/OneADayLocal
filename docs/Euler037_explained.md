@@ -11,9 +11,18 @@ Find the 11 primes that remain prime when truncating digits from left and right;
 ## Complexity
 - Tiny search space with pruning; effectively instant.
 
-## Real-world analogues and impact
-- Validity under prefix/suffix removal (e.g., URL/path robustness, progressive disclosure of identifiers).
-  - Impact: Ensures stability across incremental views.
+## Practical examples and business impact
+
+- URL/path robustness: ensure identifiers remain valid when truncated from either side (progressive disclosure/UIs).
+- API versioning: test tokens that must preserve validity when prefixes/suffixes are added or stripped by gateways.
+- Log redaction: simulate left/right truncation during PII redaction and verify tokens remain within allowed sets.
+- Streaming ingestion: validate that partial/truncated messages keep checksum-valid prefixes and suffixes.
+- Compiler tooling: ensure truncations of symbol names during minification keep unique, valid prefixes.
+- DB sharding keys: design keys that maintain distribution even when truncated for short-form display.
+- Security fuzzing: generate truncatable candidates to probe parser acceptance at every cut point.
+- Numeric coding schemes: design progression where every left/right truncation remains in a permitted numeric class.
+- Education: demonstrate invariants under truncation and the power of prefix/suffix filters.
+- Observability: define alert IDs whose truncated forms still route to the correct service during UI shortening.
 
 ## Takeaways
 - Build via BFS/DFS with digit constraints; verify all truncations prime.

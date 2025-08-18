@@ -11,9 +11,18 @@ For perimeters p ≤ P, find p with the most integer right-triangle solutions.
 ## Complexity
 - O(P log P)ish; iterating m up to √(P/2).
 
-## Real-world analogues and impact
-- Enumerating structured solutions via parameterization (avoids brute-force over a,b,c).
-  - Impact: Orders-of-magnitude faster counts for constrained geometries.
+## Practical examples and business impact
+
+- RF engineering: enumerate waveguide/cavity dimensions (integer relations) by parameterization to hit perimeter/length budgets.
+- Construction planning: count rectangular right-triangle truss options for a given perimeter; compare bill-of-materials scenarios.
+- Computer graphics: generate integer right triangles for grid-aligned meshes; choose perimeters with many options to maximize reuse.
+- Educational geometry: teach Euclid’s triple parameterization to avoid a^2+b^2=c^2 brute-force scans.
+- Robotics pathing: analyze grid-constrained path triangles for calibration; perimeters with many solutions yield more samples.
+- PCB/mechanical layout: fit right-angled components with fixed perimeters in integer grid designs.
+- Sports analytics: design field/court drill distances matching perimeter constraints with multiple triple options.
+- Cryptarithm puzzles: simulate integer solutions to constrained forms using parameterized families rather than brute force.
+- Simulation design: choose perimeters with rich solution sets to sample diverse triangle shapes under fixed budgets.
+- Operations research: demonstrate how parameterization collapses search spaces in combinatorial geometry problems.
 
 ## Takeaways
 - Generate perimeters from Euclid’s formula and count multiples; pick the max.

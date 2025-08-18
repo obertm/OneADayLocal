@@ -10,9 +10,18 @@ Find the largest 1–9 pandigital 9-digit number that is the concatenated produc
 ## Complexity
 - Small loop with string building.
 
-## Real-world analogues and impact
-- Constructed identifiers from scaled copies; uniqueness checks.
-  - Impact: Guarantees dense, constraint-satisfying IDs.
+## Practical examples and business impact
+
+- Synthetic ID design: build IDs from scaled copies of a seed to satisfy digit coverage and ordering constraints.
+- Data generation for benchmarks: produce concatenated product sequences to stress test parsers and dedup systems.
+- Telemetry synthesis: simulate sensors where harmonics (×1, ×2, ×3, …) are concatenated into a single stream; validate structure.
+- Quality control: confirm that serials composed from repeated scale factors meet format constraints.
+- Game/lottery systems: construct “valid ticket” numbers from scaled pieces under strict digit rules to model collision rates.
+- Network packet crafting: stitch scaled header components to fill exact field widths while meeting uniqueness.
+- Cryptanalysis toys: search constructed concatenations as proxy CSPs to teach constraint pruning.
+- E-commerce SKUs: generate composite SKUs from multiples of a base to hit prescribed digit patterns for legacy systems.
+- Educational demos: show how tight bounds reduce search drastically when building structured concatenations.
+- Fuzz testing: craft concatenations to hit every digit exactly once, probing validators and sanitizer edge cases.
 
 ## Takeaways
 - Narrow to 4-digit seeds and test concatenated products for pandigitality.
