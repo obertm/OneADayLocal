@@ -74,3 +74,20 @@ When you need exact results for huge combinatorial quantities (factorials, binom
 - Use BigInteger for exactness at Euler scales.
 - Separate the big-number computation from the final digit aggregation.
 - Prefer simple, verifiable loops; optimize only if needed.
+
+## Java implementation (Euler020.java)
+
+We compute n! with BigInteger and then sum its decimal digits.
+
+- Public method: `sumDigitsOfFactorial(int n)`
+  - Initialize `BigInteger fact = BigInteger.ONE`.
+  - For i = 2..n: `fact = fact.multiply(BigInteger.valueOf(i))`.
+  - Convert to text: `String s = fact.toString();`.
+  - Sum digits: loop chars and add `c - '0'` to an `int sum`.
+  - Return `sum`.
+- CLI: `main(String[] args)` defaults `n = 100`; optional first arg overrides; prints the digit sum.
+
+Classroom notes:
+- 64-bit overflow: 20! already exceeds long; BigInteger is necessary for exact results.
+- Separation of concerns: compute factorial first, then do digit work; keeps the program easy to reason about and test.
+- For very large n, you can avoid the intermediate string by repeatedly dividing by 10 with `divideAndRemainder` and accumulating remainders.

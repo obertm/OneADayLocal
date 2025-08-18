@@ -17,3 +17,11 @@ Find the largest n-digit pandigital prime.
 
 ## Takeaways
 - Use divisibility rules to prune n; permute digits descending; stop at first prime.
+
+
+## Java implementation (Euler041.java)
+
+- Class: `Euler041`
+- Helpers: `isPrime(int)` trial division; a `permute(...)` routine that generates permutations of the digit set and feeds integers to a consumer.
+- Strategy in code: Try 7-digit pandigital digits `{1..7}` first and track the maximum prime found among all permutations; if none, fall back to `{1..4}`.
+- Output: Prints the largest pandigital prime discovered.

@@ -46,3 +46,10 @@ Given n ≥ 1, compute L = lcm(1, 2, …, n).
 ## Key takeaways
 - Reduce to GCD/LCM folds or prime-power multiplication.
 - Watch for overflow order in lcm = a / gcd(a,b) * b.
+
+## Java implementation (Euler005.java)
+
+- Helper: `gcd(long a, long b)` uses Euclid’s algorithm (iterative modulo) and returns `abs(a)` when `b` becomes 0.
+- Helper: `lcm(long a, long b)` computes `a / gcd(a,b) * b` to avoid overflow.
+- Core: `lcmUpTo(int n)` folds LCM from 2..n accumulating into a `long`.
+- CLI: `main(String[] args)` defaults `n = 20` and prints the result; accepts an optional first arg.

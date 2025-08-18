@@ -17,3 +17,10 @@ Find the reduced proper fraction immediately to the left of 3/7 in the set of fr
 
 ## Takeaways
 - Compute n=floor((3d−1)/7) per d; keep coprime maximum just below 3/7.
+
+
+## Java implementation (Euler071.java)
+
+- Class: `Euler071`
+- Loop d=2..1,000,000; compute `n = floor((3d−1)/7)`; track the maximum n/d seen so far using cross-multiplication to avoid FP.
+- Output: Print the numerator `n` of the best fraction directly (as required by the problem).

@@ -20,3 +20,10 @@ Count the number of reduced proper fractions for denominators up to N.
 
 ## Takeaways
 - Totient sieve plus a prefix sum gives the answer directly.
+
+
+## Java implementation (Euler072.java)
+
+- Class: `Euler072`
+- Initialize `phi[i]=i`; for each prime p (detected via `phi[p]==p`), subtract `phi[m]/p` from all multiples m of p.
+- Sum `phi[2..N]` into a 64-bit accumulator; print the total.

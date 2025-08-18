@@ -16,3 +16,10 @@ For N ≤ 10000, count how many continued fractions of √n have an odd period.
 
 ## Takeaways
 - Implement the classic m,d,a loop; count odd-length periods for non-squares.
+
+
+## Java implementation (Euler064.java)
+
+- Class: `Euler064`
+- Helper: `period(int n)` computes the continued fraction period for √n using the `(m,d,a)` recurrence until `a == 2*a0`.
+- Main: for n up to 10,000 (override via CLI), count how many have odd period; print the count.

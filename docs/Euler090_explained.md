@@ -65,3 +65,9 @@ When checking pairwise coverage with interchangeable symbols:
 - Normalize interchangeable elements (6↔9) before checks.
 - Use bitsets for fast membership and compact iteration.
 - Treat pairs as unordered to avoid double counting.
+
+## Java implementation (Euler090.java)
+- Generates all 6-digit subsets of {0..9} as bitmasks; iterates unordered pairs (i..j) to avoid double counting.
+- Required pairs are hard-coded; membership test `has(mask,d)` treats 6 and 9 as interchangeable by checking either bit.
+- `canDisplayAll(a,b)` validates each square: (x in a & y in b) OR (x in b & y in a).
+- Prints the count of valid unordered pairs.

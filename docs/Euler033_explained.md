@@ -17,3 +17,14 @@ Find non-trivial two-digit fractions that incorrectly "cancel" a common digit ye
 
 ## Takeaways
 - Enumerate carefully, avoid zero-ending, compare via cross-multiplication; reduce at the end.
+
+
+## Java implementation (Euler033.java)
+
+- Class: `Euler033`
+- Helper: `gcd(int a, int b)` via Euclid to reduce the final product of fractions.
+- Search:
+  - Iterate `a` in 10..99, `b` in (a+1)..99; skip trivial zeros.
+  - Consider the four digit-cancellation cases; verify equality with exact arithmetic (in code this uses double for simplicity, but you can equivalently cross-multiply to avoid FP).
+  - Accumulate the resulting numerator and denominator products.
+- At the end, reduce by `gcd` and print the denominator.

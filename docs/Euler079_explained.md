@@ -17,3 +17,11 @@ Given many successful login attempts as ordered triples of digits, deduce the sh
 
 ## Takeaways
 - Translate triplets to a DAG; topo-sort to obtain the minimal consistent passcode.
+
+
+## Java implementation (Euler079.java)
+
+- Class: `Euler079`
+- Loads triplets from `Euler079.txt` if present, otherwise uses the standard sample set embedded.
+- Builds precedence edges for digits and performs Kahn’s topological sort, always choosing the smallest-available digit to ensure the minimal passcode.
+- Output: The shortest passcode string that satisfies all order constraints.

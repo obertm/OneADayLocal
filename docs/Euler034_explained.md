@@ -17,3 +17,13 @@ Find all numbers equal to the sum of the factorial of their digits; return their
 
 ## Takeaways
 - Cache digit factorials and apply a hard upper bound; scan and test.
+
+
+## Java implementation (Euler034.java)
+
+- Class: `Euler034`
+- Precompute `fact[0..9]` once; upper bound `ub = 7 * fact[9]` (2,540,160).
+- Loop `n` from 10 to `ub`:
+  - Sum `fact[d]` over the digits of `n`.
+  - If the sum equals `n`, add to `total`.
+- Print the final `total`.

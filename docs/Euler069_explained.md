@@ -19,3 +19,10 @@ For n ≤ 1,000,000, find n maximizing n/φ(n).
 
 ## Takeaways
 - Multiply consecutive primes greedily under the limit.
+
+
+## Java implementation (Euler069.java)
+
+- Class: `Euler069`
+- Greedy: Multiply successive small primes 2·3·5·… while the product ≤ 1,000,000; print the last product within the limit.
+- Rationale: Maximizes n/φ(n) by minimizing φ(n) relative to n via distinct prime factors.

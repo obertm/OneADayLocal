@@ -17,3 +17,11 @@ Find the sum of digits of the numerator of the 100th convergent of the continued
 
 ## Takeaways
 - Generate e’s CF coefficients; fold backward to get the convergent; sum numerator digits.
+
+
+## Java implementation (Euler065.java)
+
+- Class: `Euler065`
+- Build coefficients `a[0..99]` for e’s continued fraction: `a[0]=2`, and for k≥1: if k%3==2 then 2*(k+1)/3 else 1.
+- Fold backward with BigInteger: starting from the end, update `(num, den) = (a[i]*num + den, num)`.
+- Sum digits of `num` and print.

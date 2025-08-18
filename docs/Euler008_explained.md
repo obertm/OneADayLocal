@@ -41,3 +41,13 @@ Given a digit string S and window length k, compute max over all windows of leng
 ## Key takeaways
 - Use sliding windows; reset at zeros.
 - Keep integer-safe operations; beware of overflow if window is large.
+
+## Java implementation (Euler008.java)
+
+- Core: `maxAdjacentProduct(String digits, int window)`
+  - Validates `window` range and scans the digit string.
+  - Splits by zeros into zero-free segments and processes only segments with length ≥ window.
+  - Computes the first window’s product, then slides by dividing outgoing digit and multiplying incoming digit.
+  - Tracks and returns the best product.
+- Data: The 1000-digit constant is embedded as `NUM`.
+- CLI: `main(String[] args)` defaults `window = 13`; first arg overrides; prints the maximum product.

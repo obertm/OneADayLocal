@@ -41,3 +41,13 @@ Find the largest palindrome number made from the product of two n-digit numbers.
 - Start with nested loops + a fast property check.
 - Use descending order + upper-bound pruning to cut the search space.
 - Consider generating candidates directly using symmetry.
+
+## Java implementation (Euler004.java)
+
+- Helper: `isPalindrome(int n)` reverses digits numerically and compares to the original.
+- Core: `largestPalindromeProductNDigits(int digits)`
+  - Sets `high = 10^digits - 1`, `low = 10^(digits-1)`.
+  - Iterates `i` from `high` down to `low`; inner loop `j` from `i` down to `low` to avoid duplicates.
+  - Prunes when `i*high <= max` and when `i*j <= max`; updates `max` on palindrome.
+  - Returns `max`.
+- CLI: `main(String[] args)` defaults to `digits = 3` and prints the computed maximum; accepts an optional first arg to override.

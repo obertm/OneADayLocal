@@ -16,3 +16,11 @@ In the first 1000 expansions of √2, count fractions where the numerator has mo
 
 ## Takeaways
 - Use the closed recurrence for √2; count digit-length comparisons.
+
+
+## Java implementation (Euler057.java)
+
+- Class: `Euler057`
+- Start with numerator=3, denominator=2 as BigIntegers.
+- For 1000 steps: if `digits(num) > digits(den)` increment count; update `(num, den) = (num + 2*den, num + den)`.
+- Output: Print the count.

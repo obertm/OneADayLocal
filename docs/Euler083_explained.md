@@ -13,3 +13,11 @@ Find the minimal path sum from the top-left to the bottom-right of a matrix, mov
 
 ## Real-world impact
 - Shortest path on grids (navigation, network costs) with arbitrary 4-direction moves.
+
+## Java implementation (Euler083.java)
+- Loads `p083_matrix.txt` if present, else uses the 5×5 sample matrix.
+- Flattens the n×n grid into N = n² nodes; uses `dist[N]` with `Long.MAX_VALUE/4` init and a min-heap priority queue of pairs `[node, distance]`.
+- Starts at node 0 with distance `a[0][0]`; for each pop, relax up to four neighbors by adding neighbor cell weight.
+- Early exit: breaks when target node (N−1) is extracted with final distance.
+- Prints `dist[N−1]`.
+- Complexity: O(N log N + E) with E ≈ 4N; very fast for N=6400.

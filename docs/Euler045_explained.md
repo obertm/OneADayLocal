@@ -17,3 +17,10 @@ Find the next number that is triangular, pentagonal, and hexagonal after 40755.
 
 ## Takeaways
 - Generate hexagonals; test pentagonality; triangularity is implicit.
+
+
+## Java implementation (Euler045.java)
+
+- Class: `Euler045`
+- Helpers: triangular, pentagonal, and hexagonal inverse checks; triangularity is constructed; pent/hex checked via inverse formulas.
+- Loop: from n=286 upward, compute T(n); if both pentagonal and hexagonal, print T(n) and exit.

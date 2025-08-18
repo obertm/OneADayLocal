@@ -112,3 +112,8 @@ When facing “sum elements of a recurrence sequence up to a threshold that sati
 - Start with a simple generator and a filter; it’s easy, correct, and usually fast.
 - Exploit structure to skip work: here, every 3rd Fibonacci is even; iterate only even terms via E(n) = 4E(n-1) + E(n-2).
 - Favor O(1) space and O(log L) time when possible; only reach for heavier math (fast‑doubling) if the problem demands it.
+
+## Java implementation (Euler002.java)
+
+- Core: `sumEvenFib(int limit)` iterates Fibonacci numbers with `a=1, b=2`, sums `b` when even, and advances `a,b` until `b > limit`.
+- CLI: `main(String[] args)` defaults `limit = 4_000_000`; accepts an optional first arg to override; prints the sum.

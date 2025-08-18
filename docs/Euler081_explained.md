@@ -13,3 +13,12 @@ Find the minimal path sum from the top-left to the bottom-right of a matrix, mov
 
 ## Real-world impact
 - Grid cost routing with axis-aligned moves (warehouses, DP on lattices).
+
+## Java implementation (Euler081.java)
+- Loads `p081_matrix.txt` if present; otherwise uses the sample 5×5 matrix as a fallback so the program always runs.
+- Builds a 2D DP table `dp[n][n]` with:
+	- `dp[0][0] = a[0][0]`.
+	- First row/col as cumulative sums.
+	- For each cell `(i,j)`: `dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + a[i][j]`.
+- Prints `dp[n-1][n-1]`.
+- Complexity: O(n²) time and space; trivial for n = 80.

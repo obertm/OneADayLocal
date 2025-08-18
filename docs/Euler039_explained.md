@@ -17,3 +17,11 @@ For perimeters p ≤ P, find p with the most integer right-triangle solutions.
 
 ## Takeaways
 - Generate perimeters from Euclid’s formula and count multiples; pick the max.
+
+
+## Java implementation (Euler039.java)
+
+- Class: `Euler039`
+- Implementation shown here uses a straightforward perimeter scan and counts integer triples by iterating `a < b < c` with `a + b + c = p` and testing `a*a + b*b == c*c`.
+- For each p up to the limit (default 1000; you can pass another), count such triples and keep the p with the maximum count. Print that p.
+- Note: A faster alternative is to use Euclid’s formula to generate perimeters and count multiples, but the direct enumeration is simple and fast enough for P ≤ 1000.

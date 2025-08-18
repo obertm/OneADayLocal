@@ -17,3 +17,12 @@ Sum all 0–9 pandigital numbers with specific 3-digit substring divisibility pr
 
 ## Takeaways
 - Encode divisibility checks as early pruning; accumulate as soon as all constraints satisfied.
+
+
+## Java implementation (Euler043.java)
+
+- Class: `Euler043`
+- Globals: `sum` accumulator; `PR = {2,3,5,7,11,13,17}` for substring divisors.
+- Method: `perm(char[] arr, int l, int r)` generates all 0–9 pandigital permutations; at leaves, checks each 3-digit substring divisibility and, if valid, adds the numeric value to `sum`.
+- Note: The code avoids leading-zero results explicitly; the final sum is printed.
+- Optimization opportunity: A DFS that enforces constraints during construction would avoid generating all 10! permutations; current version is acceptable for one-off runs.

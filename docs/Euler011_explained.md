@@ -36,3 +36,12 @@ Input: matrix g[h][w] and window size k (Euler: h=w=20, k=4). Output: max produc
 
 ## Key takeaways
 - Enumerate directions explicitly; check bounds first; compute aggregate; track max.
+
+## Java implementation (Euler011.java)
+
+- Parser: `parseGrid(String s)` splits lines and whitespace into a 2D `int[][]`.
+- Core: `maxProductInGrid(int[][] g, int k)`
+  - Iterates all cells and computes products in four directions when in-bounds: right, down, down-right, down-left.
+  - Tracks the best product across all origins and directions and returns it.
+- Data: The 20×20 grid is stored as a multi-line string constant.
+- CLI: `main(String[] args)` defaults `k = 4`; first arg overrides; parses grid and prints maximum product.

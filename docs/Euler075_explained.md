@@ -17,3 +17,10 @@ For perimeters P ≤ 1,500,000, count how many P can be formed in exactly one wa
 
 ## Takeaways
 - Generate perimeters from primitive triples; mark multiples; count those with exactly one representation.
+
+
+## Java implementation (Euler075.java)
+
+- Class: `Euler075`
+- For m>n with opposite parity and gcd(m,n)=1, perimeter `p0 = 2m(m+n)`; for k*p0 ≤ 1,500,000, increment `count[p]` and maintain a running result of perimeters with count==1.
+- Output: Print the number of perimeters that are singular.

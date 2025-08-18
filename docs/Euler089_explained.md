@@ -13,3 +13,12 @@ Given a list of Roman numerals, compute the total number of characters saved by 
 
 ## Real-world impact
 - Normalizing encodings to canonical minimal forms; easy audits of savings/efficiency.
+
+## Java implementation (Euler089.java)
+- Current file is a placeholder that prints `DATA_FILE_NOT_FOUND`.
+- Intended structure:
+	- Read `p089_roman.txt` (or similar dataset) lines.
+	- For each line, parse value handling subtractive pairs (IV, IX, XL, XC, CD, CM).
+	- Re-encode greedily to minimal Roman and compute length difference from the original.
+	- Sum and print total savings.
+- If you want, we can implement the full parser/encoder now and wire it to the dataset.

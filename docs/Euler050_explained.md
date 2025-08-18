@@ -63,3 +63,16 @@ When searching for the longest run with constraints over a sequence:
 - Prefix sums turn window sums into O(1).
 - A fast membership test (isPrime) plus decreasing window sizes prunes most work.
 - Keep sums in long; sieve once and reuse across checks.
+
+## Java implementation (Euler050.java)
+
+- Class: `Euler050`
+- Sieve: `boolean[] sieve(int n)` builds primality lookup up to N.
+- Data prep:
+  - Collect `primes` into an ArrayList using the sieve.
+  - Build `long[] prefix` where `prefix[k+1] = prefix[k] + primes.get(k)`.
+- Search:
+  - Track `bestLen` and `bestPrime`.
+  - For each start `i`, try end `j` starting from `i + bestLen + 1` upward; compute `sum = prefix[j] - prefix[i]`.
+  - If `sum >= N`, break inner loop; if `isPrime[(int)sum]` is true, update best and continue.
+- Output: Print `bestPrime` (for N=1_000_000, this is 997651).

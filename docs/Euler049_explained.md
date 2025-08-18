@@ -17,3 +17,13 @@ Find a 12-digit number formed by concatenating three 4-digit primes that are per
 
 ## Takeaways
 - Group by digit signature; look for arithmetic triplets inside groups.
+
+
+## Java implementation (Euler049.java)
+
+- Class: `Euler049`
+- Helpers: `isPrime(int)` and `sortDigits(int)` for digit-signature grouping.
+- Steps:
+  - Sieve/prune primes to 4-digit odd primes; group into a map keyed by sorted-digit strings.
+  - For each group with size ≥ 3, sort and search for (a,b,c) with `c = 2b - a` also in the group.
+  - Skip the known example (1487, 4817, 8147); on the first new triple, print the concatenated 12-digit string and exit.

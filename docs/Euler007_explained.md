@@ -38,3 +38,9 @@ Given n ≥ 1, return the n-th prime (1-indexed): 2, 3, 5, 7, 11, …
 ## Key takeaways
 - Grow primes incrementally and test up to √x.
 - Use sieves when n gets large; for moderate n this method is simple and effective.
+
+## Java implementation (Euler007.java)
+
+- Helper: `isPrime(long x, ArrayList<Integer> primes)` tests divisibility only by prior primes up to `sqrt(x)`.
+- Core: `nthPrime(int n)` maintains a dynamic `ArrayList<Integer>` of primes, tries candidates starting at 2, then skips even numbers; stops when size == n and returns the last prime.
+- CLI: `main(String[] args)` defaults to `n = 10001`; accepts optional first arg to override; prints the nth prime.

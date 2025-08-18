@@ -13,3 +13,10 @@ Solve multiple 9×9 Sudoku puzzles and sum the 3-digit numbers formed by the top
 
 ## Real-world impact
 - General CSP solving with propagation + heuristic backtracking.
+
+## Java implementation (Euler096.java)
+- Tries to load `p096_sudoku.txt` (Grid headers + 9 lines each). If missing, prints `DATA_FILE_NOT_FOUND`.
+- Parses puzzles, then solves each using a bitmask-based MRV backtracking:
+	- Tracks used digits per row/col/box in 10-bit masks.
+	- Picks the cell with fewest candidates and tries them; backtracks on conflict.
+- Sums the 3-digit value from the top-left corner of each solved grid and prints the sum.

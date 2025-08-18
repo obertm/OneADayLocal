@@ -17,3 +17,11 @@ Find the smallest cube for which exactly five permutations of its digits are als
 
 ## Takeaways
 - Hash cubes by sorted-digit signature; find the first key reaching count=5 and take its smallest cube.
+
+
+## Java implementation (Euler062.java)
+
+- Class: `Euler062`
+- Map: `signature(cube)` → list of cubes; signature is the sorted digits of the cube.
+- Iterate n from 1 up; when a list reaches size 5, return its minimum as the answer.
+- Output: Print the smallest cube among the five permutations.

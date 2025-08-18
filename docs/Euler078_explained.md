@@ -17,3 +17,10 @@ Find the least n such that the number of partitions p(n) is divisible by 1,000,0
 
 ## Takeaways
 - Implement pentagonal recurrence with modulo; stop at first n with p(n)≡0.
+
+
+## Java implementation (Euler078.java)
+
+- Class: `Euler078`
+- Maintains `p[0]=1` and computes p(n) modulo 1,000,000 using generalized pentagonal numbers ±k(3k−1)/2 and alternating signs.
+- Stops and prints n at the first p(n)≡0 mod 1e6; includes a safe capacity bound to run within time here.

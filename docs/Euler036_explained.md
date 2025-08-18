@@ -16,3 +16,11 @@ Sum all numbers < N that are palindromic in both base 10 and base 2.
 
 ## Takeaways
 - Restrict to odds; test palindromicity in both bases.
+
+
+## Java implementation (Euler036.java)
+
+- Class: `Euler036`
+- Helper: `isPal(String s)` two-pointer palindrome checker.
+- Main: optional limit argument (default 1,000,000); loop `i` from 1 to limit-1, check decimal pal, then binary pal via `Integer.toBinaryString(i)`. Sum and print.
+- Micro-optimizations (optional): iterate only odd `i`; generate decimal palindromes directly to cut checks.

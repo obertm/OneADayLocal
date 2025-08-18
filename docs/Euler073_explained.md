@@ -19,3 +19,11 @@ Count reduced proper fractions a/b with 1/3 < a/b < 1/2 and b ≤ 12000.
 
 ## Takeaways
 - Tight bounds per denominator and a gcd test per candidate.
+
+
+## Java implementation (Euler073.java)
+
+- Class: `Euler073`
+- Uses Farey sequence stepping between neighbors to count fractions strictly between 1/3 and 1/2 for denominators ≤ 12000 without gcd loops.
+- Maintains neighbors (a/b, c/d) and repeatedly computes the next mediant step until reaching 1/2; increments a counter per step.
+- Output: Print the count.

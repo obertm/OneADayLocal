@@ -16,3 +16,10 @@ Find the largest 1–9 pandigital 9-digit number that is the concatenated produc
 
 ## Takeaways
 - Narrow to 4-digit seeds and test concatenated products for pandigitality.
+
+
+## Java implementation (Euler038.java)
+
+- Class: `Euler038`
+- Helpers: `isPandigital(String)` for 1–9; `concatProduct(int x)` builds the concatenated string of x×1, x×2, ... until 9+ chars.
+- Main: iterate x from 1 to 9999; if the concatenation has length 9 and is pandigital, parse to int and track the maximum; print the best value.

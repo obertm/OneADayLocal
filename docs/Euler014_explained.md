@@ -51,3 +51,22 @@ For iterative processes with overlapping subproblems:
 
 - Memoization turns a heavy brute-force loop into near-linear time.
 - Use 64-bit for intermediate values; backfill lengths to reuse work.
+
+## Java implementation (Euler014.java)
+
+We compute Collatz lengths with memoization using two caches and careful types.
+
+- Core helper: `collatzLength(long start, int[] cache, HashMap<Long,Integer> bigCache)`
+  - Returns the length L(start).
+  - If `start < cache.length` and `cache[start] != 0`, return cached value.
+  - Otherwise, walk the sequence using a `long n` (avoid overflow) and push visited values to an `ArrayList<Long> seen` until you hit 1 or a cached value.
+  - Accumulate `steps` during the walk. When stopping, backfill lengths into `cache` (for small values) or `bigCache` (for values ≥ cache.length) by decrementing from the final length.
+- Driver: `longestCollatzArgUnder(int limit)`
+  - Initializes `int[] cache = new int[limit+1]; cache[1] = 1;` and `HashMap<Long,Integer> bigCache`.
+  - Loops i = 2..limit-1, computes length via `collatzLength`, tracks the best (longest) start value.
+- CLI: `main(String[] args)` defaults `limit = 1_000_000`; optional first arg overrides; prints the start with the longest chain.
+
+Classroom notes:
+- Why two caches? `int[] cache` is O(limit) and very fast for small values; `HashMap<Long,Integer>` safely stores lengths for transient large values that appear during sequences (e.g., 3n+1 may exceed limit).
+- Why `long` in the sequence variable? The sequence can exceed `Integer.MAX_VALUE` before coming down; `long` prevents overflow.
+- Backfilling: When you know the terminal length, assign lengths to each visited node in reverse order so future queries end quickly.

@@ -22,3 +22,16 @@ Find coefficients a and b for n^2 + a n + b that produce the longest run of cons
 
 ## Takeaways
 - b must be prime; then brute-force a and count runs using a fast primality check.
+
+## Java implementation (Euler027.java)
+
+We scan a in [-999..999] and b among primes in [-1000..1000] and count consecutive primes from n=0.
+
+- Primality: `isPrime(int n)` handles small n, rejects evens > 2, and tests divisibility up to √n by odd numbers.
+- Candidate b: build a list of b where `isPrime(|b|)` holds; at n=0 the value equals b, so b must be prime (and positive for a strictly prime value—using |b| gives a slight over-approximation that still works with the downstream check).
+- Counting run: for each (a,b), increment n while `isPrime(n*n + a*n + b)`.
+- Track best length and coefficients, then print `a*b`.
+
+Classroom notes:
+- The n=0 constraint is a key pruning insight; it reduces search dramatically.
+- For production-scale searches, use a sieve for primes and cache factorizations for speed.

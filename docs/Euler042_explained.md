@@ -17,3 +17,14 @@ Count how many words in a list have a letter-sum that is a triangular number.
 
 ## Takeaways
 - Precompute triangle set; linear scan over words; constant-time membership.
+
+
+## Java implementation (Euler042.java)
+
+- Class: `Euler042`
+- Input: CSV of quoted words (default `p042_words.txt`); you can pass a path as the first CLI arg.
+- Helpers: `wordValue(String)` mapping A/Z or a/z to 1..26.
+- Steps in code:
+  - Read and clean CSV to a list of words; track the maximum word value.
+  - Precompute a boolean array `tri[]` marking triangle numbers up to the maximum.
+  - Count words whose value is triangle and print the count.

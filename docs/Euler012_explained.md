@@ -59,3 +59,11 @@ When you need divisor counts of structured numbers:
 - Use T_n’s coprime structure to halve the work.
 - Convert factorization to exponent counts → multiplicative divisor function.
 - Cache primes; stop as soon as the threshold is exceeded.
+
+## Java implementation (Euler012.java)
+
+- Helper: `countDivisors(long n)` performs trial division to compute the number of positive divisors of n via prime-exponent counts.
+- Core: `firstTriangleOverDivisors(int threshold)`
+  - For increasing n, forms coprime factors (n/2 and n+1) or (n and (n+1)/2) depending on n’s parity.
+  - Multiplies `countDivisors` of each factor to get d(T_n); when it exceeds the threshold, returns T_n as `a*b`.
+- CLI: `main(String[] args)` defaults threshold = 500; accepts optional first arg; prints the first qualifying triangular number.

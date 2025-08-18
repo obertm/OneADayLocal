@@ -56,3 +56,8 @@ When you need to aggregate over primes below a bound:
 
 - Use sieves for prime generation; mark from p*p and skip even steps.
 - Keep sums in long; guard p*p from overflow with long temporaries.
+
+## Java implementation (Euler010.java)
+
+- Core: `sumPrimesBelow(int n)` builds a boolean sieve and accumulates primes into a long sum, marking odd multiples starting at p*p.
+- CLI: `main(String[] args)` defaults n = 2_000_000; accepts optional first arg; prints the sum of primes < n.

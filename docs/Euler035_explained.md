@@ -17,3 +17,12 @@ Count primes below N that remain prime under all rotations of their digits.
 
 ## Takeaways
 - Use sieve + digit pruning + rotation prime checks.
+
+
+## Java implementation (Euler035.java)
+
+- Class: `Euler035`
+- Sieve: `boolean[] sieve(int n)` builds primality up to limit.
+- Candidate pruning: For multi-digit numbers, reject any with digits {0,2,4,5,6,8} since some rotation would be even or divisible by 5.
+- Check rotations by slicing strings `s.substring(i)+s.substring(0,i)` and testing primality in the sieve array.
+- Main accepts optional limit (default 1,000,000), counts circular primes below it, and prints the count.

@@ -16,3 +16,11 @@ Find the maximum digital sum of a^b for 1 < a < 100 and 1 < b < 100.
 
 ## Takeaways
 - Straight brute force with BigInteger and digit-sum helper.
+
+
+## Java implementation (Euler056.java)
+
+- Class: `Euler056`
+- Loops `a` and `b` in 1..99; computes `a^b` via repeated multiply with BigInteger; sums digits from `toString()` and tracks the maximum.
+- Helpers: `powBig(int,int)` and `digitSum(BigInteger)`.
+- Output: Print the maximum digital sum.

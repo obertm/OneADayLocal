@@ -14,3 +14,13 @@ For integer cuboids with sides up to M, count how many have an integer shortest 
 
 ## Real-world impact
 - Discrete geometry with integer-length constraints; counting via aggregation over sums.
+
+## Java implementation (Euler086.java)
+- Accepts optional CLI arg for target count (default 1,000,000).
+- Increments M from 1 upward, and for each M iterates s = a+b from 2..2M:
+	- Tests if M² + s² is a perfect square via integer sqrt.
+	- If so, adds the number of (a,b) with 1≤a≤b≤M and a+b=s:
+		- If s ≤ M: floor(s/2).
+		- Else: 1 + M − ceil(s/2) = 1 + M − (s+1)/2.
+- Stops when the cumulative count exceeds target and prints M.
+- Runs in about O(M²) integer ops; easily under a second for the Euler threshold.

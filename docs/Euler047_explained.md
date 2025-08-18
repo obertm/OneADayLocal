@@ -17,3 +17,11 @@ Find the first integer of the first run of K consecutive integers with exactly K
 
 ## Takeaways
 - Use spf sieve to get distinct-factor counts cheaply; maintain a consecutive-run counter.
+
+
+## Java implementation (Euler047.java)
+
+- Class: `Euler047`
+- Helper: `countDistinctPrimeFactors(int n)` trial-divides and counts unique factors by dividing them out.
+- Main: parameter `k` (default 4); increase `n`, track `streak` of consecutive ints with exactly `k` distinct prime factors; when `streak==k`, print `n-k+1`.
+- Note: An spf sieve would be faster, but this direct approach is still quick for k=4.

@@ -17,3 +17,11 @@ How many starting numbers below one million produce a chain with exactly 60 non-
 
 ## Takeaways
 - Precompute digit factorials; memoize chain lengths; count starts with length 60.
+
+
+## Java implementation (Euler074.java)
+
+- Class: `Euler074`
+- Precompute `FACT[0..9]`; define `next(n)` as sum of digit factorials.
+- For each start < 1,000,000, follow the chain with a local map recording step index; on revisit or memo hit, compute chain length for all seen nodes and store in `memo` up to a safe cap (e.g., 3,000,000).
+- Count starts that produce exactly 60 non-repeating terms before the loop.

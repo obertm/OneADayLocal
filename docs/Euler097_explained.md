@@ -12,3 +12,8 @@ Compute the last ten digits of 28433×2^7830457 + 1.
 
 ## Real-world impact
 - Efficient tail-digit calculations for large exponents.
+
+## Java implementation (Euler097.java)
+- Computes powmod using binary exponentiation: `modPow2(7_830_457, 10^10)`.
+- Forms `(28433 * pow + 1) mod 10^10` and prints 10 digits with zero-padding.
+- All math in long with modulo 10^10 to avoid overflow.

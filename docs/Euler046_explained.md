@@ -16,3 +16,10 @@ Find the smallest odd composite that cannot be written as prime + 2×square.
 
 ## Takeaways
 - Precompute primes; test the square condition for differences.
+
+
+## Java implementation (Euler046.java)
+
+- Class: `Euler046`
+- Helpers: `isPrime(int)` trial division; `canWrite(int n)` tries primes p<n and checks whether `(n-p)` is twice a perfect square.
+- Main: iterate odd composites from 9 upward; the first that fails `canWrite` is printed.

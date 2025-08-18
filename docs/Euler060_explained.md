@@ -17,3 +17,10 @@ Find the lowest-sum set of five primes such that any concatenation of two primes
 
 ## Takeaways
 - Cache concat primality; grow cliques with aggressive pruning; track best sum.
+
+
+## Java implementation (Euler060.java)
+
+- Class: `Euler060`
+- Status: Marked TODO in code. The planned approach: sieve primes, memoize concat-prime checks, build compatibility graph, then DFS for 5-cliques with pruning by sum and degree.
+- Once implemented, the program should print the minimum total sum of such a 5-prime set.

@@ -19,3 +19,15 @@ Count distinct terms of a^b for 2 ≤ a ≤ A and 2 ≤ b ≤ B.
 
 ## Takeaways
 - Exact exponentiation + hash set deduplication is clear and robust for these bounds.
+
+## Java implementation (Euler029.java)
+
+We enumerate a and b, compute exact powers, and deduplicate via a hash set.
+
+- State: parse optional four args (aMin, aMax, bMin, bMax) or default to 2..100 for both.
+- Core: nested loops over a and b. For each, compute `BigInteger.valueOf(a).pow(b)` and `set.add(...)`.
+- Output: print `set.size()`.
+
+Classroom notes:
+- BigInteger is required to avoid overflow; a^b grows quickly.
+- HashSet<BigInteger> handles equality by value; no normalization is needed at this scale.

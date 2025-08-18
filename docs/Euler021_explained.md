@@ -39,3 +39,19 @@ Mutual relationships via precomputed scores:
 
 - Sieve divisor sums once; then check amicable condition in O(1) per a.
 - Sum each a once to avoid double-counting.
+
+## Java implementation (Euler021.java)
+
+We compute sum of proper divisors via a multiplicative formula and scan for amicable pairs.
+
+- Helper: `sumProperDivisors(int n)`
+  - Uses prime-power sigma formula: for n = ∏ p^e, σ(n) = ∏ (1 + p + … + p^e). Returns σ(n) − n (proper divisors sum).
+  - Iterates p=2, then odd p, dividing out prime powers and accumulating a `term` for each prime.
+- Driver: `sumAmicableBelow(int limit)`
+  - Precomputes `d[a] = sumProperDivisors(a)` for a in 1..limit-1.
+  - For each a in 2..limit-1: let b = d[a]; if b != a, b in range, and d[b] == a, add a to answer.
+- CLI: `main(String[] args)` defaults `limit=10_000`; optional first arg overrides; prints the sum.
+
+Classroom notes:
+- The σ function is multiplicative across prime powers; subtract n at the end to switch from σ(n) to proper-divisor sum.
+- We only add a (not b) to avoid counting each pair twice.

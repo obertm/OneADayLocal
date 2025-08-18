@@ -17,3 +17,11 @@ Arrange numbers 1..10 in a 5-gon ring so that each line (outer+two inner nodes) 
 
 ## Takeaways
 - Canonicalize start, enforce line sums early, and track max 16-digit concatenation.
+
+
+## Java implementation (Euler068.java)
+
+- Class: `Euler068`
+- Generates permutations of 1..10; enforces that 10 is on the outer ring to ensure a 16-digit result and uses the smallest outer node as the start to break rotational symmetry.
+- Checks each 5-gon line sum equals a common value; builds the concatenated string starting from the minimal outer node; tracks the best lexicographically.
+- Output: The maximum 16-digit string.

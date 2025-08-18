@@ -17,3 +17,10 @@ Compute the product d1 × d10 × d100 × d1000 × d10000 × d100000 × d1000000 
 
 ## Takeaways
 - Compute offsets by digit-length ranges; index into the exact number and digit.
+
+
+## Java implementation (Euler040.java)
+
+- Class: `Euler040`
+- Helper: `digitAt(int n)` walks through digit-length blocks: 1-digit (9×1), 2-digit (90×2), etc., subtracting until the target falls in a block; then computes the exact source number and digit offset.
+- Main: multiplies digits at positions `{1,10,100,1000,10000,100000,1000000}` by calling `digitAt(p)` for each; prints the product.

@@ -16,3 +16,13 @@ Count how many numbers below 10,000 never form a palindrome within 50 reverse-an
 
 ## Takeaways
 - Use BigInteger to avoid overflow; clear iteration cap and palindrome checks.
+
+
+## Java implementation (Euler055.java)
+
+- Class: `Euler055`
+- For n in 1..9999, call `isLychrel(n)` which performs up to 50 reverse-and-add iterations using BigInteger.
+- Helpers:
+  - `reverseBig(BigInteger)` by reversing the decimal string.
+  - `isPalindrome(BigInteger)` via two-pointer string check.
+- If no palindrome appears within 50 iterations, count as Lychrel. Print the final count.

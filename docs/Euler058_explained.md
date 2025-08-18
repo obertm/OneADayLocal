@@ -16,3 +16,11 @@ Build the number spiral and find the side length where the ratio of primes on th
 
 ## Takeaways
 - Generate corner values directly; maintain running prime/total counts.
+
+
+## Java implementation (Euler058.java)
+
+- Class: `Euler058`
+- For each odd side length `s = 2*layer + 1`, compute corners: `s^2`, `s^2-(s-1)`, `s^2-2(s-1)`, `s^2-3(s-1)`; test the three non-square corners for primality.
+- Maintain totals: `total += 4`, increment `primes` accordingly; when `primes / total < 0.10`, print side length `s`.
+- Helper: `isPrime(long)` using 6k±1 trial division.

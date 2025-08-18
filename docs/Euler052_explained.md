@@ -16,3 +16,11 @@ Find the smallest x such that {2x,3x,4x,5x,6x} are all permutations of x’s dig
 
 ## Takeaways
 - Constrain by digit-length; use frequency arrays (10-sized) for equality checks.
+
+
+## Java implementation (Euler052.java)
+
+- Class: `Euler052`
+- Approach: Increment x from 1 upward, compute a sorted-digit signature for x; check that for k=2..6, `signature(k*x)` matches.
+- Helper: `signature(int)` sorts the digits into a canonical string for O(d log d) comparison.
+- Output: The first x that satisfies the property.

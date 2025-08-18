@@ -40,3 +40,12 @@ Given a target sum S, find a Pythagorean triple (a,b,c) with a+b+c=S and a^2 + b
 ## Key takeaways
 - Use parametric forms + divisibility to prune the search.
 - Complexity drops from cubic to near-square-root.
+
+## Java implementation (Euler009.java)
+
+- Core: `tripletProductForSum(int sum)`
+  - Iterates `m ≥ 2` with bound `2*m*(m+1) ≤ sum`; inner loop `n` from 1..m-1.
+  - Checks if `sum % (2*m*(m+n)) == 0`; when true, sets `d = sum / (2*m*(m+n))`.
+  - Computes `a = d*(m^2 − n^2)`, `b = d*(2mn)`, `c = d*(m^2 + n^2)` and validates Pythagorean and sum constraints; returns `a*b*c`.
+  - Returns -1 if no triplet exists.
+- CLI: `main(String[] args)` defaults `sum = 1000`; first arg overrides; prints the product.

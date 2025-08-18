@@ -17,3 +17,10 @@ Find n < 10^7 such that φ(n) is a permutation of n and n/φ(n) is minimized.
 
 ## Takeaways
 - Search semiprimes near √limit; compare digit signatures and keep minimal ratio.
+
+## Java implementation (Euler070.java)
+
+- Class: `Euler070`
+- Generate primes up to ~100k; iterate prime pairs (p,q) with pq < 10^7, biased toward near-equal p and q.
+- Compute φ(n) quickly as (p−1)(q−1); use a digit-count `isPermutation(int,int)` to test the permutation condition.
+- Track the smallest ratio n/φ(n) and print n.

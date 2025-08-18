@@ -16,3 +16,10 @@ Find the least number that can be written as a sum of primes in over 5000 ways.
 
 ## Takeaways
 - Coin-change DP over primes; grow n until crossing the threshold.
+
+
+## Java implementation (Euler077.java)
+
+- Class: `Euler077`
+- For N from 2 upward, build the list of primes ≤ N and run coin-change DP using those primes as coin denominations; when `ways[N] > 5000`, print N.
+- Output: The first N exceeding 5000 prime-sum partitions.

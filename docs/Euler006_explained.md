@@ -57,3 +57,9 @@ When you see sums of simple powers or polynomials over 1..n:
 
 - Translate summations to closed forms when possible.
 - Keep computations in integer math; use careful ordering to avoid overflow.
+
+## Java implementation (Euler006.java)
+
+- Helpers: `sumFirstN(long n)` returns n(n+1)/2; `sumSquaresFirstN(long n)` returns n(n+1)(2n+1)/6.
+- Core: `difference(long n)` computes `sum^2 - sumSquares` using the helpers (with long arithmetic).
+- CLI: `main(String[] args)` defaults n = 100; accepts optional first arg; prints the difference.

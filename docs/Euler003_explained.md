@@ -48,6 +48,14 @@ Why this works: whenever a composite factor appears, you strip it out. The remai
   - While real keys are too large, factorization logic is still used in small-scale tests and property checks.
   - Impact: Quick validation pipelines without heavy math libraries.
 
+## Java implementation (Euler003.java)
+
+- Method: `largestPrimeFactor(long n)` implements the trial-division approach.
+  - Strips factor 2 with a while loop using bit check `(n & 1) == 0`.
+  - Tries odd factors `f = 3, 5, …` while `f*f <= n`, dividing out all repetitions and tracking `largest`.
+  - If `n > 1` at the end, that remaining `n` is prime and is the largest factor.
+- CLI: `main(String[] args)` uses default `n = 600_851_475_143L` and allows overriding via the first argument; prints the result to stdout.
+
 ## Key takeaways
 - Trial division with 2 then odd f up to √n gets you a robust, beginner-friendly solution.
 - Always check if a prime remainder > 1 remains; that’s your largest factor.

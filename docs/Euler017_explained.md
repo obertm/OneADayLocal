@@ -47,3 +47,23 @@ When converting numeric ranges to words and aggregating properties:
 
 - Decompose by ranges; reuse small tables and a single formatter.
 - Normalize then aggregate to keep counting logic simple.
+
+## Java implementation (Euler017.java)
+
+We build small word tables and a formatter function, then sum letter counts.
+
+- Data: `ONES` array holds empty,"one".."nineteen"; `TENS` holds "","","twenty","thirty",...,"ninety".
+- Formatter: `numberToWords(int n)`
+  - 0 → "zero".
+  - < 20 → from `ONES`.
+  - < 100 → tens word + optional "-" + ones word.
+  - < 1000 → `<ones> hundred` + (" and " + remainder) when remainder > 0.
+  - 1000 → "one thousand" (exact).
+- Counter: `letterCount(String words)` counts only lowercase letters a..z, ignoring spaces and hyphens.
+- Aggregator: `totalLettersInRange(int from, int to)` sums `letterCount(numberToWords(n))` for n in the range.
+- CLI: `main(String[] args)` defaults to 1..1000; optional args override start and end; prints the total.
+
+Classroom notes:
+- British usage rule: Include "and" between hundreds and the remainder, e.g., "one hundred and one".
+- Normalization: Counting only [a-z] makes the letter tally unambiguous and easy to implement.
+- Modularity: Separating formatting from counting simplifies testing and reuse.

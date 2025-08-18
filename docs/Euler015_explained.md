@@ -53,3 +53,21 @@ When paths are constrained to unit steps on a grid with fixed counts of moves:
 
 - Recognize combinatorial structure → use C(2n, n).
 - Use BigInteger to keep exactness; multiplicative binomial is efficient and numerically stable.
+
+## Java implementation (Euler015.java)
+
+We compute C(2n, n) exactly using BigInteger and a multiplicative formula.
+
+- Public method: `latticePaths(int n)` returns `binomial(2*n, n)`.
+- Helper: `binomial(int n, int k)`
+  - Handles edge cases: k < 0 or k > n → 0; k == 0 or k == n → 1.
+  - Uses symmetry: replace k with `n - k` if it’s larger to minimize loop length.
+  - Iteratively multiply then divide with BigInteger:
+    - For i from 1..k: `res = res * (n - k + i) / i`.
+  - Divisions are exact at each step by construction, so no rounding is needed.
+- CLI: `main(String[] args)` defaults `n = 20`; optional first arg overrides; prints the result.
+
+Classroom notes:
+- Why multiplicative? Avoids building huge factorials; keeps intermediate values smaller and divides cleanly each step.
+- Why symmetry? It ensures ≤ n/2 iterations, reducing work roughly by half.
+- BigInteger division safety: We only divide by i after multiplying by a corresponding numerator factor, so intermediate is an exact multiple of i.

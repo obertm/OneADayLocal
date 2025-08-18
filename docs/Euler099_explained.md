@@ -12,3 +12,8 @@ Given many pairs (a,b), find the line with the largest value of a^b.
 
 ## Real-world impact
 - Ranking exponential magnitudes without computing huge numbers.
+
+## Java implementation (Euler099.java)
+- Loads `p099_base_exp.txt` (base,exponent per line), or prints `DATA_FILE_NOT_FOUND` if not found.
+- Scans lines computing `b*ln(a)` and keeps the line number (1-based) with the maximum value.
+- Prints the winning line index.

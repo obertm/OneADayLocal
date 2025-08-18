@@ -42,3 +42,16 @@ Rank-weighted scoring pipelines:
 
 - Keep parsing strict; separate sort from scoring for clarity and testability.
 - Use long for totals to avoid overflow.
+
+## Java implementation (Euler022.java)
+
+We read a CSV of quoted names, normalize, sort, and compute rank-weighted scores.
+
+- Parser: reads file path from `args[0]` or uses `p022_names.txt`; loads content with `Files.readString(Path.of(file))`.
+- Cleaning: splits on commas, trims quotes ("name" → name), keeps non-empty entries.
+- Scoring: `nameValue(String)` maps A..Z/a..z to 1..26 and sums; `totalScore(List<String>)` sorts and accumulates `(i+1) * nameValue(name)` into a long.
+- CLI: prints the total score; prints `DATA_FILE_NOT_FOUND` if the data file is missing (so tests can handle absent datasets).
+
+Classroom notes:
+- Using `Collections.sort` keeps the sort stable and simple; letter mapping avoids locale issues.
+- Use `long` for the total because the sum can exceed 32-bit range.

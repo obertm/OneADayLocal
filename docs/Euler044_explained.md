@@ -17,3 +17,11 @@ Find pentagonal numbers Pj, Pk such that Pj + Pk and |Pj − Pk| are pentagonal,
 
 ## Takeaways
 - Precompute, store in a set, and use the integer inverse test to check pentagonality.
+
+
+## Java implementation (Euler044.java)
+
+- Class: `Euler044`
+- Helpers: `pent(n)` generator; `isPent(x)` via inverse formula `(1+sqrt(1+24x))/6` and integer check.
+- Double loop: Increase j, iterate k<j; compute `d = Pj - Pk`. If `d >= best`, break inner loop; if both `Pj + Pk` and `d` are pentagonal, record `best = d`.
+- Output: Minimal difference printed.

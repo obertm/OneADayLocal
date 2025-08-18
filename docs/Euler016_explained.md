@@ -44,3 +44,19 @@ When summing digits of huge exact integers:
 
 - BigInteger keeps results exact; digit sum is linear in number length.
 - Choose digit extraction method based on memory constraints.
+
+## Java implementation (Euler016.java)
+
+We compute 2^n exactly and then sum its digits.
+
+- Public method: `sumDigitsOfTwoPow(int n)`
+  - Builds `BigInteger val = BigInteger.ONE.shiftLeft(n);` which equals 2^n.
+  - Converts to decimal: `String s = val.toString();`.
+  - Loops over characters and adds `s.charAt(i) - '0'` to an `int sum`.
+  - Returns the sum.
+- CLI: `main(String[] args)` defaults `n = 1000`; optional first arg overrides; prints the digit sum.
+
+Classroom notes:
+- Why `shiftLeft(n)`? It’s a fast, idiomatic way to compute 2^n with BigInteger (equivalent to pow(2, n)).
+- Why string-based digit extraction? It’s simple and clear for teaching; for extremely large n, repeated divide-by-10 avoids creating a giant string.
+- All arithmetic stays exact because BigInteger is arbitrary precision.

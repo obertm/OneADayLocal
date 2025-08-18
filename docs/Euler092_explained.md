@@ -12,3 +12,10 @@ For n < 10 million, numbers converge to 1 or 89 by repeatedly replacing n with t
 
 ## Real-world impact
 - Iterated function orbits with small-state memoization.
+
+## Java implementation (Euler092.java)
+- Optional CLI limit (default 10,000,000).
+- Prepares a memo array for sums up to 567, marking 1→state=1 and 89→state=2.
+- For each n, iterates the digit-square map until reaching a known memo state; backfills along the path and counts those ending at 89.
+- Prints the count.
+- Complexity: O(limit) small-constant work; memory O(567).

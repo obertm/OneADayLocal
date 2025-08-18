@@ -48,3 +48,20 @@ When summing many large integers and only a prefix is needed:
 
 - Prefer exact integer addition; extract only what you need (first 10 digits) at the end.
 - Manual addition is an implementation fallback with identical complexity.
+
+## Java implementation (Euler013.java)
+
+This solution uses `java.math.BigInteger` to keep exact precision while summing 100 numbers with ~50 digits each.
+
+- Data: The 100 numbers are stored in a `String[] NUMBERS` constant.
+- Core method: `firstNDigitsOfSum(int n)`
+  - Start with `BigInteger sum = BigInteger.ZERO;`.
+  - Loop over each string s in `NUMBERS` and do `sum = sum.add(new BigInteger(s));`.
+  - Convert to decimal text: `String str = sum.toString();`.
+  - Return the prefix: `str.length() <= n ? str : str.substring(0, n)`.
+- CLI behavior: `main(String[] args)` defaults `n = 10`; if a first argument is provided, it tries to parse it as the number of leading digits; it then prints the result.
+
+Classroom notes:
+- Why BigInteger? 64-bit integers overflow immediately at this size; BigInteger grows to as many digits as needed and stays exact.
+- Why string then substring? We only need the first n digits; converting once and slicing is simple and fast enough for 100 inputs.
+- Alternative: Manual column addition avoids BigInteger but is more code; performance is similar at this scale.

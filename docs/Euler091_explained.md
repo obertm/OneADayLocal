@@ -13,3 +13,10 @@ Count right triangles with vertices at (0,0), (x1,y1), (x2,y2) where 0 ≤ x,y �
 
 ## Real-world impact
 - Counting orthogonal structures in grids via gcd-based perpendicular steps.
+
+## Java implementation (Euler091.java)
+- Optional CLI N (default 50).
+- Initializes `total = N*N` axis-aligned right triangles with right angle at origin.
+- For each lattice point (x,y) with x,y in 1..N, accumulates `gcd(x,y)` and adds twice that to the total at the end: `total += 2*sumGcd`.
+- Prints `total`.
+- Time: O(N²) with a fast gcd per point.

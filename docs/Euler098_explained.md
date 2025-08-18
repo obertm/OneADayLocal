@@ -13,3 +13,9 @@ From a word list, find the largest square number formed by substituting digits f
 
 ## Real-world impact
 - Isomorphism-based mapping between symbol sequences and numbers.
+
+## Java implementation (Euler098.java)
+- Loads `p098_words.txt` (quoted, comma-separated); otherwise prints `DATA_FILE_NOT_FOUND`.
+- Groups words by sorted letters; for each anagram pair, considers square candidates of matching length grouped by structural pattern.
+- Builds bijection letter→digit ensuring no leading zero and one-to-one mapping; checks both words map to squares; tracks max.
+- Prints the largest such square.

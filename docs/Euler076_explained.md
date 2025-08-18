@@ -16,3 +16,10 @@ Number of ways to write 100 as a sum of at least two positive integers.
 
 ## Takeaways
 - Standard combinations DP for partitions; subtract 1 if excluding the single-term partition.
+
+
+## Java implementation (Euler076.java)
+
+- Class: `Euler076`
+- Coin-change DP with coins 1..100: ways[0]=1; for each coin, add ways to targets ≥ coin. Answer is `ways[100]-1` to exclude the single-term partition.
+- Output: Print the computed value.

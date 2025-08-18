@@ -17,3 +17,13 @@ Find the smallest prime that, by replacing certain repeated digits with the same
 
 ## Takeaways
 - Enumerate bitmasks on repeated digits; replace and count primes; prune by obvious digit rules.
+
+
+## Java implementation (Euler051.java)
+
+- Class: `Euler051`
+- Sieve: boolean array up to a generous limit (2,000,000 in code) for primality tests.
+- For each prime p:
+  - Generate non-empty bitmasks over its digit positions; keep masks where all masked positions share the same original digit.
+  - For each mask, try replacements 0..9 (skip leading-zero cases), count how many results are prime and track the smallest.
+  - If count ≥ 8, return that smallest prime; print result in main.

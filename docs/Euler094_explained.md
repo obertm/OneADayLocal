@@ -12,3 +12,9 @@ Find perimeters < 1e9 of integer-sided triangles with sides (a,a,a±1) having in
 
 ## Real-world impact
 - Diophantine constraints solved by Pell recurrences; efficient generation of rare structures.
+
+## Java implementation (Euler094.java)
+- Currently marked TODO in code. The intended approach:
+	- Use Pell-type recurrences to generate valid (a,a,a±1) with integer area.
+	- For each generated a, add perimeter `3a±1` if ≤ 1e9; sum until exceeding limit.
+- We can implement this next to complete the solution.

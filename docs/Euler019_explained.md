@@ -41,3 +41,23 @@ Calendar queries over ranges:
 
 - Prefer closed-form weekday calculations for speed and correctness.
 - Keep leap-year and month-length rules centralized and tested.
+
+## Java implementation (Euler019.java)
+
+We iterate months and track weekday offsets with Gregorian leap-year rules.
+
+- Leap helper: `isLeap(int year)` implements the Gregorian rule: divisible by 4, except centuries unless divisible by 400.
+- Month length: `daysInMonth(int year, int month)` returns 28/29/30/31 based on the month and leap year.
+- Core: `countSundaysOnFirst(int startYear, int endYear)`
+  - Track day-of-week (dow) with 0=Sunday .. 6=Saturday.
+  - Seed `dow = 1` because 1900-01-01 was a Monday.
+  - Loop year=1900..endYear and month=1..12:
+    - If year within [startYear, endYear] and `dow == 0`, increment count.
+    - Advance `dow = (dow + daysInMonth(year, month)) % 7`.
+  - Return the count.
+- CLI: `main(String[] args)` defaults to 1901..2000; two optional args override start and end; prints the total Sundays on the first of a month.
+
+Classroom notes:
+- Seeding from 1900-01-01 avoids having to compute an absolute epoch; we “walk” forward month by month.
+- The `% 7` accumulation is a simple, bug-resistant way to track weekdays without a full calendar library.
+- Alternative: Use Zeller’s congruence to compute each month’s weekday directly; iteration is clearer for teaching.

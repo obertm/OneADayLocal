@@ -16,3 +16,10 @@ Count how many n-digit positive integers are also an nth power.
 
 ## Takeaways
 - Iterate a=1..9, small n; count digit-length matches; sum results.
+
+
+## Java implementation (Euler063.java)
+
+- Class: `Euler063`
+- Loop: base a=1..9; maintain `val = a^n` via multiply; if `digits(val) == n` increment total, else if `< n` break for that a.
+- Output: Print the total count.

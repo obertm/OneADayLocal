@@ -18,3 +18,14 @@ Find a set of six 4-digit figurate numbers (triangle, square, pentagonal, hexago
 
 ## Takeaways
 - Precompute per-type lists and prefix maps; DFS across types with suffix/prefix matching and cycle closure.
+
+
+## Java implementation (Euler061.java)
+
+- Class: `Euler061`
+- Precompute: For each figurate type 3..8, generate 4-digit values with non-zero middle (suffix>=10). Bucket by 2-digit prefix in a map: type → prefix → list of values.
+- DFS:
+  - Try any start value/type, track used values to avoid duplicates.
+  - Recurse over remaining types by matching previous suffix to next prefix.
+  - When one type remains, enforce that its suffix closes the cycle to the starting prefix; on success, return the sum.
+- Output: The sum of the six numbers in the unique cycle.

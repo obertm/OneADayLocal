@@ -42,3 +42,21 @@ For DAG-like layered structures with local choices:
 
 - Bottom-up DP on triangles/lattices gives linear-time optimal solutions.
 - In-place updates minimize memory and simplify code.
+
+## Java implementation (Euler018.java)
+
+We compute the maximum path sum using bottom-up dynamic programming.
+
+- Data: `int[][] TRIANGLE` constant encodes the Euler triangle.
+- Core: `maxPathSum(int[][] tri)`
+  - Let `n = tri.length`. Create `int[][] dp = new int[n][]`.
+  - Initialize base: `dp[n-1] = tri[n-1].clone()`.
+  - For each row i from n-2 down to 0:
+    - For each column j, set `dp[i][j] = tri[i][j] + Math.max(dp[i+1][j], dp[i+1][j+1]);`.
+  - Return `dp[0][0]` as the answer.
+- CLI: `main(String[] args)` prints `maxPathSum(TRIANGLE)`.
+
+Classroom notes:
+- Why clone the last row? It preserves the original triangle and provides the base of the DP without side effects.
+- Complexity: Each cell is processed once; memory is O(n) rows. A 1D rolling array optimization is possible but less explicit for teaching.
+- This exact technique scales to larger triangles (see Euler067) when data is read from a file.
