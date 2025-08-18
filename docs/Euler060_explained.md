@@ -11,9 +11,18 @@ Find the lowest-sum set of five primes such that any concatenation of two primes
 ## Complexity
 - Exponential but small with pruning and caching; feasible.
 
-## Real-world analogues and impact
-- Clique finding in compatibility graphs with expensive edge tests; memoization is key.
-  - Impact: Turns a hard search tractable with graph-based pruning and caching.
+## Practical examples and business impact
+
+- Clique finding: search for maximal compatible sets in graphs with expensive edge tests (e.g., prime concatenation).
+- Compatibility modeling: build graphs where edges represent expensive-to-check relationships; prune with memoization.
+- Simulation: measure how memoization/caching accelerates hard search problems.
+- Education: teach clique search and graph pruning strategies.
+- Benchmarking: compare naive vs. memoized edge tests in graph search.
+- Data mining: find sets of items with all-pairs compatibility under custom rules.
+- Scheduling: assign groups where all members must be mutually compatible (e.g., team formation).
+- Security: model key-agreement groups where all pairs must pass a cryptographic test.
+- QA: test clique-finding logic with synthetic compatibility graphs.
+- Visualization: plot compatibility graphs and highlight maximal cliques found.
 
 ## Takeaways
 - Cache concat primality; grow cliques with aggressive pruning; track best sum.

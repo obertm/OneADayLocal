@@ -10,9 +10,18 @@ Decrypt a text encrypted with repeating-key XOR (lowercase 3-letter key) and ret
 ## Complexity
 - O(26^3 × N) brute force; still tiny for provided input sizes.
 
-## Real-world analogues and impact
-- Simple cryptanalysis via n-gram/space heuristics.
-  - Impact: Demonstrates effectiveness of statistical signals against weak ciphers.
+## Practical examples and business impact
+
+- XOR decryption: brute-force key search with statistical validation for weak ciphers.
+- Security education: teach how n-gram/space frequency breaks simple encryption.
+- QA: test decryption routines with known-plaintext and brute-force keys.
+- Data recovery: recover text from corrupted XORed files using frequency analysis.
+- Simulation: model brute-force search space and success rates for short keys.
+- Benchmarking: compare heuristic vs. full brute-force for key recovery.
+- Embedded: implement lightweight XOR decryption for resource-limited devices.
+- Analytics: measure distribution of decrypted ASCII values to flag likely plaintexts.
+- Fuzzing: generate random keys and measure false-positive rates in statistical validation.
+- Visualization: plot key/score heatmaps to show best candidate keys.
 
 ## Takeaways
 - Either per-position frequency or full brute-force; verify plaintext heuristically; then sum ASCII.

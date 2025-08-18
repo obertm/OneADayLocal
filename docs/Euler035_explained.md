@@ -1,28 +1,46 @@
 # Euler035 — Circular primes below N
 
-Count primes below N that remain prime under all rotations of their digits.
+## Problem statement
 
-## Approach
+Count the primes below N that remain prime under all rotations of their digits.
 
-- Sieve primes up to N.
-- Exclude numbers containing even digits or 5 (except single-digit primes) to prune.
-- For each candidate, generate all rotations and ensure each is prime.
+## Step-by-step reasoning
 
-## Complexity
-- Sieve O(N log log N) plus per-candidate rotation checks; fast for N=1e6.
+1) Sieve primes
+- Build a primality array up to N (Sieve of Eratosthenes).
 
-## Real-world analogues and impact
-- Robustness under rotations/transformations (e.g., cyclic shifts in hash-based systems).
-  - Impact: Ensures invariance properties for identifiers.
+2) Prune impossible candidates
+- Any multi-digit number containing {0,2,4,5,6,8} will produce a composite rotation (even or multiple of 5). Skip them.
 
-## Takeaways
-- Use sieve + digit pruning + rotation prime checks.
+3) Check rotations
+- For each remaining candidate, generate all digit rotations and ensure each one is prime via the sieve.
 
+## Reusable template (for rotation-invariant filters)
+
+- Precompute membership (primality) once.
+- Use digit/property pruning to cut the search space.
+- Verify the invariance under all cyclic shifts.
+
+## Practical examples and business impact
+
+- Rotation-invariant identifiers: design IDs that remain valid under sensor/camera rotations (e.g., rotated readings still parse).
+- Cryptographic toy models: explore rotation-closed sets to illustrate invariants in block transformations.
+- Manufacturing labels: ensure cyclic barcode encodings don’t yield invalid codes when read from arbitrary starting offsets.
+- Network tokenization: test cyclic shift robustness in protocol tokens to avoid accidental valid-but-rotated collisions.
+- Stream ciphers education: simulate keystream rotations and filter invalid states quickly via pruning.
+- Monitoring systems: rotate time-windowed feature vectors; keep only those whose rotations satisfy thresholds (anomaly detection).
+- Genetic sequence analysis: cyclic rotations of k-mers; prune impossible motifs early.
+- Compiler tooling: detect rotation-invariant substrings in code obfuscation and remove trivial patterns.
+- Search optimization: show how pruning rules cut orders of magnitude from brute force in combinatorial scans.
+- Data compression: analyze circular shifts in strings to maintain validity under LZ-like transforms.
+
+## Key takeaways
+
+- Sieve + pruning + rotation checks solve this comfortably for N up to 1e6.
 
 ## Java implementation (Euler035.java)
 
-- Class: `Euler035`
-- Sieve: `boolean[] sieve(int n)` builds primality up to limit.
-- Candidate pruning: For multi-digit numbers, reject any with digits {0,2,4,5,6,8} since some rotation would be even or divisible by 5.
-- Check rotations by slicing strings `s.substring(i)+s.substring(0,i)` and testing primality in the sieve array.
-- Main accepts optional limit (default 1,000,000), counts circular primes below it, and prints the count.
+- Sieve builder: `boolean[] sieve(int n)`.
+- Pruning: reject multi-digit numbers containing forbidden digits.
+- Rotation check: rotate strings and test each rotation via the sieve.
+- CLI: optional limit (default 1_000_000), print the count of circular primes below it.
