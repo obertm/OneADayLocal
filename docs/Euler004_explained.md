@@ -2,31 +2,32 @@
 
 Find the largest palindrome number made from the product of two n-digit numbers.
 
-## Approach you can reproduce
+## Problem statement
 
-1) Clarify
-- Input: n (digits, n ≥ 1). Two factors are in [10^(n-1), 10^n - 1].
+- Input: n (digits, n ≥ 1). Two factors are in [10^(n-1), 10^n − 1].
 - Output: maximum product i*j that reads the same forward and backward.
 
-2) Start with a straightforward search + palindrome check
+## Step-by-step reasoning
+
+1) Start with a straightforward search + palindrome check
 - Iterate i from high down to low.
 - For each i, iterate j from i down to low (avoid duplicates, i*j=j*i).
 - Check if `prod = i*j` is a palindrome:
   - Reverse digits numerically or compare string to its reverse.
 - Track the max palindrome.
 
-3) Pruning to speed up
+2) Pruning to speed up
 - If `i * high <= currentMax`, break outer loop for that i (no better product exists with smaller j).
 - If `i * j <= currentMax`, break inner loop and move to next i.
 - Optional: generate palindromes first (by mirroring) and test factorability within range—often faster for large n.
 
-4) Complexity
+3) Complexity
 - Worst-case O(R^2) products where R is the range size. Pruning reduces work a lot in practice.
 
-5) Reusable template
+4) Reusable template
 - For “find max satisfying property over product pairs,” iterate descending, prune with best-known bounds, and test the property efficiently.
 
-## Real-world patterns and impact
+## Real-world patterns and business impact
 
 - Search with symmetry and pruning
   - Mirror-based candidate generation (palindromes) is a symmetry trick. Similar ideas apply to SKU codes, checksums, and ID formats with constraints.

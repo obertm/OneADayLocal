@@ -2,7 +2,11 @@
 
 Find the largest prime factor of a given integer n (n ≥ 2).
 
-## Problem-solving approach
+## Problem statement
+
+Given an integer n ≥ 2, return the largest prime p that divides n.
+
+## Step-by-step reasoning
 
 1) Define the goal
 - Input: n (≥ 2).
@@ -26,11 +30,11 @@ Why this works: whenever a composite factor appears, you strip it out. The remai
 - Using `int` and overflowing; prefer `long` for 64-bit n.
 - Loop condition must be `f*f <= n` (use long to avoid overflow in `f*f`).
 
-5) Reusable template
+## Reusable template
 - Factor out small primes first (2), then scan odd candidates up to √n.
 - Record factors as you go (counts if needed); finish by checking leftover n.
 
-## Real-world analogues and impact
+## Practical examples and business impact
 
 - Ratio simplification / canonical forms
   - Factorization lets you reduce fractions or normalize ratios. This is useful in data deduplication where canonical keys matter.

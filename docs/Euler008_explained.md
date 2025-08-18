@@ -2,7 +2,11 @@
 
 Given a long string of digits and a window size k, find the maximum product of any k consecutive digits.
 
-## Steps to reproduce
+## Problem statement
+
+Given a digit string S and window length k, compute max over all windows of length k of the product of digits in the window.
+
+## Step-by-step reasoning
 
 1) Parse and validate inputs
 - Ensure window (k) is 1..length.
@@ -21,10 +25,10 @@ Given a long string of digits and a window size k, find the maximum product of a
 4) Complexity
 - O(n) time, O(1) extra space.
 
-## Reusable pattern
+## Reusable template
 - For “max product/sum in sliding window”: split on zero-like blockers and maintain a rolling aggregate.
 
-## Real-world analogues and impact
+## Practical examples and business impact
 
 - Fraud/risk detection over rolling windows
   - Maintain a rolling score over k recent events; reset segments at blockers (e.g., high-severity alerts).

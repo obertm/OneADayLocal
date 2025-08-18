@@ -9,7 +9,7 @@ Given a positive integer limit L, compute the sum of all even Fibonacci numbers 
 - For L = 100, the even Fibonacci numbers ≤ 100 are 2, 8, 34 → sum = 44.
 - For L = 4_000_000 (4 million), the answer is 4,613,732.
 
-## Step‑by‑step reasoning
+## Step-by-step reasoning
 
 1) Inputs/outputs
 - Input: integer L (L ≥ 1), default 4_000_000 if not provided.
@@ -86,7 +86,7 @@ When facing “sum elements of a recurrence sequence up to a threshold that sati
 4) Keep state minimal (constant space) unless the problem requires history or memoization.
 5) Validate with small cases and one larger case.
 
-## Practical examples from the real world
+## Practical examples and business impact
 
 - Retry/backoff schedules with cost caps
   - Problem: Many systems use exponential or Fibonacci‑like backoff. You may want to sum only attempts that land on “even” steps (or steps matching a cadence) to estimate cost or load until a cutoff L.
@@ -107,22 +107,6 @@ When facing “sum elements of a recurrence sequence up to a threshold that sati
   - Problem: Apply heavier analytics only on windows that fall on certain indices (e.g., every 3rd or even window) while still projecting total heavy‑compute cost up to L.
   - Model: Generate indices; filter by parity/modulo; sum projected costs.
   - Impact: Controls cloud costs and keeps SLAs.
-
-Snippets to translate the pattern:
-- SQL (conceptual; sequences often materialized upstream):
-  ```sql
-  -- Imagine a table fib(n, val) up to L
-  SELECT SUM(val) FROM fib WHERE val % 2 = 0 AND val <= :L;
-  ```
-- Java (straight iteration):
-  ```java
-  long sum = 0, a = 1, b = 2;
-  while (b <= L) {
-      if ((b & 1) == 0) sum += b;
-      long next = a + b; a = b; b = next;
-  }
-  ```
-- Java (even‑only recurrence): see `sumEvenFibEvenOnly` above.
 
 ## Key takeaways
 - Start with a simple generator and a filter; it’s easy, correct, and usually fast.

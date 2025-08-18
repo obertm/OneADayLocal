@@ -2,32 +2,30 @@
 
 Find the nth prime number.
 
-## Approach you can repeat
+## Problem statement
 
-1) Clarify
-- Input: n ≥ 1.
-- Output: the nth prime.
+Given n ≥ 1, return the n-th prime (1-indexed): 2, 3, 5, 7, 11, …
 
-2) Trial building with a dynamic prime list
+## Step-by-step reasoning
+
+1) Trial building with a dynamic prime list
 - Keep a growing list/array of found primes.
 - To test a candidate x, check divisibility only by primes ≤ √x.
 - Start from 2, then test only odd numbers after 2 to skip obvious composites.
 - Continue until you have n primes.
 
-3) Why this works and scales reasonably
+2) Why this works and scales reasonably
 - Dividing only by found primes saves work.
 - Checking up to √x reduces divisions.
 - For n ≈ 10^5 it’s fast; for much larger n, use a segmented sieve.
 
-4) Complexity
+3) Complexity
 - Roughly O(n log log n) if using sieve; dynamic trial division is fine for moderate n like 10,001.
 
 ## Reusable template
-- Maintain a list of primes.
-- For each candidate, test divisibility by primes up to √candidate.
-- Skip even candidates after 2.
+- Maintain a list of primes; test candidates by primes up to √candidate; skip even candidates after 2.
 
-## Real-world parallels and impact
+## Practical examples and business impact
 
 - Security scanning / rule evaluation
   - Similar strategy: maintain a set of known blockers (primes) and test candidates against only necessary rules (≤ threshold).

@@ -2,7 +2,11 @@
 
 Find the smallest positive number evenly divisible by all numbers from 1 to n.
 
-## Method you can follow every time
+## Problem statement
+
+Given n ≥ 1, compute L = lcm(1, 2, …, n).
+
+## Step-by-step reasoning
 
 1) Model
 - The answer is the least common multiple (LCM) of numbers 1..n.
@@ -22,7 +26,10 @@ Find the smallest positive number evenly divisible by all numbers from 1 to n.
 4) Complexity
 - Folding lcm with gcd is roughly O(n log n) time with tiny constants; space O(1).
 
-## Real-world uses and impact
+## Reusable template
+- Reduce “divisible by 1..n” into a fold of LCMs using GCD, or compute prime powers ≤ n and multiply.
+
+## Practical examples and business impact
 
 - Calendar/schedule alignment
   - When multiple recurring events need a common alignment point, the LCM gives the first simultaneous occurrence.
@@ -37,6 +44,5 @@ Find the smallest positive number evenly divisible by all numbers from 1 to n.
   - Impact: Improves throughput and reduces hotspotting.
 
 ## Key takeaways
-- Reduce “divisible by 1..n” into a fold of LCMs using GCD.
-- Or compute prime powers ≤ n; both reach the same result.
+- Reduce to GCD/LCM folds or prime-power multiplication.
 - Watch for overflow order in lcm = a / gcd(a,b) * b.
