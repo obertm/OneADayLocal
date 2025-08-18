@@ -127,6 +127,16 @@ java EulerRunner run 4      # 906609
   - [Euler068 – Magic 5-gon ring](docs/Euler068_explained.md)
   - [Euler069 – Totient maximum](docs/Euler069_explained.md)
   - [Euler070 – Totient permutation](docs/Euler070_explained.md)
+  - [Euler071 – Ordered fractions (left of 3/7)](docs/Euler071_explained.md)
+  - [Euler072 – Counting reduced proper fractions](docs/Euler072_explained.md)
+  - [Euler073 – Counting fractions in a range (1/3, 1/2)](docs/Euler073_explained.md)
+  - [Euler074 – Digit factorial chains](docs/Euler074_explained.md)
+  - [Euler075 – Singular integer right triangles](docs/Euler075_explained.md)
+  - [Euler076 – Counting summations](docs/Euler076_explained.md)
+  - [Euler077 – Prime summations](docs/Euler077_explained.md)
+  - [Euler078 – Coin partitions divisible by one million](docs/Euler078_explained.md)
+  - [Euler079 – Passcode derivation](docs/Euler079_explained.md)
+  - [Euler080 – Square root digital expansion](docs/Euler080_explained.md)
 <!-- BEGIN: EULER_RESULTS -->
 ## Results
 
