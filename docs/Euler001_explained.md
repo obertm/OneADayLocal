@@ -103,8 +103,9 @@ static long sumMultiples3or5Below_formula(long n) {
 
 Both methods should return the same answers for all N ≥ 0.
 
-## Practical examples and business impact
+## Practical examples from the real world (where this pattern shows up) and business impact
 
+These are real or realistic scenarios where "sum/count items divisible by a set of factors" appears. The same loop-or-formula appeoach applies.
 These real scenarios use the same modulo + inclusion–exclusion pattern; use the loop for clarity or the O(1) formula for planning at scale.
 
 - Marketing promotions scheduling
