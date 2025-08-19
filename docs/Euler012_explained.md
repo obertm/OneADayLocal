@@ -47,12 +47,54 @@ When you need divisor counts of structured numbers:
 ## Practical examples and business impact
 
 - Co-prime decomposition in scheduling/CRT-like systems
-  - Split near-coprime components to analyze properties cheaply.
+  - Problem: Analyze combined periods from near-coprime parts cheaply.
+  - Model: Split into n and n+1 halves (coprime) to compute properties.
   - Impact: Faster feasibility checks and capacity planning.
 
 - Indexing and bucketing by factor structure
-  - Buckets keyed by divisor counts or factor signatures can improve join/selectivity estimation.
-  - Impact: Better query plans and cache efficiency.
+  - Problem: Improve selectivity estimates and joins.
+  - Model: Bucket by divisor counts/factor signatures.
+  - Impact: Better query plans and caches.
+
+- Load distribution fairness
+  - Problem: Choose counts with many divisors to allow flexible partitioning.
+  - Model: Prefer numbers with high d(x) for shards/teams.
+  - Impact: Easier rebalancing.
+
+- Packaging and bin packing presets
+  - Problem: Pick sizes divisible by many small factors.
+  - Model: Factor counts to maximize divisor options.
+  - Impact: Reduced waste.
+
+- Cryptosystems toy models
+  - Problem: Teach divisor functions and factorization rapidly.
+  - Model: Use T_n decomposition to demonstrate d(n).
+  - Impact: Clear pedagogy.
+
+- Simulation parameter grids
+  - Problem: Build grids with flexible subdivision.
+  - Model: Favor parameters with high divisor counts.
+  - Impact: Faster sweeps and allocations.
+
+- Scheduling work-rotation cycles
+  - Problem: Design cycles with many alignment options.
+  - Model: Use counts with large d(n) to increase feasible rotations.
+  - Impact: Happier schedules.
+
+- Data partition compaction
+  - Problem: Merge partitions efficiently.
+  - Model: Factor sizes to choose merge factors.
+  - Impact: Lower IO.
+
+- Education tools for multiplicative functions
+  - Problem: Visualize d(n) via exponent products.
+  - Model: Show Π(e+1) from prime exponents.
+  - Impact: Strong intuition.
+
+- Heuristics for search bounds
+  - Problem: Estimate when d(T_n) exceeds thresholds.
+  - Model: Use average orders and coprime splits for bounds.
+  - Impact: Targeted searches.
 
 ## Key takeaways
 

@@ -37,12 +37,54 @@ When summing many large integers and only a prefix is needed:
 ## Practical examples and business impact
 
 - Financial ledgers at scale
-  - Sum thousands of high-precision amounts; return statement headers or preview prefixes.
-  - Impact: Prevents rounding bugs; keeps audits clean.
+  - Problem: Sum many high-precision amounts; show header digits.
+  - Model: Exact BigInteger addition; slice leading digits.
+  - Impact: Audit-safe previews.
 
 - Telemetry aggregation
-  - Aggregate large counters exactly across shards.
-  - Impact: Accurate dashboards and capacity triggers.
+  - Problem: Aggregate large counters across shards exactly.
+  - Model: BigInteger sums or column-wise addition.
+  - Impact: Accurate capacity triggers.
+
+- Blockchain analytics
+  - Problem: Sum balances/values with 256-bit precision.
+  - Model: Use arbitrary-precision addition and prefix reporting.
+  - Impact: Correctness across big ranges.
+
+- Scientific measurements
+  - Problem: Accumulate very large integer counts (events/reads).
+  - Model: Exact integer aggregation; prefix for dashboards.
+  - Impact: No precision loss.
+
+- Billing pre-invoices
+  - Problem: Generate previews showing only first 10–12 digits quickly.
+  - Model: Sum exactly; format prefix only.
+  - Impact: Faster UX.
+
+- ETL checkpointing
+  - Problem: Maintain exact row-count sums from many sources.
+  - Model: BigInteger counters; periodic prefix logs.
+  - Impact: Reliable lineage.
+
+- Risk engines
+  - Problem: Add large exposure numbers with no rounding.
+  - Model: BigInteger totals; extract report prefixes.
+  - Impact: Compliance-friendly.
+
+- Archival integrity checks
+  - Problem: Combine large chunk sizes/checksums counts.
+  - Model: Exact sums; small prefixes for logs/alerts.
+  - Impact: Trustworthy operations.
+
+- Education / competitions
+  - Problem: Show how exact arithmetic avoids float pitfalls.
+  - Model: Side-by-side demo with floats vs BigInteger.
+  - Impact: Strong intuition.
+
+- Distributed map-reduce sums
+  - Problem: Partial sums are large; final aggregator needs exactness.
+  - Model: BigInteger reduction and prefix display.
+  - Impact: Correct results at scale.
 
 ## Key takeaways
 

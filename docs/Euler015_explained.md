@@ -42,12 +42,54 @@ When paths are constrained to unit steps on a grid with fixed counts of moves:
 ## Practical examples and business impact
 
 - Routing and scheduling with unit operations
-  - Model parallelizable task sequences as right/down moves; quickly compute counts to size buffers and workers.
-  - Impact: Instant capacity sizing and SLA planning without simulation.
+  - Problem: Count ways to sequence unit tasks (right/down moves).
+  - Model: C(2n, n) paths; size buffers/workers accordingly.
+  - Impact: Instant capacity sizing without simulation.
 
 - Combinatorial A/B test design
-  - Count combinations of choices (e.g., n options in two categories) via binomials to bound experiment space.
-  - Impact: Controls scope and cost of experiments.
+  - Problem: Bound experiment space with two categories of choices.
+  - Model: Binomials count combinations; choose n of 2n.
+  - Impact: Efficient planning.
+
+- Warehouse picking paths
+  - Problem: Estimate path counts in grid aisles.
+  - Model: Right/down moves; C(2n, n) for rectangular blocks.
+  - Impact: Layout optimization.
+
+- Network packet routing in meshes
+  - Problem: Count shortest paths in grid networks.
+  - Model: Binomial coefficients for minimal-hop routes.
+  - Impact: Capacity analysis.
+
+- Parallel job scheduling
+  - Problem: Ways to interleave two independent job streams.
+  - Model: Choose positions for one stream among 2n slots.
+  - Impact: Throughput estimates.
+
+- DNA sequence alignment (toy model)
+  - Problem: Count alignments with only matches and gaps.
+  - Model: Combinatorial interleavings as binomials.
+  - Impact: Intuition for alignment growth.
+
+- UI testing sequences
+  - Problem: Order of clicks/keystrokes with two action types.
+  - Model: Number of sequences equals C(2n, n).
+  - Impact: Scope realistic test coverage.
+
+- Finance rebalancing steps
+  - Problem: Ways to interleave buy/sell unit steps.
+  - Model: Binomial counts of sequences.
+  - Impact: Risk scenario counts.
+
+- Education combinatorics drills
+  - Problem: Teach stars‑and‑bars/choose functions.
+  - Model: Multiplicative binomial computation.
+  - Impact: Stronger fundamentals.
+
+- Distributed systems retries vs work
+  - Problem: Interleave retries with productive ops.
+  - Model: Combinatorial placements among fixed steps.
+  - Impact: Predictive sizing.
 
 ## Key takeaways
 

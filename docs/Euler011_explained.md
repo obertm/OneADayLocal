@@ -29,10 +29,56 @@ Input: matrix g[h][w] and window size k (Euler: h=w=20, k=4). Output: max produc
 - This generalizes to sums, mins/maxes, and other associative operations.
 
 ## Practical examples and business impact
-- Sliding-window feature extraction on grids (images, heatmaps) → like small convolutions.
-  - Impact: Efficient O(n)ish scans per direction enable real-time analytics on 2D data.
-- Risk streaks in time×category matrices (e.g., outages) → detect strongest contiguous streaks.
-  - Impact: Early detection with controllable compute.
+
+- Image/vision kernels (mini-convolutions)
+  - Problem: Extract local features (edges, corners) with small kernels.
+  - Model: Fixed-direction windowed products/sums over pixels.
+  - Impact: Real-time analytics with predictable cost.
+
+- Heatmap hotspot detection
+  - Problem: Find strongest contiguous k-cells horizontally/vertically/diagonally.
+  - Model: Directional sliding windows across the grid.
+  - Impact: Fast incident detection on KPI heatmaps.
+
+- Reliability along routes
+  - Problem: Evaluate path reliability as product of per-hop reliabilities.
+  - Model: Max product over k-step lines approximates best local route segment.
+  - Impact: Quick what-if analysis for network planning.
+
+- Sports analytics (streaks)
+  - Problem: Longest strong run across time×player or time×team matrices.
+  - Model: Max product/sum streaks along allowed directions.
+  - Impact: Simple, explainable streak metrics.
+
+- Geospatial raster scans
+  - Problem: Detect linear features (roads, rivers) in raster tiles.
+  - Model: Directional window products/scores as cheap prefilter.
+  - Impact: Lower-cost pipeline before heavy models.
+
+- Bioinformatics k-mer intensity tracks
+  - Problem: Identify strong consecutive k-mer signals on 2D assays.
+  - Model: Sliding products across rows/cols/diagonals.
+  - Impact: Rapid candidate discovery.
+
+- Manufacturing wafer/board QA
+  - Problem: Detect linear defect runs on 2D inspection grids.
+  - Model: Directional k-length product/score scans; reset on zeros.
+  - Impact: Early warning, reduced scrap.
+
+- Game AI pattern finding
+  - Problem: Find four-in-a-row style patterns.
+  - Model: Check k-aligned cells in four directions efficiently.
+  - Impact: Strong baselines and test harnesses.
+
+- Log anomaly maps (service×minute)
+  - Problem: Find high-intensity linear anomalies.
+  - Model: Directional window scans with thresholds.
+  - Impact: Faster incident triage.
+
+- Financial correlation grids
+  - Problem: Detect short linear clusters of high co-movement.
+  - Model: Sliding products/sums per direction on correlation heatmaps.
+  - Impact: Quick signals for further analysis.
 
 ## Key takeaways
 - Enumerate directions explicitly; check bounds first; compute aggregate; track max.

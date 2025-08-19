@@ -40,12 +40,54 @@ For iterative processes with overlapping subproblems:
 ## Practical examples and business impact
 
 - Workflow DAGs with repeated subpaths
-  - Memoize path lengths/costs to avoid recomputing shared tails.
-  - Impact: Large speedups in schedulers and ETL planners.
+  - Problem: Recompute path lengths/costs many times.
+  - Model: Memoize lengths; backfill along traversed nodes.
+  - Impact: Large speedups.
 
 - Caching in rule engines
-  - Many rules reduce to previously seen states; cache to short-circuit evaluation.
-  - Impact: Lower latency and compute cost.
+  - Problem: Rules reduce to previously seen states.
+  - Model: Cache hits short-circuit evaluation.
+  - Impact: Lower latency and compute.
+
+- Compiler common subexpression elimination (CSE)
+  - Problem: Recompute same expressions during optimization.
+  - Model: Cache results; reuse across passes.
+  - Impact: Faster builds.
+
+- Graph shortest paths with reuse
+  - Problem: Many queries share subpaths.
+  - Model: Store partial distances; reuse across queries.
+  - Impact: Snappier services.
+
+- Dynamic programming in pricing
+  - Problem: Repeated subproblems in tariff/discount plans.
+  - Model: Memoize sub-results by state.
+  - Impact: Real-time quotes.
+
+- Simulation checkpoints
+  - Problem: Long-running chains revisit states.
+  - Model: Record and reuse state costs/lengths.
+  - Impact: Shorter runs.
+
+- Caching enriched telemetry
+  - Problem: Enrichment steps repeat.
+  - Model: Memoization keyed by derived state.
+  - Impact: Cheaper pipelines.
+
+- Recursive API pagination
+  - Problem: Fetch paths revisit offsets.
+  - Model: Cache segment results by cursor.
+  - Impact: Lower API calls.
+
+- Game state evaluation
+  - Problem: Recursive evaluation revisits states.
+  - Model: Transposition tables (memoization).
+  - Impact: Stronger AI.
+
+- Education demos on memoization
+  - Problem: Teach caching with a visual chain.
+  - Model: Collatz length memoization as a clean example.
+  - Impact: Immediate intuition.
 
 ## Key takeaways
 
