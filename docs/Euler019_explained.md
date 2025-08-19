@@ -30,12 +30,54 @@ Calendar queries over ranges:
 ## Practical examples and business impact
 
 - Scheduling/reporting pipelines
-  - Compute month-aligned events and counts reliably.
-  - Impact: Correct compliance reports and predictable automation.
+  - Problem: Compute month-aligned events and counts.
+  - Model: Month iteration with weekday checks.
+  - Impact: Correct compliance reports.
 
 - Capacity planning for month-start workloads
-  - Anticipate spikes that fall on specific weekdays.
-  - Impact: Better staffing and SLA adherence.
+  - Problem: Anticipate weekday-driven spikes.
+  - Model: Count first-of-month Sundays/Mondays/etc.
+  - Impact: Better staffing.
+
+- Payroll alignment
+  - Problem: Predict paydays on specific weekdays.
+  - Model: Iterate months with leap rules; pick weekday targets.
+  - Impact: Reliable payroll ops.
+
+- Subscription renewals load
+  - Problem: Forecast monthly renewals when anchored to weekdays.
+  - Model: Month-start weekday distributions.
+  - Impact: Smoother billing.
+
+- Event planning calendars
+  - Problem: Choose dates that avoid weekend starts.
+  - Model: Scan months for weekday conditions.
+  - Impact: Higher attendance.
+
+- Batch window scheduling
+  - Problem: Avoid batch overlap on bad weekdays.
+  - Model: Month-by-month weekday mapping.
+  - Impact: Fewer collisions.
+
+- Logistics pickups
+  - Problem: Align pickups with depot weekend closures.
+  - Model: Count first-of-month weekends.
+  - Impact: Fewer failed pickups.
+
+- SLA renewals
+  - Problem: Align SLA checkpoints to business days.
+  - Model: Weekday checks on month boundaries.
+  - Impact: Predictable reviews.
+
+- Education academic calendars
+  - Problem: Avoid first-day classes on weekends/holidays.
+  - Model: Weekday counting with exceptions.
+  - Impact: Better schedules.
+
+- BI reporting cadence health
+  - Problem: Ensure report jobs fall on correct weekdays.
+  - Model: Month-first weekday audit.
+  - Impact: Fewer failed reports.
 
 ## Key takeaways
 

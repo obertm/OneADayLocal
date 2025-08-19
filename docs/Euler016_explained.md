@@ -33,12 +33,54 @@ When summing digits of huge exact integers:
 ## Practical examples and business impact
 
 - Checksums for giant identifiers or hashes
-  - Derive human-auditable summaries by summing digits.
-  - Impact: Lightweight integrity checks without additional systems.
+  - Problem: Produce a human-auditable summary for very large IDs/hashes.
+  - Model: Sum decimal digits of the exact value as a quick checksum.
+  - Impact: Lightweight integrity checks without extra systems.
 
 - Auditable reporting of exponential growth metrics
-  - Compute exact values and then summarize for dashboards.
-  - Impact: Accuracy preserves trust in finance/ops.
+  - Problem: Report exponential trends (e.g., 2^n scenarios) with clear summaries.
+  - Model: Compute exactly, store value, show digit-sum as a compact signal.
+  - Impact: Accurate dashboards; preserves stakeholder trust.
+
+- Big-integer pipeline smoke tests
+  - Problem: Validate BigInteger computations across services.
+  - Model: Compare digit sums of outputs across implementations.
+  - Impact: Cheap cross-language consistency checks.
+
+- Capacity planning for exponential backoff bounds
+  - Problem: Backoff schedules reach huge counters; need quick sanity proxies.
+  - Model: Use digit sum as a low-cost fingerprint of expected bounds.
+  - Impact: Faster detection of misconfigurations.
+
+- Data sharding keys sanity
+  - Problem: Large numeric keys distributed by decimal transforms.
+  - Model: Digit sums/roots serve as simple uniformity probes.
+  - Impact: Early detection of skew.
+
+- Education: exponent growth intuition
+  - Problem: Teach how digit lengths scale with powers of 2.
+  - Model: Compute 2^n and relate digit count and digit sum trends.
+  - Impact: Stronger number-sense.
+
+- Crypto training labs (toy)
+  - Problem: Summarize big exponents without exposing full values.
+  - Model: Publish digit sums as non-reversible signals.
+  - Impact: Safer classroom exercises.
+
+- Compression dictionary sizing previews
+  - Problem: Anticipate magnitude of synthetic datasets.
+  - Model: Use 2^n magnitudes and digit sums as quick checks.
+  - Impact: Right-size memory ahead of time.
+
+- Ledger rollup fingerprints
+  - Problem: Large integer rollups across shards need quick verifiers.
+  - Model: Compare digit sums after exact sums (no floats).
+  - Impact: Confidence in nightly reconciliations.
+
+- Monitoring guardrails
+  - Problem: Detect implausible exponential outputs.
+  - Model: Alert on digit-sum ranges inconsistent with n.
+  - Impact: Early anomaly detection.
 
 ## Key takeaways
 

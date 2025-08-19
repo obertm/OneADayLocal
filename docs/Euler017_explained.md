@@ -36,12 +36,54 @@ When converting numeric ranges to words and aggregating properties:
 ## Practical examples and business impact
 
 - Invoice/cheque printing and spoken-form conversions
-  - Deterministic, testable conversion logic for financial docs.
-  - Impact: Fewer human errors and better compliance.
+  - Problem: Convert amounts to words reliably (locale-aware).
+  - Model: Deterministic formatter with British "and" rules.
+  - Impact: Fewer errors; better compliance.
 
 - Accessibility/readouts in dashboards
-  - Convert numbers to readable form for narration; count/limit length for UI.
-  - Impact: Improves UX without external dependencies.
+  - Problem: Narrate metrics naturally for screen readers.
+  - Model: Number-to-words with proper punctuation rules; letter-count limits for UI.
+  - Impact: Better UX without heavy dependencies.
+
+- IVR/voice assistants
+  - Problem: Speak numbers clearly to callers.
+  - Model: Number-to-words with locale-specific phrasing.
+  - Impact: Clearer interactions.
+
+- Testing localization packs
+  - Problem: Verify number rendering across languages.
+  - Model: British baseline with letter-count checks as invariants.
+  - Impact: Safer releases.
+
+- Education content generators
+  - Problem: Produce worksheets with numbers written in words.
+  - Model: Programmatic number-to-words across ranges.
+  - Impact: Scalable content creation.
+
+- Compliance length constraints
+  - Problem: Forms cap character counts.
+  - Model: Letter counts post-normalization.
+  - Impact: Filing success.
+
+- Data quality pipelines
+  - Problem: Detect malformed numeric text entries.
+  - Model: Re-render numbers and compare to inputs.
+  - Impact: Cleaner datasets.
+
+- Bank statement reconciliation bots
+  - Problem: Validate written-out amounts vs numeric fields.
+  - Model: Dual rendering and comparison.
+  - Impact: Fewer disputes.
+
+- Document layout engines
+  - Problem: Avoid line breaks in awkward positions.
+  - Model: Pre-compute lengths from normalized words.
+  - Impact: Better typography.
+
+- Internationalization scoping
+  - Problem: Estimate complexity for adding locales.
+  - Model: Tally rule and dictionary size per language from a baseline.
+  - Impact: Realistic roadmaps.
 
 ## Key takeaways
 

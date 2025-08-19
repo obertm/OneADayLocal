@@ -31,12 +31,54 @@ For DAG-like layered structures with local choices:
 ## Practical examples and business impact
 
 - Decision trees and staged investment choices
-  - Choose paths with maximum return under adjacency constraints.
-  - Impact: Simple DP yields optimal policies quickly and explainably.
+  - Problem: Maximize return across sequential choices.
+  - Model: Bottom-up DP on a layered DAG.
+  - Impact: Fast and explainable.
 
 - Routing with limited branching
-  - Aggregating costs along constrained paths in grids or trees.
-  - Impact: Efficient route selection without heavy solvers.
+  - Problem: Aggregate costs along constrained paths.
+  - Model: DP over layers; pick best child at each step.
+  - Impact: Efficient route selection.
+
+- Supply chain stage optimization
+  - Problem: Choose best suppliers at each tier.
+  - Model: Layered DP on cost triangle.
+  - Impact: Lower costs.
+
+- Career path planning (toy)
+  - Problem: Maximize cumulative score across stages.
+  - Model: DP on staged graph.
+  - Impact: Decision support.
+
+- Neural net layer pruning (toy)
+  - Problem: Keep best connections per layer under constraints.
+  - Model: DP-like reduction on layered structure.
+  - Impact: Smaller models.
+
+- Game level upgrades
+  - Problem: Best upgrade path with adjacent choices.
+  - Model: Triangle DP.
+  - Impact: Better gameplay balance.
+
+- Marketing funnel budgeting
+  - Problem: Allocate spend per stage for max conversions.
+  - Model: DP on funnel layers.
+  - Impact: Improved ROI.
+
+- Education adaptive paths
+  - Problem: Choose next modules for highest mastery.
+  - Model: DP over module lattice.
+  - Impact: Personalized learning.
+
+- Cloud cost reservations
+  - Problem: Sequence commitments across terms.
+  - Model: DP on staged options.
+  - Impact: Cost savings.
+
+- Project task sequencing
+  - Problem: Maximize value with local adjacency constraints.
+  - Model: DP across phases.
+  - Impact: Predictable outcomes.
 
 ## Key takeaways
 

@@ -58,16 +58,54 @@ When you need exact results for huge combinatorial quantities (factorials, binom
 ## Practical examples and business impact
 
 - Combinatorial risk and capacity planning
-  - Estimating counts of permutations/combinations (e.g., SKU bundles or routing configurations) grows factorially. BigInteger avoids overflow and keeps audits exact.
-  - Impact: Accurate capacity/risk estimates; no silent truncation.
+  - Problem: Estimate counts of permutations/combinations.
+  - Model: Exact BigInteger computation; derive summary metrics.
+  - Impact: Accurate capacity/risk estimates.
 
 - Data integrity via digit checksums
-  - Pipelines sometimes store decimal digit checks. Pattern here (compute exact value → derive digit sum) mirrors such validations.
-  - Impact: Explainable, language-agnostic validation logic at any scale.
+  - Problem: Validate large integer results succinctly.
+  - Model: Digit sums as quick fingerprints.
+  - Impact: Explainable validation.
 
 - Pricing and billing simulations
-  - Simulating exhaustive combinations of fees/tiers can produce huge totals. Compute exactly, then derive concise metrics like digit sums or mod checks.
-  - Impact: Prevents financial errors and improves compliance.
+  - Problem: Exhaustive tier combinations yield huge totals.
+  - Model: Compute exactly, then derive concise metrics.
+  - Impact: Prevents financial errors.
+
+- Scientific counting problems
+  - Problem: Factorials appear in combinatorics and probability.
+  - Model: BigInteger factorials; digit metrics for sanity.
+  - Impact: Trustworthy results.
+
+- ETL cardinality checks
+  - Problem: Cross-validate large counts via independent paths.
+  - Model: Compare digit sums of expected vs observed totals.
+  - Impact: Early anomaly detection.
+
+- Education demos for big-number growth
+  - Problem: Show how fast n! grows.
+  - Model: Compute n! and inspect digits/digit sums.
+  - Impact: Strong intuition.
+
+- Crypto toy problems
+  - Problem: Work with very large integers safely.
+  - Model: Use BigInteger; avoid 64-bit overflow traps.
+  - Impact: Safe exercises.
+
+- Audit trails for batch math
+  - Problem: Store compact verifiers for large outputs.
+  - Model: Digit sums alongside full values.
+  - Impact: Faster verifications.
+
+- Hardware benchmarking
+  - Problem: Stress-test big-integer arithmetic.
+  - Model: Compute factorials and digit sums.
+  - Impact: Comparable benchmarks.
+
+- Monitoring guardrails
+  - Problem: Detect impossible factorial results from bugs.
+  - Model: Digit-sum ranges/length checks.
+  - Impact: Quicker bug detection.
 
 ## Key takeaways
 
