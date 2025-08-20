@@ -7,14 +7,16 @@ public final class Euler091 {
         if (args != null && args.length > 0) {
             try { N = Integer.parseInt(args[0]); } catch (Exception ignore) {}
         }
-        long total = (long) N * N; // right angle at origin using (x,0) & (0,y)
-        long sum = 0;
+    // Count right triangles with vertices at (0,0), (x1,y1), (x2,y2), 0<=x,y<=N.
+    // Correct count: N*N (axis-aligned with right angle at origin) + 2 * sum_{x=1..N} sum_{y=1..N} gcd(x,y)
+    long total = 1L * N * N;
+    long sum = 0;
         for (int x = 1; x <= N; x++) {
             for (int y = 1; y <= N; y++) {
-                sum += gcd(x, y);
+        sum += gcd(x, y);
             }
         }
-        total += 2 * sum;
+    total += 2 * sum;
         System.out.println(total);
     }
 

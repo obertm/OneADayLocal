@@ -12,30 +12,30 @@ public final class Euler080 {
             java.math.BigInteger N = bi.multiply(scale);
             java.math.BigInteger s = isqrt(N);
             String digits = s.toString();
-            // Sum all digits of s (integer part + 100 decimal digits)
-            int sum = 0; for (int i = 0; i < digits.length(); i++) sum += digits.charAt(i) - '0';
+            // Sum only the first 100 decimal digits: the last 100 digits of s
+            int sum = 0;
+            int L = digits.length();
+            for (int i = Math.max(0, L - 100); i < L; i++) sum += digits.charAt(i) - '0';
             total += sum;
         }
         System.out.println(total);
     }
 
-    // Integer square root for BigInteger: floor(sqrt(x))
+    // Integer square root for BigInteger: floor(sqrt(x)) via binary search (robust)
     private static java.math.BigInteger isqrt(java.math.BigInteger x) {
-        java.math.BigInteger zero = java.math.BigInteger.ZERO;
+        if (x.signum() <= 0) return java.math.BigInteger.ZERO;
         java.math.BigInteger one = java.math.BigInteger.ONE;
-        java.math.BigInteger two = java.math.BigInteger.valueOf(2);
-        if (x.signum() <= 0) return zero;
-        // Initial guess: 1 << ((bitLength+1)/2)
         int bl = x.bitLength();
-        java.math.BigInteger g = one.shiftLeft((bl + 1) / 2);
-        while (true) {
-            java.math.BigInteger ng = g.add(x.divide(g)).divide(two);
-            if (ng.equals(g) || ng.equals(g.subtract(one))) {
-                // Ensure ng^2 <= x
-                while (ng.multiply(ng).compareTo(x) > 0) ng = ng.subtract(one);
-                return ng;
+        java.math.BigInteger high = one.shiftLeft((bl + 1) / 2 + 1); // safe upper bound
+        java.math.BigInteger low = java.math.BigInteger.ZERO;
+        while (high.compareTo(low) > 0) {
+            java.math.BigInteger mid = low.add(high).add(one).shiftRight(1);
+            if (mid.multiply(mid).compareTo(x) <= 0) {
+                low = mid;
+            } else {
+                high = mid.subtract(one);
             }
-            g = ng;
         }
+        return low;
     }
 }
