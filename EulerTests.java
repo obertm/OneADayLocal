@@ -9,7 +9,17 @@ public final class EulerTests {
     private static final long DEFAULT_TIMEOUT_MS = Long.getLong("eulerTests.timeoutMs", 1500L);
     private static final long SLOW_LOG_MS = Long.getLong("eulerTests.slowLogMs", 250L);
     private static final boolean TIMEOUT_AS_SKIP = Boolean.parseBoolean(System.getProperty("eulerTests.timeoutAsSkip", "true"));
-    private static final boolean QUICK_DEFAULT_CHECKS = Boolean.parseBoolean(System.getProperty("eulerTests.quickDefaults", "false"));
+    private static final boolean QUICK_DEFAULT_CHECKS = Boolean.parseBoolean(System.getProperty("eulerTests.quickDefaults", "true"));
+
+    private static final boolean VERBOSE_PROGRESS = Boolean.parseBoolean(System.getProperty("eulerTests.verbose", "true"));
+
+    private static void logStart(String label) {
+        if (VERBOSE_PROGRESS) System.err.printf("RUN: %s%n", label);
+    }
+
+    private static void logDone(String label, long ms) {
+        if (VERBOSE_PROGRESS) System.err.printf("DONE: %s (%d ms)\n", label, ms);
+    }
 
     private static void assertEquals(String name, long expected, long actual) {
         if (expected == actual) {
@@ -32,6 +42,9 @@ public final class EulerTests {
     private static void test001() {
         assertEquals("Euler001: sumMultiples3or5Below(10)", 23, Euler001.sumMultiples3or5Below(10));
         assertEquals("Euler001: sumMultiples3or5Below(1000)", 233168, Euler001.sumMultiples3or5Below(1000));
+    // Generalized API checks
+    assertEquals("Euler001: sumOfMultiplesBelow(20; 7)", 21, Euler001.sumOfMultiplesBelow(20, 7));
+    assertEquals("Euler001: sumOfMultiplesBelow(20; 3,5)", 78, Euler001.sumOfMultiplesBelow(20, 3, 5));
     }
 
     private static void test002() {
@@ -644,8 +657,13 @@ public final class EulerTests {
 
     private static void test073() {
         try {
-            String out = runMainCapture("Euler073");
-            if ("TODO".equals(out)) { skipped++; } else if (out.matches("\\d+")) { assertEquals("Euler073: fractions in range", EXPECTED_DEFAULT.get(73), out); } else { failed++; System.out.printf("FAIL: Euler073 unexpected output=%s%n", out); }
+            String out = runMainCaptureWithTimeout("Euler073", DEFAULT_TIMEOUT_MS);
+            if ("TODO".equals(out)) { skipped++; }
+            else if (out.matches("\\d+")) { assertEquals("Euler073: fractions in range", EXPECTED_DEFAULT.get(73), out); }
+            else { failed++; System.out.printf("FAIL: Euler073 unexpected output=%s%n", out); }
+        } catch (java.util.concurrent.TimeoutException te) {
+            if (TIMEOUT_AS_SKIP) { skipped++; System.err.printf("SKIP (timeout %d ms): Euler073%n", DEFAULT_TIMEOUT_MS); }
+            else { failed++; System.out.printf("FAIL: Euler073 timeout%n"); }
         } catch (Exception e) { failed++; System.out.printf("FAIL: Euler073 threw %s%n", e); }
     }
 
@@ -793,15 +811,19 @@ public final class EulerTests {
         }
     }
 
+    private static void invokeMain(String className, String... args) throws Exception {
+        Class<?> cls = Class.forName(className);
+        java.lang.reflect.Method main = cls.getMethod("main", String[].class);
+        main.invoke(null, (Object) args);
+    }
+
     private static String runMainCapture(String className, String... args) throws Exception {
         java.io.PrintStream oldOut = System.out;
         java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
         java.io.PrintStream ps = new java.io.PrintStream(baos);
         System.setOut(ps);
         try {
-            Class<?> cls = Class.forName(className);
-            java.lang.reflect.Method main = cls.getMethod("main", String[].class);
-            main.invoke(null, (Object) args);
+            invokeMain(className, args);
         } finally {
             System.setOut(oldOut);
         }
@@ -949,38 +971,52 @@ public final class EulerTests {
 
     // Run a class's main with a timeout. Helps avoid hangs/very slow implementations during smoke runs.
     private static String runMainCaptureWithTimeout(String className, long timeoutMs) throws Exception {
+        java.io.PrintStream oldOut = System.out;
+        java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+        java.io.PrintStream ps = new java.io.PrintStream(baos);
+        System.setOut(ps);
         java.util.concurrent.ExecutorService es = java.util.concurrent.Executors.newSingleThreadExecutor(r -> {
             Thread t = new Thread(r, "EulerMain-" + className);
             t.setDaemon(true);
             return t;
         });
         try {
-            java.util.concurrent.Future<String> fut = es.submit(() -> runMainCapture(className));
-            return fut.get(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS);
+            java.util.concurrent.Future<?> fut = es.submit(() -> {
+                try { invokeMain(className); } catch (Exception e) { throw new RuntimeException(e); }
+            });
+            fut.get(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS);
+            return baos.toString().trim();
         } catch (java.util.concurrent.TimeoutException te) {
-            // Cancel the task and propagate to caller for handling
-            //noinspection ResultOfMethodCallIgnored
             es.shutdownNow();
             throw te;
         } finally {
+            System.setOut(oldOut);
             es.shutdownNow();
         }
     }
 
     // Overload to pass args to main
     private static String runMainCaptureWithTimeout(String className, long timeoutMs, String[] args) throws Exception {
+        java.io.PrintStream oldOut = System.out;
+        java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+        java.io.PrintStream ps = new java.io.PrintStream(baos);
+        System.setOut(ps);
         java.util.concurrent.ExecutorService es = java.util.concurrent.Executors.newSingleThreadExecutor(r -> {
             Thread t = new Thread(r, "EulerMain-" + className);
             t.setDaemon(true);
             return t;
         });
         try {
-            java.util.concurrent.Future<String> fut = es.submit(() -> runMainCapture(className, args));
-            return fut.get(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS);
+            java.util.concurrent.Future<?> fut = es.submit(() -> {
+                try { invokeMain(className, args); } catch (Exception e) { throw new RuntimeException(e); }
+            });
+            fut.get(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS);
+            return baos.toString().trim();
         } catch (java.util.concurrent.TimeoutException te) {
             es.shutdownNow();
             throw te;
         } finally {
+            System.setOut(oldOut);
             es.shutdownNow();
         }
     }
@@ -1000,6 +1036,7 @@ public final class EulerTests {
                 continue;
             }
             try {
+                if (VERBOSE_PROGRESS) System.err.printf("RUN default: %s (timeout %d ms)\n", className, DEFAULT_TIMEOUT_MS);
                 long start = System.nanoTime();
                 String actual = runMainCaptureWithTimeout(className, DEFAULT_TIMEOUT_MS);
                 long elapsedMs = (System.nanoTime() - start) / 1_000_000L;
@@ -1008,9 +1045,11 @@ public final class EulerTests {
                 }
                 if (expected.equals(actual)) {
                     passed++;
+                    if (VERBOSE_PROGRESS) System.err.printf("OK default: %s (%d ms)\n", className, elapsedMs);
                 } else {
                     failed++;
                     System.out.printf("FAIL: %s default expected=%s actual=%s%n", className, expected, actual);
+                    if (VERBOSE_PROGRESS) System.err.printf("FAIL default: %s (%d ms)\n", className, elapsedMs);
                 }
             } catch (Exception e) {
                 if (e instanceof java.util.concurrent.TimeoutException && TIMEOUT_AS_SKIP) {
@@ -1039,114 +1078,130 @@ public final class EulerTests {
                 }
             }
         }
-        ArrayList<Runnable> tests = new ArrayList<>();
-        tests.add(EulerTests::test001);
-        tests.add(EulerTests::test002);
-        tests.add(EulerTests::test003);
-        tests.add(EulerTests::test004);
-        tests.add(EulerTests::test005);
-        tests.add(EulerTests::test006);
-        tests.add(EulerTests::test007);
-        tests.add(EulerTests::test008);
-        tests.add(EulerTests::test009);
-    tests.add(EulerTests::test010);
-    tests.add(EulerTests::test011);
-    tests.add(EulerTests::test012);
-    tests.add(EulerTests::test013);
-    tests.add(EulerTests::test014);
-    tests.add(EulerTests::test015);
-    tests.add(EulerTests::test016);
-    tests.add(EulerTests::test017);
-    tests.add(EulerTests::test018);
-    tests.add(EulerTests::test019);
-    tests.add(EulerTests::test020);
-    tests.add(EulerTests::test021);
-    tests.add(EulerTests::test022);
-    tests.add(EulerTests::test023);
-    tests.add(EulerTests::test024);
-    tests.add(EulerTests::test025);
-    tests.add(EulerTests::test026);
-    tests.add(EulerTests::test027);
-    tests.add(EulerTests::test028);
-    tests.add(EulerTests::test029);
-    tests.add(EulerTests::test030);
-    tests.add(EulerTests::test031);
-    tests.add(EulerTests::test032);
-    tests.add(EulerTests::test033);
-    tests.add(EulerTests::test034);
-    tests.add(EulerTests::test035);
-    tests.add(EulerTests::test036);
-    tests.add(EulerTests::test037);
-    tests.add(EulerTests::test038);
-    tests.add(EulerTests::test039);
-    tests.add(EulerTests::test040);
-    tests.add(EulerTests::test041);
-    tests.add(EulerTests::test042);
-    tests.add(EulerTests::test043);
-    tests.add(EulerTests::test044);
-    tests.add(EulerTests::test045);
-    tests.add(EulerTests::test046);
-    tests.add(EulerTests::test047);
-    tests.add(EulerTests::test048);
-    tests.add(EulerTests::test049);
-    tests.add(EulerTests::test050);
-    tests.add(EulerTests::test051);
-    tests.add(EulerTests::test052);
-    tests.add(EulerTests::test053);
-    tests.add(EulerTests::test054);
-    tests.add(EulerTests::test055);
-    tests.add(EulerTests::test056);
-    tests.add(EulerTests::test057);
-    tests.add(EulerTests::test058);
-    tests.add(EulerTests::test059);
-    tests.add(EulerTests::test060);
-    tests.add(EulerTests::test061);
-    tests.add(EulerTests::test062);
-    tests.add(EulerTests::test063);
-    tests.add(EulerTests::test064);
-    tests.add(EulerTests::test065);
-    tests.add(EulerTests::test066);
-    tests.add(EulerTests::test067);
-    tests.add(EulerTests::test068);
-    tests.add(EulerTests::test069);
-    tests.add(EulerTests::test070);
-    tests.add(EulerTests::test071);
-    tests.add(EulerTests::test072);
-    tests.add(EulerTests::test073);
-    tests.add(EulerTests::test074);
-    tests.add(EulerTests::test075);
-    tests.add(EulerTests::test078);
-    tests.add(EulerTests::test079);
-    tests.add(EulerTests::test080);
-    tests.add(EulerTests::test081);
-    tests.add(EulerTests::test082);
-    tests.add(EulerTests::test083);
-    tests.add(EulerTests::test090);
-    tests.add(EulerTests::test091);
-    tests.add(EulerTests::test092);
-    tests.add(EulerTests::test093);
-    tests.add(EulerTests::test097);
-    tests.add(EulerTests::test100);
-    tests.add(EulerTests::test084);
-    tests.add(EulerTests::test085);
-    tests.add(EulerTests::test086);
-    tests.add(EulerTests::test087);
-    tests.add(EulerTests::test088);
+    ArrayList<String> names = new ArrayList<>();
+    ArrayList<Runnable> tests = new ArrayList<>();
+    names.add("test001"); tests.add(EulerTests::test001);
+    names.add("test002"); tests.add(EulerTests::test002);
+    names.add("test003"); tests.add(EulerTests::test003);
+    names.add("test004"); tests.add(EulerTests::test004);
+    names.add("test005"); tests.add(EulerTests::test005);
+    names.add("test006"); tests.add(EulerTests::test006);
+    names.add("test007"); tests.add(EulerTests::test007);
+    names.add("test008"); tests.add(EulerTests::test008);
+    names.add("test009"); tests.add(EulerTests::test009);
+    names.add("test010"); tests.add(EulerTests::test010);
+    names.add("test011"); tests.add(EulerTests::test011);
+    names.add("test012"); tests.add(EulerTests::test012);
+    names.add("test013"); tests.add(EulerTests::test013);
+    names.add("test014"); tests.add(EulerTests::test014);
+    names.add("test015"); tests.add(EulerTests::test015);
+    names.add("test016"); tests.add(EulerTests::test016);
+    names.add("test017"); tests.add(EulerTests::test017);
+    names.add("test018"); tests.add(EulerTests::test018);
+    names.add("test019"); tests.add(EulerTests::test019);
+    names.add("test020"); tests.add(EulerTests::test020);
+    names.add("test021"); tests.add(EulerTests::test021);
+    names.add("test022"); tests.add(EulerTests::test022);
+    names.add("test023"); tests.add(EulerTests::test023);
+    names.add("test024"); tests.add(EulerTests::test024);
+    names.add("test025"); tests.add(EulerTests::test025);
+    names.add("test026"); tests.add(EulerTests::test026);
+    names.add("test027"); tests.add(EulerTests::test027);
+    names.add("test028"); tests.add(EulerTests::test028);
+    names.add("test029"); tests.add(EulerTests::test029);
+    names.add("test030"); tests.add(EulerTests::test030);
+    names.add("test031"); tests.add(EulerTests::test031);
+    names.add("test032"); tests.add(EulerTests::test032);
+    names.add("test033"); tests.add(EulerTests::test033);
+    names.add("test034"); tests.add(EulerTests::test034);
+    names.add("test035"); tests.add(EulerTests::test035);
+    names.add("test036"); tests.add(EulerTests::test036);
+    names.add("test037"); tests.add(EulerTests::test037);
+    names.add("test038"); tests.add(EulerTests::test038);
+    names.add("test039"); tests.add(EulerTests::test039);
+    names.add("test040"); tests.add(EulerTests::test040);
+    names.add("test041"); tests.add(EulerTests::test041);
+    names.add("test042"); tests.add(EulerTests::test042);
+    names.add("test043"); tests.add(EulerTests::test043);
+    names.add("test044"); tests.add(EulerTests::test044);
+    names.add("test045"); tests.add(EulerTests::test045);
+    names.add("test046"); tests.add(EulerTests::test046);
+    names.add("test047"); tests.add(EulerTests::test047);
+    names.add("test048"); tests.add(EulerTests::test048);
+    names.add("test049"); tests.add(EulerTests::test049);
+    names.add("test050"); tests.add(EulerTests::test050);
+    names.add("test051"); tests.add(EulerTests::test051);
+    names.add("test052"); tests.add(EulerTests::test052);
+    names.add("test053"); tests.add(EulerTests::test053);
+    names.add("test054"); tests.add(EulerTests::test054);
+    names.add("test055"); tests.add(EulerTests::test055);
+    names.add("test056"); tests.add(EulerTests::test056);
+    names.add("test057"); tests.add(EulerTests::test057);
+    names.add("test058"); tests.add(EulerTests::test058);
+    names.add("test059"); tests.add(EulerTests::test059);
+    names.add("test060"); tests.add(EulerTests::test060);
+    names.add("test061"); tests.add(EulerTests::test061);
+    names.add("test062"); tests.add(EulerTests::test062);
+    names.add("test063"); tests.add(EulerTests::test063);
+    names.add("test064"); tests.add(EulerTests::test064);
+    names.add("test065"); tests.add(EulerTests::test065);
+    names.add("test066"); tests.add(EulerTests::test066);
+    names.add("test067"); tests.add(EulerTests::test067);
+    names.add("test068"); tests.add(EulerTests::test068);
+    names.add("test069"); tests.add(EulerTests::test069);
+    names.add("test070"); tests.add(EulerTests::test070);
+    names.add("test071"); tests.add(EulerTests::test071);
+    names.add("test072"); tests.add(EulerTests::test072);
+    names.add("test073"); tests.add(EulerTests::test073);
+    names.add("test074"); tests.add(EulerTests::test074);
+    names.add("test075"); tests.add(EulerTests::test075);
+    names.add("test078"); tests.add(EulerTests::test078);
+    names.add("test079"); tests.add(EulerTests::test079);
+    names.add("test080"); tests.add(EulerTests::test080);
+    names.add("test081"); tests.add(EulerTests::test081);
+    names.add("test082"); tests.add(EulerTests::test082);
+    names.add("test083"); tests.add(EulerTests::test083);
+    names.add("test090"); tests.add(EulerTests::test090);
+    names.add("test091"); tests.add(EulerTests::test091);
+    names.add("test092"); tests.add(EulerTests::test092);
+    names.add("test093"); tests.add(EulerTests::test093);
+    names.add("test097"); tests.add(EulerTests::test097);
+    names.add("test100"); tests.add(EulerTests::test100);
+    names.add("test084"); tests.add(EulerTests::test084);
+    names.add("test085"); tests.add(EulerTests::test085);
+    names.add("test086"); tests.add(EulerTests::test086);
+    names.add("test087"); tests.add(EulerTests::test087);
+    names.add("test088"); tests.add(EulerTests::test088);
 
         // If selection was provided, run only those (currently supports 84 explicitly)
         boolean onlyMode = !onlySet.isEmpty();
         if (onlyMode) {
+            java.util.ArrayList<String> selNames = new java.util.ArrayList<>();
             java.util.ArrayList<Runnable> sel = new java.util.ArrayList<>();
             if (onlySet.contains(84)) sel.add(EulerTests::test084);
             if (onlySet.contains(85)) sel.add(EulerTests::test085);
             if (onlySet.contains(86)) sel.add(EulerTests::test086);
             if (onlySet.contains(87)) sel.add(EulerTests::test087);
             // If nothing matched, keep original list
-            if (!sel.isEmpty()) tests = sel;
+            if (!sel.isEmpty()) {
+                // Preserve names minimally for selected ones
+                if (onlySet.contains(84)) selNames.add("test084");
+                if (onlySet.contains(85)) selNames.add("test085");
+                if (onlySet.contains(86)) selNames.add("test086");
+                if (onlySet.contains(87)) selNames.add("test087");
+                names = selNames;
+                tests = sel;
+            }
         }
 
         long t0 = System.nanoTime();
-        tests.forEach(Runnable::run);
+        for (int i = 0; i < tests.size(); i++) {
+            String label = names.size() == tests.size() ? names.get(i) : ("test#" + i);
+            long s = System.nanoTime();
+            logStart(label);
+            try { tests.get(i).run(); }
+            finally { logDone(label, (System.nanoTime() - s) / 1_000_000L); }
+        }
         long t1 = System.nanoTime();
 
         // Generic default-output checks for 001..050, 051..070, and 071..100

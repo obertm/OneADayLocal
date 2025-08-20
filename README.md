@@ -55,6 +55,39 @@ java EulerRunner run 3      # 6857
 java EulerRunner run 4      # 906609
 ```
 
+### Euler001 generalized usage
+- By default, Euler001 computes the sum of multiples of 3 or 5 below 1000.
+- You can pass a custom limit and any number of divisors (>=1):
+```bash
+# Default behavior (limit=1000, divisors 3 and 5)
+java EulerRunner run 1
+
+# Custom limit only (still divisors 3 and 5)
+java EulerRunner run 1 200
+
+# Custom limit and custom divisors (e.g., 7 and 11)
+java EulerRunner run 1 50 7 11   # sum of multiples of 7 or 11 below 50
+
+# Custom divisors reproducing Euler spec
+java EulerRunner run 1 1000 3 5
+```
+
+## Tests
+
+There is a lightweight test harness `EulerTests` with timeouts to avoid stalls.
+
+- Quick mode (default): runs core tests and a subset of default-output checks.
+- Full mode: runs all smoke tests plus default-output checks for 001–100.
+
+Examples:
+```bash
+javac EulerTests.java
+java EulerTests                 # quick mode (default)
+java -DeulerTests.quickDefaults=false EulerTests   # full mode
+java -DeulerTests.timeoutMs=2000 EulerTests        # adjust timeout
+java EulerTests 84,85           # run only selected tests
+```
+
 ## Docs index
 - Problem walkthroughs with approach, rationale, and real-world applications:
   - [Euler001 – Sum of multiples of 3 or 5](docs/Euler001_explained.md)
