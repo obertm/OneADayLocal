@@ -8,6 +8,10 @@ Given an integer n, return S(n) = sum of all primes p with p < n. For example, S
 
 ## Step-by-step reasoning
 
+## Approach
+
+Use a boolean sieve of Eratosthenes marking odd multiples starting from p^2, accumulating the prime sum on the fly; skip even numbers to halve work.
+
 1) Inputs/outputs
 - Input: n (n ≥ 0). If n ≤ 2, the sum is 0.
 - Output: 64-bit sum of primes below n (use long).
@@ -25,6 +29,12 @@ Given an integer n, return S(n) = sum of all primes p with p < n. For example, S
 
 4) Complexity
 - Time ~ O(n log log n); space O(n). For n up to 2,000,000, this is trivial in Java.
+
+## Complexity
+
+- Time: O(n log log n) classic sieve.
+- Space: O(n) bits/booleans (could compress with bitset/segmentation if needed).
+- Summation integrated to avoid second pass.
 
 5) Edge cases and correctness
 - n ≤ 2 → 0.
@@ -94,7 +104,7 @@ When you need to aggregate over primes below a bound:
   - Model: Mark‑and‑sweep style sieve pass.
   - Impact: Healthier datasets.
 
-## Key takeaways
+## Key Takeaways
 
 - Use sieves for prime generation; mark from p*p and skip even steps.
 - Keep sums in long; guard p*p from overflow with long temporaries.

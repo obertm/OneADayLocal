@@ -6,6 +6,10 @@ Find all positive integers that can be written as the sum of the p-th powers of 
 
 ## Step-by-step reasoning
 
+## Approach
+
+Derive an upper bound via d·9^p; precompute digit p-th powers; iterate numbers up to bound summing digit powers and compare to number; accumulate matches.
+
 1) Upper bound
 - For a d-digit number, the maximum sum of p-th powers is d·9^p. Find the smallest d where d·9^p < 10^{d-1}; search up to d·9^p.
 
@@ -15,6 +19,20 @@ Find all positive integers that can be written as the sum of the p-th powers of 
 
 3) Complexity
 - O(LIMIT · digits(n)) with tiny constants; extremely fast for p=5.
+
+## Complexity
+
+- Time: O(B · log10 B) where B is derived bound; constant factors minimal.
+- Space: O(1) beyond small power cache.
+
+## Edge Cases
+
+- p=1: Every number equals sum of first-power digits; problem definition usually excludes trivial p; handle gracefully.
+- Single-digit numbers: Exclude 0..9 as per problem statement (trivial cases) when summing results.
+- Bound miscalc: Ensure the derived LIMIT truly covers all solutions (verify increasing d until inequality fails).
+- Overflow: pow[i] must fit in int/long; for large p consider BigInteger or early bound checks.
+- Performance: For larger p values, LIMIT can grow; reassess feasibility before brute force.
+- Negative p or zero p: Invalid/exotic; document or reject.
 
 ## Reusable template (for digit-function fixed points)
 
@@ -27,7 +45,7 @@ Find all positive integers that can be written as the sum of the p-th powers of 
 - Check-digit and scoring systems that aggregate digit-based contributions.
 - Efficiently bounding search spaces by reasoning with digit maxima minimizes compute costs.
 
-## Key takeaways
+## Key Takeaways
 
 - Tight bounds + per-digit caching turn an intractable-looking search into a short loop.
 

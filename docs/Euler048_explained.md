@@ -2,10 +2,18 @@
 
 Compute the last 10 digits of Σ_{i=1..N} i^i with N=1000.
 
-## Method
+## Approach
 
 - Use modular exponentiation with modulus M=10^10; compute powmod(i, i, M) and sum mod M.
 - Be careful with overflow; use long with mod or BigInteger.modPow.
+
+## Edge Cases
+
+- Modulus power: 10^10 fits in long (10000000000) but intermediate multiplications must mod early to avoid overflow (use long, reduce after each multiply).
+- Leading zeros: Result may have fewer than 10 digits; pad with leading zeros for canonical form.
+- Range flexibility: If generalized to larger exponents or modulus > 2^63, need BigInteger; here long is safe.
+- Performance: Loop to 1000 trivial, but for larger N consider exponentiation caching or binary exponent reuse.
+- Negative / zero indices: Not present; sequence starts at 1; handle generic input validation if generalized.
 
 ## Complexity
 - O(N log i) exponentiation steps; trivial for N=1000.
@@ -23,7 +31,7 @@ Compute the last 10 digits of Σ_{i=1..N} i^i with N=1000.
 - Simulation: explore wrap-around behavior in modular arithmetic with growing exponents.
 - Education: teach fast powmod and modular summation patterns.
 
-## Takeaways
+## Key Takeaways
 - Apply mod 10^10 throughout; sum modulo M to keep numbers small.
 
 

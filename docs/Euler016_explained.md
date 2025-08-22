@@ -8,6 +8,10 @@ Given n ≥ 0, compute S(n) = sum of decimal digits of 2^n.
 
 ## Step-by-step reasoning
 
+## Approach
+
+Compute 2^n exactly with BigInteger (shiftLeft) then sum its decimal digits via string traversal (simple) or repeated divide/mod 10 (memory-light). Choose based on n size.
+
 1) Exact power computation
 - Use BigInteger: `BigInteger.ONE.shiftLeft(n)` or `BigInteger.valueOf(2).pow(n)` to compute 2^n exactly.
 
@@ -17,12 +21,24 @@ Given n ≥ 0, compute S(n) = sum of decimal digits of 2^n.
 3) Complexity
 - O(d) where d ≈ n·log10(2) is the number of digits; memory O(d) if using strings.
 
-4) Edge cases
-- n=0 → 1 → sum=1.
-- Very large n → prefer divideAndRemainder to reduce peak memory.
+## Complexity
 
-5) Testing mindset
-- Small checks: n=0→1; n=15→32768→sum=3+2+7+6+8=26; Euler asks n=1000.
+- Time: O(d) digit generation + O(d) digit summation → O(d) total.
+- Space: O(d) for string approach; O(1) extra when using divide-and-remainder extraction.
+
+## Edge Cases
+
+- n = 0: 2^0 = 1 → digit sum 1.
+- Very large n: String conversion allocates O(d) memory; switch to divideAndRemainder loop for memory-sensitive contexts.
+- Negative n: Not defined for integer power in this context; reject early.
+- Performance: shiftLeft is faster than pow for base 2; misuse (e.g., pow(2).pow(n)) wastes cycles.
+- Digit summation overflow: Sum fits in 32-bit int easily even for huge n (worst-case digit sum 9·d), but use long if paranoid.
+
+## Testing mindset
+- n=0 and n=1 basic cases.
+- Known example: n=15 → 32768 → sum 26.
+- Large case: n=1000 matches published Euler result 1366.
+
 
 ## Reusable template (for similar problems)
 
@@ -82,7 +98,7 @@ When summing digits of huge exact integers:
   - Model: Alert on digit-sum ranges inconsistent with n.
   - Impact: Early anomaly detection.
 
-## Key takeaways
+## Key Takeaways
 
 - BigInteger keeps results exact; digit sum is linear in number length.
 - Choose digit extraction method based on memory constraints.

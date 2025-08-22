@@ -2,10 +2,17 @@
 
 In the first 1000 expansions of √2, count fractions where the numerator has more digits than the denominator.
 
-## Recurrence
+## Approach
 
 - Continued fraction expansion of √2 has convergents: starting with (n,d)=(3,2) then n,d ← (n+2d, n+d).
 - Count when digits(n) > digits(d) over 1000 steps.
+
+## Edge Cases
+- Initialization: Confirm first expansion counted corresponds to (3/2); off-by-one start shifts counts.
+- Digit comparison: String length fine; for large generalizations consider logs to avoid converting huge numbers.
+- Overflow: BigInteger avoids overflow; if using long, would overflow early.
+- Loop bounds: Exactly 1000 expansions; ensure inclusive/exclusive math correct.
+- Reuse temp vars: Must store old numerator when updating denominator; ordering critical.
 
 ## Complexity
 - O(1000) BigInteger additions.
@@ -23,7 +30,7 @@ In the first 1000 expansions of √2, count fractions where the numerator has mo
 - Embedded: implement recurrence-based rational approximators for resource-limited systems.
 - Simulation: model error decay in convergent expansions and digit-length crossovers.
 
-## Takeaways
+## Key Takeaways
 - Use the closed recurrence for √2; count digit-length comparisons.
 
 

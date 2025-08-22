@@ -8,6 +8,15 @@ For perimeters p ≤ P, find p with the most integer right-triangle solutions.
 - For each primitive perimeter p0=2m(m+n) ≤ P, increment counts for multiples k·p0.
 - Track p with max count.
 
+## Edge Cases
+
+- P below smallest perimeter (12): No solutions; result should be 0 or none; define contract.
+- Duplicate triples: Counting multiples of primitive triples ensures uniqueness; naive a<b<c loops must avoid duplicate (a,b,c) ordering.
+- Overflow: For large P, m^2 + n^2 may exceed int; use long in calculations.
+- Coprime check: Ensure gcd(m,n)=1 and not both odd; skipping either inflates counts with non-primitive duplicates.
+- Performance: Brute-force a,b,c O(P^2) slow for big P; Euclid’s formula vital above ~10^4.
+- Tie handling: If multiple perimeters share max count, decide whether to return smallest; Euler instance unique.
+
 ## Complexity
 - O(P log P)ish; iterating m up to √(P/2).
 
@@ -24,7 +33,7 @@ For perimeters p ≤ P, find p with the most integer right-triangle solutions.
 - Simulation design: choose perimeters with rich solution sets to sample diverse triangle shapes under fixed budgets.
 - Operations research: demonstrate how parameterization collapses search spaces in combinatorial geometry problems.
 
-## Takeaways
+## Key Takeaways
 - Generate perimeters from Euclid’s formula and count multiples; pick the max.
 
 

@@ -7,6 +7,13 @@ Find the least number that can be written as a sum of primes in over 5000 ways.
 - Generate primes up to a growing limit; use coin-change DP with primes as coins to count ways for each target n.
 - Increase n and recompute (or extend) until ways[n] > 5000; return n.
 
+## Edge Cases
+- Prime inclusion: 1 is not a prime; ensure coin list starts at 2.
+- Dynamic prime list: When n increases, add new primes only once; avoid rebuilding from scratch for efficiency.
+- Overflow: Ways counts remain small (<5000) around solution; for larger thresholds use bigger types.
+- Order: Same coin-change ordering constraint: outer loop primes, inner ascending sums to avoid permutations.
+- Termination: Strictly > 5000 (not ≥); confirm condition matches problem statement.
+
 ## Complexity
 - O(n × #primes) per sweep; n is small for threshold 5000.
 
@@ -14,7 +21,7 @@ Find the least number that can be written as a sum of primes in over 5000 ways.
 - Ways to compose a value from prime building blocks.
   - Impact: DP gives exact counts quickly.
 
-## Takeaways
+## Key Takeaways
 - Coin-change DP over primes; grow n until crossing the threshold.
 
 

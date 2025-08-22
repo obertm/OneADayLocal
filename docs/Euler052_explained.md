@@ -2,10 +2,17 @@
 
 Find the smallest x such that {2x,3x,4x,5x,6x} are all permutations of x’s digits.
 
-## Method
+## Approach
 
 - Iterate x, checking that digit-count signature of kx matches x for k=2..6.
 - Early bounds: number of digits must remain constant across 6x, so x must be at least 10^{d-1} and less than 10^d/6.
+
+## Edge Cases
+- Digit length change: When 6x crosses a power of 10, further x with that starting digit count invalid; jump to next length.
+- Leading zeros: Not possible in integer multiplication; ignore.
+- Signature collisions: Use fixed-size int[10] or sorted string; ensure resets between k iterations to avoid carryover.
+- Overflow: For larger generalized multiples, watch beyond int range; here within int safe.
+- Performance: Simple brute force fine; if generalized, pruning by digit length difference mandatory.
 
 ## Complexity
 - O(candidates × digits), very fast with signature comparison.
@@ -23,7 +30,7 @@ Find the smallest x such that {2x,3x,4x,5x,6x} are all permutations of x’s dig
 - Distributed systems: sanity-check that scaling factors don’t break formatting constraints across services.
 - Simulation: explore parameter spaces where scaling preserves structure (digit multiset) and measure frequency.
 
-## Takeaways
+## Key Takeaways
 - Constrain by digit-length; use frequency arrays (10-sized) for equality checks.
 
 

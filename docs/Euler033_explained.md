@@ -4,6 +4,10 @@
 
 Find the four non-trivial two-digit fractions that incorrectly “cancel” a common digit yet remain equal (excluding trivial cases like 30/50). Multiply them together and reduce to lowest terms; report the denominator.
 
+## Approach
+
+Enumerate two‑digit numerator/denominator pairs (excluding trivial zeros), generate the four possible single-digit cancellation variants where a shared digit is removed, and test equality via cross-multiplication. Multiply qualifying fractions and reduce by GCD.
+
 ## Step-by-step reasoning
 
 1) Enumerate candidates
@@ -14,6 +18,15 @@ Find the four non-trivial two-digit fractions that incorrectly “cancel” a co
 
 3) Aggregate and reduce
 - Multiply the found fractions’ numerators and denominators; reduce the product by GCD to lowest terms.
+
+## Edge Cases
+
+- Trivial zeros: Exclude cases where either number ends with 0 (true arithmetic cancellation scenario, not the contrived ones sought).
+- Duplicate detection: Ensure each valid quirky fraction counted once; avoid symmetrical processing producing duplicates.
+- Division by zero: After cancellation, guard against n' or d' becoming zero.
+- Equality precision: Use cross-multiplication (n*d' == n'*d) to avoid double rounding; doubles can misclassify edge cases.
+- GCD overflow: For multiplication of multiple fractions, numerators/denominators fit in int; if generalized, promote to long before multiply.
+- Cancel same position twice: Only remove one digit per operand; avoid over-cancellation logic.
 
 ## Reusable template (for enumerating quirky equivalences)
 
@@ -34,7 +47,11 @@ Find the four non-trivial two-digit fractions that incorrectly “cancel” a co
 - Scientific reproducibility: simulate numeric reductions where partial cancellation appears valid but breaks under exact arithmetic.
 - Code reviews: checklist item to avoid shortcut simplifications; add unit tests for the four non-trivial cases as canaries.
 
-## Key takeaways
+## Complexity
+
+Time: O(90²) ≈ O(1) for enumerating candidate fractions. Space: O(1).
+
+## Key Takeaways
 
 - Enumerate carefully, avoid trivial zeros, compare exactly, and reduce at the end.
 

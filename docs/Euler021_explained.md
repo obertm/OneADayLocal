@@ -8,6 +8,10 @@ Given N, compute the sum of all a < N that are part of an amicable pair (a,b) wi
 
 ## Step-by-step reasoning
 
+## Approach
+
+Precompute d(x) (sum of proper divisors) for all x < N, then scan each a: b=d(a); if b≠a, b<N, and d(b)=a, add a. Use multiplicative divisor-sum or a sieve; multiplicative per-number factoring is fine at Euler limits.
+
 1) Precompute d(x)
 - Sieve-like pass: initialize sums with 1 for x>1, then for each m from 2..N/2 add m to multiples 2m,3m,…
 - Alternative: loop f up to √x per x and add f and x/f; sieve is faster in bulk.
@@ -18,6 +22,20 @@ Given N, compute the sum of all a < N that are part of an amicable pair (a,b) wi
 
 3) Complexity
 - Divisor-sum sieve ~ O(N log N); detection O(N).
+
+## Complexity
+
+- Precompute via sieve: O(N log N) time, O(N) space.
+- Detection: O(N) lookups.
+- Total: dominated by precomputation.
+
+## Edge Cases
+
+- N ≤ 2: No amicable numbers; sum is 0.
+- Perfect numbers: d(a)=a (e.g., 6, 28) must not be counted; ensure b != a.
+- Partner out of range: If b = d(a) ≥ N skip (Euler spec counts only a < N even if partner larger).
+- Overflow: For larger N, divisor sums can exceed int; use long arrays.
+- Duplicate counting: Summing only a avoids adding both a and b.
 
 ## Reusable template (for similar problems)
 
@@ -35,7 +53,7 @@ Mutual relationships via precomputed scores:
   - Identify mutual follows/edges efficiently.
   - Impact: Efficient features for recommendation and moderation.
 
-## Key takeaways
+## Key Takeaways
 
 - Sieve divisor sums once; then check amicable condition in O(1) per a.
 - Sum each a once to avoid double-counting.

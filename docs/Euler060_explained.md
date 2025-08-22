@@ -2,11 +2,19 @@
 
 Find the lowest-sum set of five primes such that any concatenation of two primes in any order is also prime.
 
-## Practical strategy
+## Approach
 
 - Sieve primes to a limit; implement a fast concatenation primality test (cache results of concat(p,q)).
 - Build an undirected graph where an edge connects p and q if both concatenations are prime.
 - Search for a 5-clique via DFS with pruning: maintain candidate lists that are connected to all in the current set; sort by degree; stop when sum exceeds current best.
+
+## Edge Cases
+- Concatenation overflow: Use long or string-based conversion; concatenating two ~5-digit primes may exceed int.
+- Leading zeros: Not present (primes have no leading zeros), so concatenation straightforward.
+- Cache symmetry: concat(p,q) vs concat(q,p) both needed; store both or compute directionally each time.
+- Prime limit adequacy: Sieve must cover largest prime appearing in concatenations (which can create numbers larger than base limit); may need on-demand primality test for large concatenations.
+- Pruning correctness: Ensure candidate intersection logic only keeps nodes connected to all current set; a single missed edge invalidates clique.
+- Search ordering: Without degree/sum ordering, explosion occurs; maintain deterministic ordering to avoid missed minimal-sum solution.
 
 ## Complexity
 - Exponential but small with pruning and caching; feasible.
@@ -24,7 +32,7 @@ Find the lowest-sum set of five primes such that any concatenation of two primes
 - QA: test clique-finding logic with synthetic compatibility graphs.
 - Visualization: plot compatibility graphs and highlight maximal cliques found.
 
-## Takeaways
+## Key Takeaways
 - Cache concat primality; grow cliques with aggressive pruning; track best sum.
 
 

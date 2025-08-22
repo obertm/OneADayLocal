@@ -8,6 +8,10 @@ Given a start date and end date, count months whose first day is a Sunday within
 
 ## Step-by-step reasoning
 
+## Approach
+
+Iterate months from a known weekday seed, apply Gregorian leap rules, and advance weekday by month length; count months whose first day (tracked weekday) is Sunday.
+
 1) Day-of-week engine
 - Implement Zeller’s congruence (or Doomsday) to compute weekday for any Y-M-D.
 - Alternatively, iterate months and track weekday offsets with leap-year rules.
@@ -20,6 +24,21 @@ Given a start date and end date, count months whose first day is a Sunday within
 
 4) Complexity
 - O(#months) with congruence; trivial for century spans.
+
+## Complexity
+
+- Time: O(M) where M is number of months (≈ years*12).
+- Space: O(1).
+- Optionally replace iteration with per-month weekday formula (same asymptotic, more math operations).
+
+## Edge Cases
+
+- Range boundaries: Ensure start and end months are both included; off-by-one errors can drop January or December.
+- Start year before seed (1900): Seeding assumes 1900-01-01; if earlier dates needed, either back-calculate or use a direct weekday formula.
+- Leap century rule: Years divisible by 100 are not leap unless divisible by 400 (1900 no, 2000 yes); common bug is treating any year%4==0 as leap.
+- Weekday indexing: Maintain consistent 0=Sunday mapping throughout; mixing conventions silently shifts counts.
+- Month lengths: February has 29 only in leap years; April, June, September, November are 30 days—mislabeling skews weekday progression.
+- Large spans: Multi-millennia ranges still safe in 32-bit counters but switch to long for defensive robustness.
 
 ## Reusable template (for similar problems)
 
@@ -79,7 +98,7 @@ Calendar queries over ranges:
   - Model: Month-first weekday audit.
   - Impact: Fewer failed reports.
 
-## Key takeaways
+## Key Takeaways
 
 - Prefer closed-form weekday calculations for speed and correctness.
 - Keep leap-year and month-length rules centralized and tested.

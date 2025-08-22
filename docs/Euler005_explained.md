@@ -8,6 +8,10 @@ Given n ≥ 1, compute L = lcm(1, 2, …, n).
 
 ## Step-by-step reasoning
 
+## Approach
+
+Fold LCM across 1..n via gcd (ans = lcm(ans,i))—simple and robust. Alternate: compute highest prime powers ≤ n and multiply (same result, potentially faster for large n).
+
 1) Model
 - The answer is the least common multiple (LCM) of numbers 1..n.
 - LCM(a, b) = a / gcd(a, b) * b.
@@ -27,6 +31,19 @@ Given n ≥ 1, compute L = lcm(1, 2, …, n).
 - Folding lcm with gcd is roughly O(n log n) time with tiny constants; space O(1).
 
 ## Reusable template
+
+## Edge Cases
+
+- n <= 0: Undefined; validate input.
+- n = 1: Result is 1.
+- Overflow risk: Use division-before-multiplication in lcm to reduce risk; for very large n use BigInteger.
+- Duplicate inputs (generalized list): Folding LCM handles duplicates naturally.
+- Non-monotonic input order: Irrelevant—LCM is commutative.
+
+## Complexity
+
+- GCD fold: O(n log n) (Euclid per step) with O(1) extra space.
+- Prime-power (sieve): O(n log log n) time, O(n) space; beneficial for very large n.
 - Reduce “divisible by 1..n” into a fold of LCMs using GCD, or compute prime powers ≤ n and multiply.
 
 ## Practical examples and business impact
@@ -81,7 +98,7 @@ Given n ≥ 1, compute L = lcm(1, 2, …, n).
   - Model: lcm‑based planning avoids cascading downtime.
   - Impact: Higher reliability and easier compliance.
 
-## Key takeaways
+## Key Takeaways
 - Reduce to GCD/LCM folds or prime-power multiplication.
 - Watch for overflow order in lcm = a / gcd(a,b) * b.
 

@@ -8,6 +8,10 @@ Given n ≥ 1, return the n-th prime (1-indexed): 2, 3, 5, 7, 11, …
 
 ## Step-by-step reasoning
 
+## Approach
+
+Maintain a growing list of discovered primes; test each odd candidate for divisibility only by primes ≤ √candidate until n primes collected. For much larger n, switch to a (segmented) sieve, but dynamic trial division is simpler for moderate bounds.
+
 1) Trial building with a dynamic prime list
 - Keep a growing list/array of found primes.
 - To test a candidate x, check divisibility only by primes ≤ √x.
@@ -22,10 +26,23 @@ Given n ≥ 1, return the n-th prime (1-indexed): 2, 3, 5, 7, 11, …
 3) Complexity
 - Roughly O(n log log n) if using sieve; dynamic trial division is fine for moderate n like 10,001.
 
+## Complexity
+
+- Dynamic trial division: about O(n √p_avg / log p) empirically; fast for nth=10k.
+- Sieve of Eratosthenes: O(N log log N) time, O(N) space for primes below bound N (with N ≈ n log n).
+- Space for trial list: O(n) integers.
+
 ## Reusable template
 - Maintain a list of primes; test candidates by primes up to √candidate; skip even candidates after 2.
 
 ## Practical examples and business impact
+## Edge Cases
+
+- n = 1: Answer is 2 directly.
+- Very large n: Trial division slows; switch to sieve/segmented sieve.
+- Integer overflow: Using int for primes is fine until >2^31; for larger bounds use long.
+- Negative or zero n: Invalid input; validate upstream.
+- Performance plateau: Re-testing even numbers (skip them after 2) crucial.
 
 - Security scanning / rule evaluation
   - Problem: Evaluate items against a minimal set of decisive rules.
@@ -77,7 +94,7 @@ Given n ≥ 1, return the n-th prime (1-indexed): 2, 3, 5, 7, 11, …
   - Model: Show test‑up‑to‑sqrt and prior‑primes logic.
   - Impact: Better intuition.
 
-## Key takeaways
+## Key Takeaways
 - Grow primes incrementally and test up to √x.
 - Use sieves when n gets large; for moderate n this method is simple and effective.
 

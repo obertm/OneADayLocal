@@ -7,6 +7,13 @@ Find the maximum digital sum of a^b for 1 < a < 100 and 1 < b < 100.
 - Loop a,b; compute BigInteger a^b (or repeated multiply), sum digits; track maximum.
 - Minor prune: a with trailing zeros won’t help maximize digit sum at high b, but full brute force is fine.
 
+## Edge Cases
+- Base / exponent bounds: Exclude a=1 or b=1 per problem; confirm loops start at 2.
+- BigInteger reuse: Recomputing from scratch vs. incremental multiply; incremental multiply safer than repeated pow loops with exponent resets.
+- Digit sum correctness: Convert to string; ensure Unicode digits only (BigInteger toString uses ASCII digits).
+- Performance: 99×99 operations trivial; if scaled, consider pruning trailing-zero bases early.
+- Overflow: Using BigInteger prevents overflow; avoid using double-based pow which would lose precision.
+
 ## Complexity
 - ~10k exponentiations with small sizes; trivial.
 
@@ -23,7 +30,7 @@ Find the maximum digital sum of a^b for 1 < a < 100 and 1 < b < 100.
 - Visualization: plot heatmaps of (a,b) vs. digit sum to reveal structure.
 - Embedded: test digit-sum routines with large, varied inputs from grid search.
 
-## Takeaways
+## Key Takeaways
 - Straight brute force with BigInteger and digit-sum helper.
 
 

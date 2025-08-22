@@ -6,6 +6,10 @@ Sum the numbers on both diagonals in an n×n spiral formed by starting at 1 in t
 
 ## Step-by-step reasoning
 
+## Approach
+
+Sum per-layer spiral corner contributions using closed-form 4s^2 − 6(s−1) over layers up to radius (n−1)/2; add center 1.
+
 1) Corner formula per layer
 - For layer k with side length s = 2k + 1, the four corner values sum to 4s^2 − 6(s − 1).
 
@@ -14,6 +18,19 @@ Sum the numbers on both diagonals in an n×n spiral formed by starting at 1 in t
 
 3) Complexity
 - O(m) arithmetic, m ≈ n/2. Negligible cost for typical n.
+
+## Complexity
+
+- Time: O(n) with small constant (≈ n/2 iterations) or O(1) if further algebraically simplified.
+- Space: O(1).
+
+## Edge Cases
+
+- Even n: Spiral definition assumes odd n; decide to reject or adjust (nearest odd).
+- n = 1: Sum is 1; loop should skip gracefully.
+- Overflow: For very large n, corner formula values exceed 32-bit; use long or BigInteger if scaling beyond Euler range.
+- Closed-form correctness: Algebraic simplification errors can silently skew results; keep tested iterative fallback.
+- Input validation: Negative or zero n invalid; guard early.
 
 ## Reusable template (for layered grid sums)
 
@@ -26,7 +43,7 @@ Sum the numbers on both diagonals in an n×n spiral formed by starting at 1 in t
 - Structured data analytics: when values follow a pattern, compute aggregates analytically instead of iterating all cells.
 - Performance: Avoids O(n^2) grid work by exploiting geometry.
 
-## Key takeaways
+## Key Takeaways
 
 - Use the corner formula per layer; summing layers is simple and precise.
 

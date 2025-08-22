@@ -35,9 +35,12 @@ Count the distinct ways to place digits on two cubes so that they can display al
 - Remember leading zero is allowed in two-digit displays (01, 04, 09).
 - Use unordered counting to avoid doubling.
 
-7) Testing mindset
-- Quick invariants: If a set lacks both 6 and 9 entirely, it can still be valid as long as the counterpart cube covers both; augmentation handles this correctly.
-- Spot-check a few known valid pairs; total count should match Euler’s known answer (121).
+## Edge Cases
+- Interchange rule: Must add both 6 and 9 presence if either chosen; forgetting yields undercount.
+- Duplicate unordered pairs: Enforce i ≤ j iteration to prevent double counting.
+- Pair (6,4) vs (4,9): Need to ensure both appear; augmentation ensures 6↔9 but 4 distinct.
+- Missing digit: If either cube lacks required digit after augmentation, pair invalid early—prune check order.
+- Leading zero: Accept squares starting with 0; do not filter out 01,04,09.
 
 ## Reusable template (for similar problems)
 
@@ -60,7 +63,7 @@ When checking pairwise coverage with interchangeable symbols:
   - Verify that two departments’ controls jointly cover a control matrix with equivalences (either side can satisfy a control).
   - Impact: Avoids redundant controls while ensuring coverage.
 
-## Key takeaways
+## Key Takeaways
 
 - Normalize interchangeable elements (6↔9) before checks.
 - Use bitsets for fast membership and compact iteration.

@@ -8,6 +8,10 @@ Given a triangle with R rows (R ~ 15), choose a path from the top to bottom by m
 
 ## Step-by-step reasoning
 
+## Approach
+
+Bottom-up dynamic programming: starting from the penultimate row, replace each cell with its value plus max of its two children, finishing with apex containing the optimal path sum.
+
 1) Bottom-up dynamic programming
 - Starting from the second last row up to the top: each cell becomes `cell += max(child_left, child_right)`.
 - Finally, the top cell is the maximum path sum.
@@ -18,9 +22,18 @@ Given a triangle with R rows (R ~ 15), choose a path from the top to bottom by m
 3) Complexity
 - Time O(N) where N is number of cells; space O(width) with a rolling array or O(1) if in-place.
 
-4) Edge cases
-- Negative numbers: still works because we take maxima locally.
-- Empty triangle: define sum 0.
+## Complexity
+
+- Time: O(N) (each cell touched once).
+- Space: O(W) for row buffer or O(1) extra if in-place mutation acceptable.
+
+## Edge Cases
+
+- Empty triangle: Return 0 (no path) or throw; here we treat as 0.
+- Single row: Answer is the top value; DP loop naturally skips.
+- Negative numbers: Algorithm still correct—local maxima incorporate negatives.
+- Integer overflow: Sums may exceed 32-bit if triangle values large; use long if needed.
+- Mutability: In-place modification destroys original triangle; use copy if original needed later.
 
 ## Reusable template (for similar problems)
 
@@ -80,7 +93,7 @@ For DAG-like layered structures with local choices:
   - Model: DP across phases.
   - Impact: Predictable outcomes.
 
-## Key takeaways
+## Key Takeaways
 
 - Bottom-up DP on triangles/lattices gives linear-time optimal solutions.
 - In-place updates minimize memory and simplify code.

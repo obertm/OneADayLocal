@@ -8,6 +8,10 @@ Given an integer n ≥ 2, return the largest prime p that divides n.
 
 ## Step-by-step reasoning
 
+## Approach
+
+Strip factor 2, then trial-divide by odd numbers up to √n, dividing out each factor fully; any leftover >1 is the largest prime factor.
+
 1) Define the goal
 - Input: n (≥ 2).
 - Output: the largest p such that p is prime and p | n.
@@ -26,6 +30,20 @@ Why this works: whenever a composite factor appears, you strip it out. The remai
 - For 64-bit inputs, this is usually fast. For very large integers (hundreds of digits), consider advanced methods (Pollard’s Rho, ECM).
 
 4) Typical pitfalls
+
+## Edge Cases
+
+- n < 2: Out of scope (no prime factors). Return 0 or error if validating.
+- n prime: Loop ends with n > 1; that remainder is the largest factor.
+- Power of 2: After removing 2s, n = 1 quickly; ensure last recorded factor is 2.
+- Large prime factor near √n: Ensure `f * f <= n` uses long to prevent overflow.
+- Negative input: Not required for Euler; validate in production.
+
+## Complexity
+
+- Time: O(√n) worst-case (n prime). Reduces as n shrinks when small factors exist.
+- Space: O(1).
+- Larger (multi-precision) inputs may warrant Pollard's Rho / ECM.
 - Forgetting to handle factor 2 separately (makes loop simpler and faster).
 - Using `int` and overflowing; prefer `long` for 64-bit n.
 - Loop condition must be `f*f <= n` (use long to avoid overflow in `f*f`).
@@ -94,7 +112,7 @@ Why this works: whenever a composite factor appears, you strip it out. The remai
   - If `n > 1` at the end, that remaining `n` is prime and is the largest factor.
 - CLI: `main(String[] args)` uses default `n = 600_851_475_143L` and allows overriding via the first argument; prints the result to stdout.
 
-## Key takeaways
+## Key Takeaways
 - Trial division with 2 then odd f up to √n gets you a robust, beginner-friendly solution.
 - Always check if a prime remainder > 1 remains; that’s your largest factor.
 - Scale up to Rho/ECM only when input sizes demand it.

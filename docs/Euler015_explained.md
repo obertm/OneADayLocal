@@ -8,6 +8,10 @@ For a grid of size n×n (edges, not including nodes outside), how many unique pa
 
 ## Step-by-step reasoning
 
+## Approach
+
+Recognize lattice paths correspond to arranging n rights and n downs: compute central binomial coefficient C(2n,n) exactly via multiplicative BigInteger loop (apply symmetry to minimize iterations).
+
 1) Inputs/outputs
 - Input: n ≥ 0 (Euler uses n=20).
 - Output: number of paths (grows large; use BigInteger for exactness).
@@ -24,13 +28,24 @@ For a grid of size n×n (edges, not including nodes outside), how many unique pa
 4) Complexity
 - O(n) BigInteger multiplications/divisions; space proportional to digit count (~Θ(n)).
 
-5) Edge cases
-- n=0 → 1 path (empty path).
-- Ensure division is exact at each step (choose multiply-then-divide per iteration to keep integers).
+## Complexity
 
-6) Testing mindset
-- Small checks: n=0→1; n=1→2; n=2→6; n=3→20.
-- Cross-validate multiplicative method vs factorial method.
+- Time: O(n) big-int ops; each multiply/divide on O(log C(2n,n)) digits (~O(n)).
+- Space: O(n) digits for the result; intermediate stays within final magnitude.
+- Efficient due to symmetry and per-step exact division.
+
+## Edge Cases
+
+- n = 0: Exactly one empty path; formula C(0,0)=1 covers it.
+- Large n: Intermediate BigInteger grows; multiplicative form keeps size manageable but still O(n) memory for digits; monitor for memory pressure.
+- Exact division: Multiply then divide each iteration guarantees exactness—avoid integer division before multiplication.
+- Symmetry misuse: Forgetting to minimize k to min(k, n-k) doubles work.
+- Input validation: Negative n should throw or return 0; define explicitly.
+
+## Testing mindset
+- Small values: n=0→1, n=1→2, n=2→6, n=3→20 (matches known sequence).
+- Cross-check multiplicative vs factorial implementation for a mid-sized n (e.g., n=10).
+
 
 ## Reusable template (for similar problems)
 
@@ -91,7 +106,7 @@ When paths are constrained to unit steps on a grid with fixed counts of moves:
   - Model: Combinatorial placements among fixed steps.
   - Impact: Predictive sizing.
 
-## Key takeaways
+## Key Takeaways
 
 - Recognize combinatorial structure → use C(2n, n).
 - Use BigInteger to keep exactness; multiplicative binomial is efficient and numerically stable.

@@ -9,6 +9,10 @@ Given a positive integer n, compute the difference between the square of the sum
 
 ## Step-by-step reasoning
 
+## Approach
+
+Derive and directly evaluate closed-form formulas for the sum and sum of squares of the first n integers, then subtract: (n(n+1)/2)^2 − n(n+1)(2n+1)/6. Avoid loops entirely.
+
 1) Inputs/outputs
 - Input: n ≥ 0 (default per Euler is 100).
 - Output: a single integer Δ(n).
@@ -28,6 +32,11 @@ Given a positive integer n, compute the difference between the square of the sum
 
 5) Complexity
 - Time O(1), space O(1).
+
+## Complexity
+
+- Single pass of constant arithmetic operations → O(1) time, O(1) space.
+- Risk area: intermediate multiplication overflow when n is large; mitigate by reordering factors / promoting to wider types.
 
 6) Edge cases
 - n = 0 → 0; n = 1 → 0.
@@ -95,7 +104,7 @@ When you see sums of simple powers or polynomials over 1..n:
   - Model: Store and merge sum/sum‑of‑squares; compute Δ on demand.
   - Impact: Fast BI queries.
 
-## Key takeaways
+## Key Takeaways
 
 - Translate summations to closed forms when possible.
 - Keep computations in integer math; use careful ordering to avoid overflow.

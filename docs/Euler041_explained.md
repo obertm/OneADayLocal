@@ -8,6 +8,15 @@ Find the largest n-digit pandigital prime.
 - Generate candidates in descending lexicographic order for 7-digit pandigitals first (then 4-digit if needed).
 - Test primality (sieve + trial division or deterministic Miller–Rabin for int range).
 
+## Edge Cases
+
+- No candidate prime in chosen digit set: Fall back to next smaller digit set (e.g., from 7-digit to 4-digit) automatically.
+- Leading zeros: Not allowed in pandigital set (digits start at 1); ensure permutations exclude 0 unless using 0..n variant.
+- Primality test limits: For 32-bit ints, deterministic Miller–Rabin with selected bases sufficient; trial division acceptable at this scale.
+- Performance: Generating all 7! = 5040 permutations trivial; descending generation allows early exit at first prime.
+- Overflow: Permuted value fits in int (≤ 7,654,321). For extended variants (0..9 pandigital) still within int.
+- Duplicate permutations: Avoid if using manual generation; standard permutation algorithm handles uniqueness.
+
 ## Complexity
 - Few permutations are needed before hitting the max prime; primality checks are cheap.
 
@@ -24,7 +33,7 @@ Find the largest n-digit pandigital prime.
 - Security filtering: quick-reject classes of inputs that cannot pass downstream prime checks.
 - Competitive programming pattern: template for cutting search space early using arithmetic invariants.
 
-## Takeaways
+## Key Takeaways
 - Use divisibility rules to prune n; permute digits descending; stop at first prime.
 
 

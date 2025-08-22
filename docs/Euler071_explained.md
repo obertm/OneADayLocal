@@ -8,6 +8,13 @@ Find the reduced proper fraction immediately to the left of 3/7 in the set of fr
 - Check gcd(n,d)=1 and track the maximum value n/d encountered; keep its numerator.
 - Using the mediant/Farey property ensures this greedy per-denominator choice is optimal.
 
+## Edge Cases
+- Exact multiple: When 3d is divisible by 7, subtract 1 in numerator to stay strictly left.
+- GCD performance: Use iterative gcd with ints; but denominator up to 1e6 so still trivial.
+- Overflow: 3d fits in 32-bit; safe. For larger limits use long.
+- Precision: Avoid floating comparisons; use cross-multiplication to compare fractions.
+- Denominator 7: Skips 3/7 itself due to subtract 1; ensures strict inequality.
+
 ## Complexity
 - O(N) gcd checks with tiny constants; feasible for 1e6.
 
@@ -15,7 +22,7 @@ Find the reduced proper fraction immediately to the left of 3/7 in the set of fr
 - Best-approximation to a target ratio under bounded denominator (rationals in scheduling, sampling rates).
   - Impact: Tight bounds via Farey/mediant arithmetic without sorting all fractions.
 
-## Takeaways
+## Key Takeaways
 - Compute n=floor((3d−1)/7) per d; keep coprime maximum just below 3/7.
 
 

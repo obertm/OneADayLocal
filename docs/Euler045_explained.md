@@ -8,6 +8,14 @@ Find the next number that is triangular, pentagonal, and hexagonal after 40755.
 - Test pentagonality for H(n) via inverse check: x=(1+√(1+24H))/6 integer.
 - First match after 40755 is the answer.
 
+## Edge Cases
+
+- Starting point: Ensure n starts just after the known index (n=143 for 40755) to avoid re-reporting.
+- Precision: Use long/double carefully; for very large n double sqrt may lose precision; validate by reconstructing n from inverse formula.
+- Overflow: H(n) ~ 2n^2; use long for n beyond ~1e4 to avoid int overflow.
+- Infinite loop: Guarantee termination by eventually finding next intersection; if extending to huge searches, set a sensible upper bound or detection of lack of progress.
+- Negative / zero n: Not applicable; inputs positive.
+
 ## Complexity
 - O(k) iterations until the next match; constant-time membership test.
 
@@ -24,7 +32,7 @@ Find the next number that is triangular, pentagonal, and hexagonal after 40755.
 - Analytics: exploring intersections of precomputed feature families with O(1) checks.
 - Cryptanalysis toys: seek numbers with multiple structural properties as didactic exercises.
 
-## Takeaways
+## Key Takeaways
 - Generate hexagonals; test pentagonality; triangularity is implicit.
 
 

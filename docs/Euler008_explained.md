@@ -8,6 +8,10 @@ Given a digit string S and window length k, compute max over all windows of leng
 
 ## Step-by-step reasoning
 
+## Approach
+
+Sliding window product with zero segmentation: split the digit string by zeros (reset points) and maintain a rolling product within each zero-free segment, updating by dividing outgoing and multiplying incoming digits.
+
 1) Parse and validate inputs
 - Ensure window (k) is 1..length.
 
@@ -25,10 +29,23 @@ Given a digit string S and window length k, compute max over all windows of leng
 4) Complexity
 - O(n) time, O(1) extra space.
 
+## Complexity
+
+- Time: O(n) (each digit enters/exits window once within its segment).
+- Space: O(1) beyond input storage.
+- Zero splits prevent unnecessary O(k) recomputations after zero windows.
+
 ## Reusable template
 - For “max product/sum in sliding window”: split on zero-like blockers and maintain a rolling aggregate.
 
 ## Practical examples and business impact
+## Edge Cases
+
+- k > length of string: Return 0 or error (undefined) – ensure validation.
+- k = 0: Vacuous window; usually invalid – reject.
+- Zeros inside window: reset segmentation logic; ensure division not attempted across zero.
+- Overflow: For long windows product may overflow 64-bit; consider BigInteger or log-sum variant.
+- Non-digit characters: Validate or strip; Euler input trusted.
 
 - Fraud/risk detection over rolling windows
   - Problem: Maintain rolling risk over k events with resets on triggers.
@@ -80,7 +97,7 @@ Given a digit string S and window length k, compute max over all windows of leng
   - Model: Split by deploy markers; sliding counts per segment.
   - Impact: Fast incident triage.
 
-## Key takeaways
+## Key Takeaways
 - Use sliding windows; reset at zeros.
 - Keep integer-safe operations; beware of overflow if window is large.
 

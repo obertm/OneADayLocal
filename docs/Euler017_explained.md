@@ -8,6 +8,10 @@ Convert each integer from 1 to 1000 inclusive to its British English words, remo
 
 ## Step-by-step reasoning
 
+## Approach
+
+Prebuild lookup tables (ones/teens/tens). For each number, decompose into thousands/hundreds/tens/ones applying British "and" rule, emit words, strip spaces/hyphens, count letters, and accumulate.
+
 1) Build small dictionaries
 - Ones (1–9), teens (10–19), tens (20,30,…,90), and words for hundred, thousand.
 
@@ -22,9 +26,18 @@ Convert each integer from 1 to 1000 inclusive to its British English words, remo
 4) Complexity
 - O(N) numbers with O(1) work each; dictionary lookups dominate.
 
-5) Edge cases
-- Exact hundreds (“three hundred”) should not include “and”.
-- British usage requires “and” when a remainder exists.
+## Complexity
+
+- Time: O(N) where each number processed in constant bounded operations.
+- Space: O(1) beyond static tables.
+
+## Edge Cases
+
+- Exact hundreds: Must omit "and" ("three hundred", not "three hundred and").
+- British "and" rule: Include "and" only when a hundreds component and a non-zero remainder coexist.
+- Hyphen handling: Only between tens and ones for 21–99 (excluding round tens). Ensure it’s stripped before counting.
+- Range limits: Ensure upper bound inclusive (1000) handled explicitly; 0 not in target range—avoid accidental inclusion.
+- Table lookups: Guard index bounds (teens vs tens) to avoid off-by-one errors producing wrong words.
 
 ## Reusable template (for similar problems)
 
@@ -85,7 +98,7 @@ When converting numeric ranges to words and aggregating properties:
   - Model: Tally rule and dictionary size per language from a baseline.
   - Impact: Realistic roadmaps.
 
-## Key takeaways
+## Key Takeaways
 
 - Decompose by ranges; reuse small tables and a single formatter.
 - Normalize then aggregate to keep counting logic simple.

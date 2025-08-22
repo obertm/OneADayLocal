@@ -8,6 +8,10 @@ Given a file/list of uppercase names, sort alphabetically. For name at 1-based i
 
 ## Step-by-step reasoning
 
+## Approach
+
+Parse and clean names, sort lexicographically, compute per-name alphabetic value, multiply by 1-based rank, accumulate into a long.
+
 1) Parse and clean
 - Read CSV or quoted names; strip quotes; normalize to uppercase.
 
@@ -20,8 +24,20 @@ Given a file/list of uppercase names, sort alphabetically. For name at 1-based i
 4) Complexity
 - Sorting dominates: O(N log N); scoring O(total characters).
 
-5) Edge cases
-- Empty names; stray quotes/commas → sanitize.
+## Complexity
+
+- Time: O(N log N + totalChars).
+- Space: O(N) references + input char storage.
+
+## Edge Cases
+
+- Empty file / blank entries: Filter out empty strings after trimming; they contribute 0 and shouldn’t shift indexing if removed—decide whether to keep or drop consistently.
+- Duplicate names: Each occurrence participates independently with its own position weight; this is consistent with problem spec.
+- Case variability: Normalize to uppercase; mixed case without normalization skews letter values (lowercase subtraction produces different results).
+- Non A–Z characters: Either reject or ignore; simplest is to strip quotes and ensure remaining chars are A–Z; log or skip malformed names.
+- Overflow: Use long for total; for large inputs (millions of names) product position*value can exceed 32-bit.
+- Large whitespace: Trim before processing to avoid leading/trailing spaces inflating length or causing parse issues.
+- Locale sorting: Force plain ASCII/Unicode code-point sort; avoid locale-sensitive collation which can reorder unexpectedly.
 
 ## Reusable template (for similar problems)
 
@@ -38,7 +54,7 @@ Rank-weighted scoring pipelines:
   - Map characters to numeric values to build reproducible metrics.
   - Impact: Traceable transformations for audits.
 
-## Key takeaways
+## Key Takeaways
 
 - Keep parsing strict; separate sort from scoring for clarity and testability.
 - Use long for totals to avoid overflow.

@@ -8,6 +8,10 @@ Input: matrix g[h][w] and window size k (Euler: h=w=20, k=4). Output: max produc
 
 ## Step-by-step reasoning
 
+## Approach
+
+Brute-force directional scan: for every cell, attempt the four direction vectors (→, ↓, ↘, ↙) if the k-length window stays in bounds, compute the product, and track the maximum. k is tiny (4), so direct multiplication is fastest; no need for incremental rolling products.
+
 1) Deterministic scan
 - For each cell (r, c):
   - If c + k ≤ w, compute product to the right.
@@ -18,6 +22,12 @@ Input: matrix g[h][w] and window size k (Euler: h=w=20, k=4). Output: max produc
 
 2) Complexity
 - O(h·w·k) multiplications (k is small, e.g., 4), space O(1).
+
+## Complexity
+
+- Time: O(h·w·k) with k constant (≈ O(h·w)).
+- Space: O(1) beyond input grid.
+- Early exits possible if remaining theoretical max < current best (not needed for Euler size).
 
 3) Practical tips
 - Guard bounds before multiplying to avoid index errors.
@@ -80,8 +90,19 @@ Input: matrix g[h][w] and window size k (Euler: h=w=20, k=4). Output: max produc
   - Model: Sliding products/sums per direction on correlation heatmaps.
   - Impact: Quick signals for further analysis.
 
-## Key takeaways
+## Key Takeaways
 - Enumerate directions explicitly; check bounds first; compute aggregate; track max.
+
+## Edge Cases
+
+- Boundary windows: Skip any direction whose k-step window would exit the grid (avoid partial products). The explicit bound checks prevent index errors.
+- k = 1: Result is simply the maximum single cell value; loops still work unmodified.
+- Zeros: A zero inside a window forces product 0; no special handling needed, but you can micro‑opt by early abort once a zero is seen while multiplying.
+- Negative numbers: If the grid were extended to include negatives, products could become larger in magnitude via even counts of negatives. Use `long` if values·k may overflow `int`.
+- Overflow: For Euler (max cell 99, k=4) the max product 99^4 < 1e8 fits in 32-bit. Generalize with values up to 10^6 or larger k → switch accumulator to `long` or `BigInteger`.
+- Non-square or small grids: Works for any h×w. If k > max(h,w), no products are computed; define return (commonly 0 or throw). Here we naturally return the initial best (0) if nothing evaluated.
+- Input validation: Guard against null/empty grid or inconsistent row lengths before scanning.
+
 
 ## Java implementation (Euler011.java)
 

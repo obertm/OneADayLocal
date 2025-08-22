@@ -2,10 +2,17 @@
 
 Count how many numbers below 10,000 never form a palindrome within 50 reverse-and-add iterations.
 
-## Method
+## Approach
 
 - For n in 1..9999: iterate up to 50 times: n = n + reverse(n) using big integers; if a palindrome appears, mark non-Lychrel.
 - Count those that never hit a palindrome within the limit.
+
+## Edge Cases
+- Palindrome detection off-by-one: Check palindrome after each addition (not before first addition per definition) — confirm interpretation.
+- Leading zeros: Reverse via string; no leading zeros appear unless trailing zeros in original; acceptable.
+- Iteration cap: Exactly 50 iterations; ensure numbers needing 51 aren’t counted; specification nuance.
+- BigInteger growth: Values can grow quickly; relying on BigInteger avoids overflow but watch performance if generalized.
+- Reverse function correctness: Avoid stripping zeros inadvertently which would alter numeric path.
 
 ## Complexity
 - O(10000 × 50 × digits) with small big-int overhead.
@@ -23,7 +30,7 @@ Count how many numbers below 10,000 never form a palindrome within 50 reverse-an
 - QA fuzzing: generate seeds that don’t converge under the cap to test alerting.
 - Documentation: highlight need for BigInteger when sums grow quickly.
 
-## Takeaways
+## Key Takeaways
 - Use BigInteger to avoid overflow; clear iteration cap and palindrome checks.
 
 

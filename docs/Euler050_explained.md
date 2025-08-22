@@ -6,6 +6,10 @@ Find the prime < 1,000,000 that can be written as the longest sum of consecutive
 
 Among all sums of consecutive primes p_i + p_{i+1} + … + p_j that are < 1,000,000, find the one that is itself prime and has the maximum length (j−i+1). Return that prime.
 
+## Approach
+
+Sieve primes below N, build a prefix sum array of primes, then search for the longest consecutive prime sequence whose sum is < N by expanding end indices for each start while pruning when sums exceed N; update best when a prime sum appears, leveraging O(1) range sum and membership tests.
+
 ## Step-by-step reasoning
 
 1) Inputs/outputs
@@ -28,9 +32,7 @@ Among all sums of consecutive primes p_i + p_{i+1} + … + p_j that are < 1,000,
 - Each sum is O(1) via prefix sums.
 - Decreasing L stops early once a valid run is found, so total work is far below O(K^2) in practice.
 
-5) Complexity
-- Sieve: O(N log log N) time, O(N) space.
-- Search: worst-case O(K^2) checks but with strong pruning; practical runtime is small for N=1e6.
+5) (See Complexity section below)
 
 6) Edge cases and correctness
 - Ensure prefix sums use long to avoid overflow (sum of primes below 1e6 fits in 64-bit).
@@ -80,7 +82,11 @@ When searching for the longest run with constraints over a sequence:
 - Observability
   - Longest alert-free window whose event-sum remains below a cap and fits an SLO class membership; capacity planning.
 
-## Key takeaways
+## Complexity
+
+Time: Sieve O(N log log N); search worst-case O(K^2) but pruned heavily—practical performance near O(K · averageWindow) for N=1e6. Space: O(N) for primality + O(K) for prefix sums.
+
+## Key Takeaways
 
 - Prefix sums turn window sums into O(1).
 - A fast membership test (isPrime) plus decreasing window sizes prunes most work.
@@ -98,3 +104,13 @@ When searching for the longest run with constraints over a sequence:
   - For each start `i`, try end `j` starting from `i + bestLen + 1` upward; compute `sum = prefix[j] - prefix[i]`.
   - If `sum >= N`, break inner loop; if `isPrime[(int)sum]` is true, update best and continue.
 - Output: Print `bestPrime` (for N=1_000_000, this is 997651).
+
+## Edge Cases
+
+- Limit boundary: Ensure sums strictly < 1,000,000; break early when sum exceeds limit to prune windows.
+- Prefix sum overflow: Sum of primes below 1e6 fits in int? Total sum exceeds int; use long for prefix entries.
+- Primality check of sums: Need O(1) membership; either boolean array sized limit or hash set of primes; since limit small (1e6) boolean array fine.
+- Window length ordering: If scanning lengths ascending, must continue after finding prime; descending can early exit; document choice.
+- Single-prime window: Should be considered; prime itself counts (length 1) baseline.
+- Performance pitfalls: Naive nested loops O(n^2); early breaks on sum overflow and length pruning reduce runtime.
+- Off-by-one: prefix indexing careful: prime k..(l-1) sum is prefix[l]-prefix[k].

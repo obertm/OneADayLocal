@@ -11,6 +11,10 @@ Given a positive integer limit L, compute the sum of all even Fibonacci numbers 
 
 ## Step-by-step reasoning
 
+## Approach
+
+Iterate Fibonacci numbers up to the limit, summing even ones (simple baseline). Optimize by generating only every 3rd (even) Fibonacci using E(n)=4E(n-1)+E(n-2), shrinking iterations ~3x while keeping O(log L) growth in terms.
+
 1) Inputs/outputs
 - Input: integer L (L ≥ 1), default 4_000_000 if not provided.
 - Output: single integer: sum of even Fibonacci numbers not exceeding L.
@@ -138,7 +142,13 @@ When facing “sum elements of a recurrence sequence up to a threshold that sati
   - Model: Sum assessment effort/time at even milestones to plan instructor workload.
   - Impact: Sustainable pacing with predictable workload.
 
-## Key takeaways
+## Complexity
+
+- Full sequence iteration: O(k) where k ≈ log_phi(L); O(1) space.
+- Even-term recurrence: same asymptotic, reduced constant factor (≈1/3 steps).
+- Fast-doubling only needed for random access; unnecessary here.
+
+## Key Takeaways
 - Start with a simple generator and a filter; it’s easy, correct, and usually fast.
 - Exploit structure to skip work: here, every 3rd Fibonacci is even; iterate only even terms via E(n) = 4E(n-1) + E(n-2).
 - Favor O(1) space and O(log L) time when possible; only reach for heavier math (fast‑doubling) if the problem demands it.

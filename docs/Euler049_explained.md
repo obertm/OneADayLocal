@@ -2,11 +2,20 @@
 
 Find a 12-digit number formed by concatenating three 4-digit primes that are permutations of each other and form an arithmetic sequence (excluding the known example starting at 1487).
 
-## Strategy
+## Approach
 
 - Sieve 4-digit primes; group by sorted-digit signature.
 - For each group with ≥3 primes, sort ascending and search for triples (a,b,c) with equal gaps where all three are in the group.
 - Concatenate the found triple.
+
+## Edge Cases
+
+- Leading zeros in permutations: Not an issue since all primes stay 4-digit; ensure r ≤ 9999.
+- Duplicate detection: Triplets can be visited multiple ways; restrict to p < q < r and maybe iterate q>p only.
+- Known sequence filtering: Must compare full triplet set membership, not just starting value, to skip exactly that sequence.
+- Digit multiset: Sort 4-character string or count 10-length frequency array; stable and fast; avoid BigInteger for concatenation.
+- Overflow: Concatenation of three 4-digit numbers fits in int? 12-digit may exceed int; use long or string building.
+- Performance: Nested loops worst-case O(P^2); early pruning by difference (r beyond 9999) reduces search.
 
 ## Complexity
 - Sieve + grouping O(N); triple search per group is small.
@@ -24,7 +33,7 @@ Find a 12-digit number formed by concatenating three 4-digit primes that are per
 - Scheduling: job IDs permuted per site; detect arithmetic cadence within equivalence groups.
 - Benchmarking: compare naive all-pairs vs. signature-then-gap search performance.
 
-## Takeaways
+## Key Takeaways
 - Group by digit signature; look for arithmetic triplets inside groups.
 
 

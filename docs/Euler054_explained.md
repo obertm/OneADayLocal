@@ -2,11 +2,20 @@
 
 Given many poker deals, count how many hands Player 1 wins.
 
-## Evaluator outline
+## Approach
 
 - Map cards to ranks (2..A) and suits; compute hand rank tuple: (category, primary ranks...). Categories: High card, Pair, Two pairs, Three of a kind, Straight, Flush, Full house, Four, Straight flush, Royal flush.
 - Compare tuples lexicographically for two hands.
 - Parse the dataset, evaluate both hands per line, increment wins for Player 1 when tuple1 > tuple2.
+
+## Edge Cases
+- Ace-low straight: Detect A2345 and treat as straight with 5 high; ordering must reflect this.
+- Two pairs ordering: Ensure kicker (5th card) used only after comparing higher then lower pair ranks.
+- Full house vs. three-of-a-kind: Distinguish by presence of pair; avoid misclassifying 3+1+1.
+- Input anomalies: Extra whitespace or newline endings; robust splitting required.
+- Royal flush classification: Optionally treat as straight flush; must not inflate category beyond max set.
+- Tie handling: Exact equality shouldn’t increment Player 1; confirm strict > comparison.
+- Data file path: Provide fallback filenames; handle missing file gracefully.
 
 ## Complexity
 - O(#hands) with constant-time per-hand evaluation.
@@ -24,7 +33,7 @@ Given many poker deals, count how many hands Player 1 wins.
 - Analytics: distribution of hand categories over datasets to tune AI opponents.
 - QA suites: golden-file comparisons using stable 64-bit rank keys across versions.
 
-## Takeaways
+## Key Takeaways
 - Build a stable rank tuple; compare lexicographically; parse and evaluate line-by-line.
 
 

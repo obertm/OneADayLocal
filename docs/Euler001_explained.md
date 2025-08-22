@@ -8,6 +8,10 @@ Given a positive integer N, compute the sum of all natural numbers below N that 
 - If N = 10, the numbers are 3, 5, 6, 9 → sum = 23.
 - If N = 1000, the answer is 233168.
 
+## Approach
+
+Start with a direct O(N) scan adding numbers divisible by 3 or 5 (clear and verifiable). Then derive an O(1) inclusion–exclusion formula summing arithmetic progressions of multiples of 3, 5, and subtracting 15 to eliminate double counts. Keep both: loop for pedagogy, formula for scalability.
+
 We want a program that:
 - Accepts N (optionally from command‑line),
 - Computes the sum,
@@ -45,6 +49,12 @@ This is exactly what `Euler001.sumMultiples3or5Below` implements:
 - Time: O(N) operations; each checks two modulos and maybe one addition.
 - Space: O(1), constant extra space.
 - For N up to ~10^8, O(N) may be slow. If you need faster, use a closed‑form formula.
+
+## Complexity
+
+- Brute force: O(N) time, O(1) space.
+- Formula: O(1) time, O(1) space (constant number of divisions/multiplies).
+- Transition point: very large N where iteration cost dominates.
 
 6) Closed‑form formula (optional optimization)
 We can sum arithmetic progressions without looping:
@@ -180,4 +190,10 @@ Snippets to recognize/translate the pattern:
 - Analytics explainability
     - Simple, auditable rules (divisibility, inclusion–exclusion) make dashboards and forecasts easier to reason about for non-engineers.
 
-Key takeaway: start with a clear loop for correctness; when scale requires, switch to the closed-form to unlock instantaneous estimates and lower compute costs. The same thought process generalizes to many “sum/count with periodic criteria” problems.
+## Key Takeaways
+
+- Begin with the simplest correct loop; optimize later.
+- Inclusion–exclusion converts filtered sums over multiples into constant-time expressions.
+- Promote to long to avoid overflow in series sums.
+- Pattern generalizes to any finite set of divisibility filters.
+- Maintain both versions for validation (loop vs formula cross-check).

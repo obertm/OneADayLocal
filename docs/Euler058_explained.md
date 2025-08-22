@@ -2,10 +2,17 @@
 
 Build the number spiral and find the side length where the ratio of primes on the diagonals first falls below 10%.
 
-## Plan
+## Approach
 
 - For each odd side s=3,5,7,..., corners are s^2, s^2−(s−1), s^2−2(s−1), s^2−3(s−1). Test the three non-square corners for primality.
 - Track total diagonal count (=2s−1) and prime count; stop when ratio < 0.10.
+
+## Edge Cases
+- Ratio threshold: Strictly below 10%; equality does not stop.
+- Long arithmetic: s^2 fits in 64-bit for s up to 1e6; if generalized further, watch overflow.
+- Primality performance: Trial division adequate for problem scale; for larger s adopt Miller–Rabin.
+- Starting layer: Begin at s=3; the 1×1 spiral (s=1) has ratio 100%; ensure loop starts after base case.
+- Floating precision: Use double or compare 10*primes < total to avoid division precision issues.
 
 ## Complexity
 - O(#layers) primality checks; fast with a strong primality test.
@@ -23,7 +30,7 @@ Build the number spiral and find the side length where the ratio of primes on th
 - Data mining: detect when rare events fall below a critical mass in streaming data.
 - Security: monitor for drop-off in “prime-like” events in rolling windows.
 
-## Takeaways
+## Key Takeaways
 - Generate corner values directly; maintain running prime/total counts.
 
 

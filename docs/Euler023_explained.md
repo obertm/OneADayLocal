@@ -8,6 +8,10 @@ Compute S = sum of all n ≤ LIMIT such that there do not exist abundant a,b wit
 
 ## Step-by-step reasoning
 
+## Approach
+
+Compute all abundant numbers ≤ LIMIT by a divisor-sum sieve, then nested loop over abundant list marking reachable pair sums; finally sum integers not marked reachable.
+
 1) Classify numbers
 - Compute sum of proper divisors for 1..LIMIT via a sieve; mark abundant if sum > n.
 
@@ -19,6 +23,20 @@ Compute S = sum of all n ≤ LIMIT such that there do not exist abundant a,b wit
 
 4) Complexity
 - Divisor-sum sieve ~ O(L log L); marking sums ~ O(A^2) where A is #abundants (manageable here).
+
+## Complexity
+
+- Time: O(L log L + A^2) with A ≪ L.
+- Space: O(L) for divisor sums / can array + O(A) abundant list.
+
+## Edge Cases
+
+- LIMIT below smallest abundant sum: Small LIMIT (e.g., < 24) means all numbers are non-abundant sums; algorithm still works (abundant list nearly empty).
+- Integer overflow: Use int for indices but long if summing large LIMIT values (for Euler size fits in 32-bit).
+- Duplicate marking: Loop with i ≤ j ensures each pair sum considered once; avoid double work by early break when i+j exceeds LIMIT.
+- Off-by-one: Ensure arrays sized LIMIT+1 and iterate inclusive to handle n=LIMIT.
+- Performance: A^2 loop is feasible for LIMIT=28123; for much larger limits, consider convolution/FFT or meet-in-the-middle optimizations.
+- Proper divisor sum correctness: Include 1, exclude n; ensure starting sums array seeded appropriately (sums[1]=0).
 
 ## Reusable template (for similar problems)
 
@@ -36,7 +54,7 @@ Feasibility via pairwise reachability:
   - Determine which tasks cannot be formed by pairing two resource bundles.
   - Impact: Fast feasibility analysis guides procurement.
 
-## Key takeaways
+## Key Takeaways
 
 - Precompute special numbers; mark sums efficiently with early breaks.
 - Summing the complement answers the question directly.

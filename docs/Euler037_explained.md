@@ -2,11 +2,20 @@
 
 Find the 11 primes that remain prime when truncating digits from left and right; return their sum.
 
-## Strategy
+## Approach
 
 - Generate candidates by extending from known valid prefixes with allowed digits {1,3,7,9} and avoiding zeros.
 - Check left and right truncations for primality using a sieve-backed primality test.
 - Stop after finding 11.
+
+## Edge Cases
+
+- Single-digit primes: Not counted (must have at least two digits); ensure filter enforces this.
+- Leading zeros after truncation: Not possible if zeros are excluded; if generation allowed zeros, truncations could create leading-zero interpretations—avoid.
+- Primality test accuracy: Trial division sufficient for small range; for larger search spaces, use sieve or deterministic Miller–Rabin.
+- Duplicate generation: Ensure each found truncatable prime counted once; maintain a set if using BFS/DFS with branching.
+- Performance scaling: For larger digit lengths, constraint-based generation (prefix pruning) required; naive scanning grows expensive.
+- Overflow: Not an issue under 32-bit for these values; for generalized problems with longer truncatable primes use long.
 
 ## Complexity
 - Tiny search space with pruning; effectively instant.
@@ -24,7 +33,7 @@ Find the 11 primes that remain prime when truncating digits from left and right;
 - Education: demonstrate invariants under truncation and the power of prefix/suffix filters.
 - Observability: define alert IDs whose truncated forms still route to the correct service during UI shortening.
 
-## Takeaways
+## Key Takeaways
 - Build via BFS/DFS with digit constraints; verify all truncations prime.
 
 

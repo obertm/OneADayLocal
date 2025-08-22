@@ -8,6 +8,10 @@ Given an integer n ≥ 0, compute S(n) = sum of digits of n!. For example, 10! =
 
 ## Step-by-step reasoning
 
+## Approach
+
+Accumulate factorial n! using BigInteger multiplication (2..n) then sum decimal digits of the result via string traversal for clarity (or divide/mod for streaming extraction).
+
 1) Inputs/outputs
 - Input: integer n (n ≥ 0). Default per Euler is n = 100.
 - Output: integer digit-sum of n!.
@@ -42,6 +46,14 @@ Given an integer n ≥ 0, compute S(n) = sum of digits of n!. For example, 10! =
 - n = 0 or 1 → 1! = 1 → digit sum 1.
 - Large n → ensure BigInteger is used throughout; avoid accidental 64-bit overflow in intermediates.
 - Locale/format → use `toString()` in base 10; no separators.
+
+## Edge Cases
+
+- n < 0: Factorial undefined; reject or document behavior.
+- n = 0 or 1: Trivial factorial 1; digit sum 1.
+- Memory pressure: Very large n produces huge BigInteger; consider streaming multiplication with early digit extraction if constrained.
+- Performance scaling: For huge n, switch to product tree or prime swing algorithms.
+- Digit extraction: Using `toString()` allocates full string; divide/mod method reduces peak memory.
 
 8) Testing mindset
 - Small checks: n=0→1, n=1→1, n=3→6→sum=6, n=10→3628800→27.
@@ -107,7 +119,13 @@ When you need exact results for huge combinatorial quantities (factorials, binom
   - Model: Digit-sum ranges/length checks.
   - Impact: Quicker bug detection.
 
-## Key takeaways
+## Complexity
+
+- BigInteger growth: digits in n! ~ Θ(n log n); later multiplications dominate cost.
+- Total time ≈ Σ M(D(i!)) with practical performance fine for n=100.
+- Space: O(D) digits of n!.
+
+## Key Takeaways
 
 - Use BigInteger for exactness at Euler scales.
 - Separate the big-number computation from the final digit aggregation.

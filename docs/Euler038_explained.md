@@ -2,10 +2,19 @@
 
 Find the largest 1–9 pandigital 9-digit number that is the concatenated product of an integer with (1,2,...,n), n≥2.
 
-## Plan
+## Approach
 
 - n must start with 9 and be 4-digit at most (since 9xxx×(1,2) yields 9 digits). Search n in [9123..9876] or slightly broader.
 - Concatenate n×1, n×2, ... until length ≥ 9; check pandigital when length==9; take max.
+
+## Edge Cases
+
+- Leading zeros: Any concatenated result containing '0' invalid; skip early when a zero digit encountered.
+- Length overshoot: If concatenated string exceeds 9 digits, abandon that n; further multiples only lengthen it.
+- Duplicate digits: Immediately reject; track with a bitmask/boolean array for speed.
+- n with internal zeros: Often wastes work; pre-skip if base number contains 0 to avoid inevitable invalid concatenations.
+- Performance: Search space small; for generalized problems with larger digit sets, derive tighter bounds.
+- Overflow: Multiplying n by small integers safe in int; if scaling to larger digits, switch to long.
 
 ## Complexity
 - Small loop with string building.
@@ -23,7 +32,7 @@ Find the largest 1–9 pandigital 9-digit number that is the concatenated produc
 - Educational demos: show how tight bounds reduce search drastically when building structured concatenations.
 - Fuzz testing: craft concatenations to hit every digit exactly once, probing validators and sanitizer edge cases.
 
-## Takeaways
+## Key Takeaways
 - Narrow to 4-digit seeds and test concatenated products for pandigitality.
 
 

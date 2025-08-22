@@ -8,11 +8,23 @@ Find the minimal path sum from the top-left to the bottom-right of a matrix, mov
 - Run Dijkstra from (0,0) using a min-heap; relax neighbors with cost + cellWeight.
 - Stop when reaching target; return final distance.
 
+## Edge Cases
+- Early exit: Ensure termination when target extracted; continuing wastes time.
+- Negative weights: Dijkstra requires non-negative; assume matrix non-negative; otherwise need Bellman-Ford.
+- Heap duplicates: Multiple entries per node appear; skip outdated ones by comparing stored distance.
+- Integer overflow: Use long accumulator if cell values large to avoid wrap-around.
+- File parsing: Malformed lines cause exceptions; add validation.
+
 ## Complexity
 - O(V log V + E) ≈ O(n·m log(n·m)).
 
-## Real-world impact
-- Shortest path on grids (navigation, network costs) with arbitrary 4-direction moves.
+## Practical examples and business impact
+- Pathfinding: navigation meshes with uniform 4-way adjacency.
+- Network latency: minimal cumulative cost across a grid of routers.
+- Robotics: weighted occupancy grids for cost-optimal traversal.
+
+## Key Takeaways
+- Treat grid as graph; Dijkstra solves arbitrary positive weights efficiently.
 
 ## Java implementation (Euler083.java)
 - Loads `p083_matrix.txt` if present, else uses the 5×5 sample matrix.

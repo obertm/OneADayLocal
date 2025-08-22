@@ -7,14 +7,21 @@ Like Euler018 with a much larger triangle from a file; compute the maximum total
 - Read rows into a list; apply bottom-up DP: row[i]=row[i]+max(child[i],child[i+1]) from the row below.
 - Final answer is at the top.
 
+## Edge Cases
+- File missing: Must return a clear sentinel (e.g., DATA_FILE_NOT_FOUND) without exception.
+- Irregular rows: If a row length deviates, DP indexing fails; validate triangular structure.
+- Large triangle size: Use in-place row compression to reduce memory; avoid O(n^2) storage if huge.
+- Integer overflow: Sums may exceed 32-bit if inputs large; use long if scaling to bigger datasets.
+- Trailing whitespace: Trim lines to avoid parsing empty tokens.
+
 ## Complexity
 - O(N) over all entries; memory O(width) if rolling.
 
-## Real-world analogues and impact
+## Practical examples and business impact
 - Scalable DP for large DAGs and decision trees stored in files.
   - Impact: Linear-time optimal aggregation over large inputs.
 
-## Takeaways
+## Key Takeaways
 - Same DP as Euler018; just read from file and process bottom-up.
 
 

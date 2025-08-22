@@ -9,6 +9,10 @@ Find the largest palindrome number made from the product of two n-digit numbers.
 
 ## Step-by-step reasoning
 
+## Approach
+
+Descending double loop over factor pairs with palindrome test; prune when remaining max product cannot exceed current best; optional palindrome generation alternative.
+
 1) Start with a straightforward search + palindrome check
 - Iterate i from high down to low.
 - For each i, iterate j from i down to low (avoid duplicates, i*j=j*i).
@@ -25,6 +29,20 @@ Find the largest palindrome number made from the product of two n-digit numbers.
 - Worst-case O(R^2) products where R is the range size. Pruning reduces work a lot in practice.
 
 4) Reusable template
+
+## Edge Cases
+
+- Leading zeros: Ignore; palindrome check uses natural decimal form.
+- Reversed bounds (if parameterized): Swap or return error.
+- digits = 1: Max palindrome product is 9 (9×1); logic still holds.
+- Overflow: For larger digit counts switch to long.
+- Performance: For big digit ranges, generate palindromes first instead of full double loop.
+
+## Complexity
+
+- Naïve: O(R^2) where R is count of n-digit numbers.
+- Pruning dramatically lowers practical iterations.
+- Palindrome check O(d) with small constant d.
 - For “find max satisfying property over product pairs,” iterate descending, prune with best-known bounds, and test the property efficiently.
 
 ## Practical examples and business impact
@@ -74,7 +92,7 @@ Find the largest palindrome number made from the product of two n-digit numbers.
   - Model: Palindrome check as compliance rule; prune pairs.
   - Impact: Compliance‑friendly operations.
 
-## Key takeaways
+## Key Takeaways
 - Start with nested loops + a fast property check.
 - Use descending order + upper-bound pruning to cut the search space.
 - Consider generating candidates directly using symmetry.

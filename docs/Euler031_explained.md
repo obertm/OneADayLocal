@@ -4,6 +4,10 @@
 
 Count the number of ways to make a target amount using unlimited coins of given denominations (UK coins in the problem).
 
+## Approach
+
+Use a 1D dynamic programming array where `ways[s]` counts combinations to form sum `s`. Iterate coins as the outer loop so each unordered combination is added exactly once, then accumulate forward for each coin. This avoids permutation overcounting and keeps space linear in the target amount.
+
 ## Step-by-step reasoning
 
 1) 1D DP for combinations
@@ -11,8 +15,17 @@ Count the number of ways to make a target amount using unlimited coins of given 
 - For each coin c (outer loop), for s from c to target: `ways[s] += ways[s - c]`.
 - Coin-outer ensures each combination is counted once (order-independent).
 
-2) Complexity
-- O(target × #coins) time, O(target) space.
+2) Complexity (see dedicated section below)
+
+## Edge Cases
+
+- Target = 0: Exactly one way (choose nothing); initialization with ways[0]=1 handles it.
+- No coins / empty set: ways[target]=0 unless target=0.
+- Duplicate denominations: Should be deduped or allowed; duplicates inflate counts incorrectly if not removed.
+- Large target values: Use long for ways to avoid overflow; counts can exceed 32-bit for big targets.
+- Negative or zero denomination: Reject; zero causes infinite loops, negative invalid.
+- Order sensitivity: Ensure coin loop outer to avoid counting permutations.
+- Memory: ways array of size target+1; for huge targets consider compression or modulo counts.
 
 ## Reusable template (for unbounded coin-change combinations)
 
@@ -33,7 +46,11 @@ Count the number of ways to make a target amount using unlimited coins of given 
 - Transportation: ways to load seats/cargo using blocks (e.g., seat groups) to hit capacity targets; test boarding or loading policies.
 - Financial settlement: decompose a payout into instrument lots (bonds/equities in board lots) to match target notional; evaluate settlement friction.
 
-## Key takeaways
+## Complexity
+
+Time: O(target × #coins). Space: O(target) for the DP array.
+
+## Key Takeaways
 
 - Use coin-outer loops to avoid permutation overcounting; 1D DP is sufficient and fast.
 

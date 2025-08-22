@@ -2,10 +2,17 @@
 
 Count how many nCr exceed one million for 1 ≤ n ≤ 100.
 
-## Approaches
+## Approach
 
 - Multiplicative: incrementally compute nCr without overflow using early division and break when exceeding threshold.
 - Log-space: use log10 factorials or log sums to compare nCr > 1e6 without big integers.
+
+## Edge Cases
+- Symmetry misuse: Ensure r=min(r,n−r) each computation; forgetting doubles work.
+- Threshold equality: Count only strictly greater than 1,000,000; equality is excluded.
+- Overflow risk: Use early division or double accumulation; direct factorial division can overflow 64-bit.
+- Floating precision: Double rounding safe at these magnitudes; for larger bounds prefer BigInteger or logs.
+- Counting window: After first r where nCr > threshold found, count range r..(n−r); verify inclusive indices.
 
 ## Complexity
 - O(n^2) with tiny constants.
@@ -23,7 +30,7 @@ Count how many nCr exceed one million for 1 ≤ n ≤ 100.
 - UI design: limit multi-select combinations when nCr > limit to keep UX manageable.
 - Data pipelines: throttle combinatorial joins by pre-checking nCr against capacity.
 
-## Takeaways
+## Key Takeaways
 - Use symmetry r=min(r,n−r); stop early when crossing the threshold.
 
 

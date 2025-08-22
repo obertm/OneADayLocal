@@ -8,6 +8,10 @@ Given an integer threshold D, find the smallest triangular number T_n = n(n+1)/2
 
 ## Step-by-step reasoning
 
+## Approach
+
+Iterate n upward, leveraging T_n = n(n+1)/2 = a·b where a and b are coprime (shift the factor 2). Factor a and b separately, merge exponent counts, and compute divisor count via Π(e+1); stop when it exceeds D.
+
 1) Structure of T_n
 - T_n = n(n+1)/2. The numbers n and n+1 are coprime, so their prime factorizations don’t share primes.
 - Move the factor 2 onto the even side: if n is even, T_n = (n/2)·(n+1); else T_n = n·((n+1)/2).
@@ -30,12 +34,24 @@ Given an integer threshold D, find the smallest triangular number T_n = n(n+1)/2
 5) Complexity
 - Dominated by repeated small factorizations. With prime caching, this runs fast for Euler-scale D (e.g., D=500).
 
-6) Edge cases
-- D < 1 → T_1 = 1 qualifies.
-- Watch for overflow when forming T_n; use long for n and T_n.
+## Complexity
 
-7) Testing mindset
-- Spot checks: D=1 → 3 (T_2); D=5 → 28; Euler asks D=500 → 76576500.
+- Per n: factor two near-√T numbers; average cost small due to rapid factor shrink.
+- Overall: sub-quadratic; practical near O(n^α) with α<1 for needed range (empirical for threshold 500).
+- Space: O(P) for cached primes up to √(target T_n).
+
+## Edge Cases
+
+- Threshold extremes: If D < 1, the first triangular number (T_1 = 1) already exceeds the requirement "over D" only when D < 1; clarify contract (Euler uses D ≥ 1). Often we treat D ≤ 0 as returning 1 immediately.
+- Overflow: Use `long` for n and T_n; n(n+1)/2 fits in 64-bit for all practical Euler bounds (n < 10^9). For extremely large D causing very large n, promote to BigInteger.
+- Factor 2 placement: Ensure exactly one of n or n+1 is halved—avoid integer division mistakes that drop factors.
+- Prime cache growth: Dynamic sieve expansion must include √max(a,b); off‑by‑one errors there lead to undercounted divisors.
+- Performance plateau: If factoring becomes slow, add a heuristic upper bound or pre-generate primes once.
+
+## Testing mindset
+- Spot checks: D=1 → T_2=3; D=5 → 28; Euler D=500 → 76576500.
+- Random small D cross-check with a naive divisor counter.
+
 
 ## Reusable template (for similar problems)
 
@@ -96,7 +112,7 @@ When you need divisor counts of structured numbers:
   - Model: Use average orders and coprime splits for bounds.
   - Impact: Targeted searches.
 
-## Key takeaways
+## Key Takeaways
 
 - Use T_n’s coprime structure to halve the work.
 - Convert factorization to exponent counts → multiplicative divisor function.

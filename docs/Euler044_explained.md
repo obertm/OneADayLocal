@@ -2,11 +2,20 @@
 
 Find pentagonal numbers Pj, Pk such that Pj + Pk and |Pj − Pk| are pentagonal, minimizing the difference.
 
-## Method
+## Approach
 
 - Generate pentagonals P(n)=n(3n−1)/2; keep a HashSet for membership tests.
 - For j>k over a growing range, test sum and difference for pentagonality using the set or the inverse test x= (1+√(1+24t))/6 integer.
 - Track minimal difference; stop when growth ensures no smaller difference possible.
+
+## Edge Cases
+
+- Insufficient range: If search bound too small, may miss minimal difference; implement adaptive expansion based on current best difference.
+- Floating precision: Inverse test uses sqrt; floating rounding can cause false negatives; compare candidate n via integer reconstruction instead.
+- Overflow: P(n) grows ~1.5n^2; for large n use long/BigInteger to avoid overflow.
+- Duplicate checks: Avoid redundant sum/diff tests by breaking early when difference ≥ current best.
+- Negative difference: Always non-negative by ordering j>k; enforce loop ordering.
+- Performance: O(N^2) growth; need break conditions when minimal difference can no longer decrease.
 
 ## Complexity
 - Near O(N^2) with effective pruning and fast membership tests.
@@ -24,7 +33,7 @@ Find pentagonal numbers Pj, Pk such that Pj + Pk and |Pj − Pk| are pentagonal,
 - Embedded systems: O(1) membership to save CPU cycles under tight loops.
 - Performance profiling: show how inverse checks turn nested loops into fast filters.
 
-## Takeaways
+## Key Takeaways
 - Precompute, store in a set, and use the integer inverse test to check pentagonality.
 
 

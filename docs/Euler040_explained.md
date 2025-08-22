@@ -2,11 +2,20 @@
 
 Compute the product d1 × d10 × d100 × d1000 × d10000 × d100000 × d1000000 where dn is the nth digit of the fractional part of Champernowne’s constant 0.123456789101112...
 
-## Method
+## Approach
 
 - Walk digit-length blocks: numbers with 1 digit contribute 9×1 digits, 2-digit contribute 90×2, etc.
 - For each target position, jump through blocks to find the exact source number and digit index within it.
 - Multiply the extracted digits.
+
+## Edge Cases
+
+- Position = 0: Sequence is 1-indexed; 0 invalid; reject early.
+- Large positions: Use long for running counts if extending beyond 1e6 to avoid int overflow.
+- Off-by-one in block subtraction: Ensure when subtracting a whole block you decrement remaining position correctly; fencepost errors yield wrong digits.
+- Conversion speed: Repeated string conversions for each digit extraction acceptable for small set; for many queries, precompute block offsets or use arithmetic to index digits directly.
+- Leading zeros: Not present in natural numbers; no need to handle.
+- Negative positions: Invalid input; guard.
 
 ## Complexity
 - O(#targets × #digit-blocks) with tiny constants.
@@ -24,7 +33,7 @@ Compute the product d1 × d10 × d100 × d1000 × d10000 × d100000 × d1000000 
 - Search engines: compute term positions within concatenated posting lists using block jump tables.
 - Time-series sim: index into synthetic “counting” series by digit-block math to generate exact points on demand.
 
-## Takeaways
+## Key Takeaways
 - Compute offsets by digit-length ranges; index into the exact number and digit.
 
 

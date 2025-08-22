@@ -8,6 +8,10 @@ Given N large integers (≈50 digits each), compute the sum S and return the fir
 
 ## Step-by-step reasoning
 
+## Approach
+
+Parse each 50‑digit number as BigInteger and accumulate; convert sum to decimal string once and slice first 10 digits. Alternate manual column addition exists if BigInteger were disallowed.
+
 1) Use exact integer arithmetic
 - Avoid floating point; use BigInteger or manual column addition to prevent rounding/precision loss.
 
@@ -21,12 +25,24 @@ Given N large integers (≈50 digits each), compute the sum S and return the fir
 4) Complexity
 - O(N·L) where N is count and L is digits per number; memory O(L).
 
-5) Edge cases
-- Leading zeros in inputs are fine; outcome may have more than 50 digits—prefix extraction must handle that.
-- Trim newline/quotes if input is quoted (Euler provides clean lines).
+## Complexity
 
-6) Testing mindset
-- Create a small set of known sums; verify both BigInteger and manual addition yield identical prefixes.
+- Time: O(N·L) additions on base 2^32/2^N words (BigInteger optimized).
+- Space: O(L) digits for running sum.
+- Manual column add has same asymptotic with slightly lower constant.
+
+## Edge Cases
+
+- Leading zeros: Preserve them during parsing; BigInteger handles them; they do not affect the sum.
+- Variable line lengths: Ignore blank lines or trailing whitespace; trim each line before parsing to prevent NumberFormatException.
+- Prefix longer than sum length: If requested prefix n exceeds digit count, return the full sum (implementation already guards via substring logic).
+- Mixed input size: If some numbers are shorter, left-pad logically (BigInteger parsing already treats them correctly); manual column addition must explicitly treat missing digits as 0.
+- Extremely large N: Memory still modest; consider streaming (process line by line) rather than holding all numbers.
+
+## Testing mindset
+- Hand-compute a tiny set (e.g., 2 numbers) and verify prefix.
+- Compare BigInteger vs manual column method outputs for random synthetic sets.
+
 
 ## Reusable template (for similar problems)
 
@@ -86,7 +102,7 @@ When summing many large integers and only a prefix is needed:
   - Model: BigInteger reduction and prefix display.
   - Impact: Correct results at scale.
 
-## Key takeaways
+## Key Takeaways
 
 - Prefer exact integer addition; extract only what you need (first 10 digits) at the end.
 - Manual addition is an implementation fallback with identical complexity.

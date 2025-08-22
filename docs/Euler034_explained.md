@@ -4,6 +4,10 @@
 
 Find all numbers that are equal to the sum of the factorials of their digits (excluding single-digit trivial cases), and return their sum.
 
+## Approach
+
+Precompute factorials of digits 0–9, derive an upper bound using d·9! to cap the search (7·9! is sufficient), then linearly scan numbers ≥10, summing digit factorials and comparing to the original number.
+
 ## Step-by-step reasoning
 
 1) Precompute digit factorials
@@ -14,6 +18,15 @@ Find all numbers that are equal to the sum of the factorials of their digits (ex
 
 3) Scan and test
 - For each n, sum `fact[digit]`; if the sum equals n, include it in the answer.
+
+## Edge Cases
+
+- Single-digit numbers: Exclude 0..9; they trivially equal their digit factorial sum but are not counted per problem.
+- Upper bound tightness: Ensure chosen upper bound ≥ largest solution; verify by test or derivation; using 7·9! is safe.
+- Leading zeros: Not applicable; natural number decomposition doesn't produce them.
+- Performance: Linear scan up to 2.5M is fine; for larger factorial-based puzzles, integrate pruning or memoization of digit patterns.
+- Overflow: Factorials up to 9! fit in int; sum for 7-digit bound fits in int. For extended variants, use long.
+- Digit extraction: Using division/mod repeatedly sufficient; alternative is string digits (slower).
 
 ## Reusable template (for digit-function fixed points)
 
@@ -34,7 +47,11 @@ Find all numbers that are equal to the sum of the factorials of their digits (ex
 - IoT firmware: tiny per-digit lookup tables reduce CPU and power for continuous checks.
 - HPC batching: bound-heavy workloads to keep cluster utilization predictable; demonstrate bound rationale to schedulers.
 
-## Key takeaways
+## Complexity
+
+Time: O(upperBound · log upperBound) digit operations; effectively linear over ≤ 2.6M. Space: O(1) besides the 10-element factorial table.
+
+## Key Takeaways
 
 - Tight bounds + cached digit contributions make for a quick linear pass.
 

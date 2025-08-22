@@ -9,11 +9,23 @@ For integer cuboids with sides up to M, count how many have an integer shortest 
 - For each s, the number of (a,b) pairs with 1≤a≤b≤c and a+b=s is count(s,c) = min(c, s−1) − ceil(s/2) + 1 when positive.
 - Accumulate counts over c until exceeding 1,000,000.
 
+## Edge Cases
+- Perfect square test: Integer sqrt via rounding then square check; avoid floating precision errors.
+- Counting formula branches: Distinguish s ≤ c and s > c cases; off-by-one miscounts pairs.
+- Overflow: c^2 + s^2 within int for M ~ 2000; for larger M use long.
+- Performance: Early break once cumulative > target; don’t compute further c.
+- Symmetry: Ensure (a,b) with a≤b counted once; formula respects ordering.
+
 ## Complexity
 - ~O(M^2) with fast square tests; feasible.
 
-## Real-world impact
-- Discrete geometry with integer-length constraints; counting via aggregation over sums.
+## Practical examples and business impact
+- Packaging: integer edge lengths with integral wrap path constraints.
+- Architecture: shortest surface traverse feasibility between corners.
+- Manufacturing: material cuts producing integer diagonal travel distances.
+
+## Key Takeaways
+- Reduce to testing sqrt(c²+s²) integers; count (a,b) via combinatorial formula.
 
 ## Java implementation (Euler086.java)
 - Accepts optional CLI arg for target count (default 1,000,000).

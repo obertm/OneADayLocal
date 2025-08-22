@@ -8,6 +8,10 @@ Given a target sum S, find a Pythagorean triple (a,b,c) with a+b+c=S and a^2 + b
 
 ## Step-by-step reasoning
 
+## Approach
+
+Apply Euclid’s formula for primitive Pythagorean triples (m>n) and solve the perimeter constraint a+b+c = S ⇒ 2m(m+n)d = S. Iterate feasible m,n pairs, check divisibility for d, and construct the triple directly.
+
 1) Use Euclid’s formula
 - Primitive triplets: a = m^2 − n^2, b = 2mn, c = m^2 + n^2 where m > n ≥ 1, gcd(m,n)=1, not both odd.
 - Scaling by positive integer d gives all triplets.
@@ -23,11 +27,24 @@ Given a target sum S, find a Pythagorean triple (a,b,c) with a+b+c=S and a^2 + b
 4) Complexity
 - About O(√S) iterations; trivial for S = 1000.
 
+## Complexity
+
+- Outer m up to roughly √(S/2); inner n < m → ≈ O(√S) pairs.
+- Constant-time arithmetic per pair.
+- Space: O(1).
+
 ## Reusable template
 - Translate constraints into parametric forms (Euclid’s formula for Pythagorean triples).
 - Use divisibility to prune; compute directly once parameters fit.
 
 ## Practical examples and business impact
+## Edge Cases
+
+- No solution for given S: Return sentinel (e.g., -1) – current code does.
+- S odd small values: May not decompose; loops exit naturally.
+- Large S: Ensure loop bounds use int/long safely; m up to sqrt(S/2).
+- Multiple solutions: Problem states unique for S=1000; for other S track min or first if needed.
+- Overflow: For large S and d, a*b*c may exceed 64-bit; use BigInteger if generalized.
 
 - Geometry and lattice problems
   - Problem: Generate integer solutions under algebraic constraints.
@@ -74,7 +91,7 @@ Given a target sum S, find a Pythagorean triple (a,b,c) with a+b+c=S and a^2 + b
   - Model: Parametric formulas avoid cubic brute force.
   - Impact: Real‑time feasibility.
 
-## Key takeaways
+## Key Takeaways
 - Use parametric forms + divisibility to prune the search.
 - Complexity drops from cubic to near-square-root.
 

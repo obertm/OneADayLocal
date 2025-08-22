@@ -11,11 +11,23 @@ Find the minimal path sum from any cell in the left column to any in the right c
   - Sweep up: best[r] = min(best[r], best[r+1] + matrix[r][c]).
 - Result is min_r best[r] at the last column.
 
+## Edge Cases
+- Multiple passes: Need both downward and upward sweeps; a single pass misses paths with multiple vertical moves.
+- Initialization: best array for new column must start from prior column’s best plus current cell cost; forgetting this leads to underestimation.
+- Negative weights: Algorithm assumes non-negative; negative cycles not possible here but negative entries could still work; treat cautiously.
+- Memory: Single column array sufficient; avoid full 2D DP for large matrices.
+- File errors: Handle missing or malformed lines gracefully.
+
 ## Complexity
 - O(n·m) time, O(n) space; no priority queue needed.
 
-## Real-world impact
-- Columnar DP for constrained vertical movement (routing with limited turns).
+## Practical examples and business impact
+- Network routing with lateral progression and vertical adjustments.
+- Manufacturing lines: station-to-station movement with limited backtracking.
+- Grid energy minimization where only forward column progress is allowed.
+
+## Key Takeaways
+- Two directional relaxation sweeps per column achieve optimal up/down/right paths.
 
 ## Java implementation (Euler082.java)
 - Reads `p082_matrix.txt` if available; otherwise falls back to the same 5×5 sample as documentation.

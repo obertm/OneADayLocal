@@ -2,11 +2,20 @@
 
 Find the first integer of the first run of K consecutive integers with exactly K distinct prime factors (K=4 in the problem).
 
-## Efficient plan
+## Approach
 
 - Build an array spf[ ] (smallest prime factor) via sieve up to a limit.
 - For each n, count distinct primes by repeatedly dividing by spf while skipping duplicates.
 - Slide a window counting how many consecutive n have count==K; when it reaches K, return start.
+
+## Edge Cases
+
+- Limit selection: If answer > limit, miss it; choose generous bound (e.g., 300000) or grow dynamically.
+- Counting duplicates: Ensure repeated prime powers counted once; use loop to skip power chain.
+- Off-by-one in streak index: The reported number is current n - (streakLen - 1).
+- Memory: SPF array size; using int[] fine; for huge bounds consider segmented approach.
+- Performance: Factoring each n O(log n) with SPF; avoid recomputing distinct count via naive trial division.
+- Low n (<2): Distinct factor count 0; properly resets streak.
 
 ## Complexity
 - O(N) with spf sieve and O(log n) factorization per n; very fast for the bounds.
@@ -24,7 +33,7 @@ Find the first integer of the first run of K consecutive integers with exactly K
 - Simulation: synthetic streams with controlled factor-count streaks for benchmarking detectors.
 - Data quality: find streaks where exactly K validation rules fired to prioritize fixes.
 
-## Takeaways
+## Key Takeaways
 - Use spf sieve to get distinct-factor counts cheaply; maintain a consecutive-run counter.
 
 

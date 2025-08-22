@@ -8,6 +8,10 @@ Given a positive integer N, for each 1 ≤ s < N compute the Collatz sequence le
 
 ## Step-by-step reasoning
 
+## Approach
+
+Memoize Collatz lengths: for each start s < N follow sequence using 64-bit, stop at first cached value, then backfill computed lengths; track the arg with max length. Two-tier cache (array + map) stores small and overflow values efficiently.
+
 1) Collatz rule and length
 - Define f(x) = x/2 if even, else 3x+1. Length L(1)=1; L(x)=1+L(f(x)).
 
@@ -22,13 +26,25 @@ Given a positive integer N, for each 1 ≤ s < N compute the Collatz sequence le
 4) Complexity
 - With memoization, nearly O(N) amortized; each x’s length is computed once.
 
-5) Edge cases
-- Ensure no negative/zero inputs; N=1 → no candidates; define return accordingly (often 1).
-- Cap long if needed; for Euler bounds, 64-bit is safe.
+## Complexity
 
-6) Testing mindset
-- Spot check: N=10 → longest at 9.
-- Validate memo hits by counting cache size vs N.
+- Time: ~O(N) amortized; each sequence element’s length stored once.
+- Space: O(N) for primary array plus O(K) transient map entries (K << N).
+- Worst-case path length grows sublinearly (≈ few hundred for 1e6 bound).
+
+## Edge Cases
+
+- N ≤ 1: With range 1 ≤ s < N there are no candidates when N ≤ 1; decide whether to return 1, 0, or throw (document contract). Euler uses N > 1.
+- 64-bit overflow: Collatz trajectories for N < 1,000,000 stay within 64-bit; for much larger N consider BigInteger or detect overflow.
+- Cache bounds: Access only indices < cache.length; larger intermediate values go to the map—avoid accidental array writes.
+- Cycle safety: Collatz is conjectured to reach 1; code should still guard against pathological infinite loops (cap steps if defensive).
+- Performance regression: Ensure memoization actually stores results (no missed backfill) or run time degrades severely.
+
+## Testing mindset
+- Spot check: N=10 → longest start 9.
+- Verify known Euler value N=1_000_000 → 837799.
+- Count cache fill vs N to confirm memo usage.
+
 
 ## Reusable template (for similar problems)
 
@@ -89,7 +105,7 @@ For iterative processes with overlapping subproblems:
   - Model: Collatz length memoization as a clean example.
   - Impact: Immediate intuition.
 
-## Key takeaways
+## Key Takeaways
 
 - Memoization turns a heavy brute-force loop into near-linear time.
 - Use 64-bit for intermediate values; backfill lengths to reuse work.

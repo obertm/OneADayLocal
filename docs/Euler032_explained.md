@@ -4,6 +4,10 @@
 
 Find all products where multiplicand, multiplier, and product concatenated form a 1–9 pandigital number. Sum the distinct products.
 
+## Approach
+
+Determine feasible digit-length splits (1×4 and 2×3) to bound the search, then brute force those ranges, concatenating multiplicand, multiplier, and product. Use a digit-set check for 1–9 pandigitality and a set to deduplicate products before summing.
+
 ## Step-by-step reasoning
 
 1) Tight bounds
@@ -12,6 +16,15 @@ Find all products where multiplicand, multiplier, and product concatenated form 
 2) Search and test
 - Iterate feasible ranges; compute product p = a·b; form s = a||b||p; check length is 9 and s is pandigital over {1..9}.
 - Add p to a set to deduplicate, then sum the set.
+
+## Edge Cases
+
+- Leading zeros: Not allowed; ensure concatenated string doesn't contain '0'.
+- Duplicate digits: Reject if any digit repeats or if digit 0 appears.
+- Product length mismatch: Skip if concatenated length ≠ 9 early to save set/build cost.
+- Overlapping ranges: Ensure you don't double-count symmetrical pairs (a,b) and (b,a); restricting digit-length splits handles this.
+- Performance: Brute force within narrowed ranges is trivial; generalization to larger pandigital sizes would need deeper pruning.
+- Overflow: a·b fits within int for search bounds; if generalized upward use long.
 
 ## Reusable template (for constrained pandigital concatenations)
 
@@ -32,7 +45,11 @@ Find all products where multiplicand, multiplier, and product concatenated form 
 - Randomized load testing: generate pandigital-like inputs to stress hash functions and normalization pipelines.
 - Education/assessment: teaching constraint pruning and search bounds; students can simulate how narrowing digit-length drastically shrinks search.
 
-## Key takeaways
+## Complexity
+
+Time: Small bounded brute force (well under 10⁶ concatenations). Space: O(#distinct products) ≤ dozens.
+
+## Key Takeaways
 
 - Bounding by digit-length math makes the brute force tiny; simple digit-set checks are enough.
 
