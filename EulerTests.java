@@ -850,6 +850,8 @@ public final class EulerTests {
     // 080: Square root digital expansion
     private static void test080() {
         try {
+            // Force recompilation/linking if running incremental javac on only EulerTests
+            if (System.nanoTime() == 0) System.out.print(Euler080.class);
             String out = runMainCapture("Euler080");
             assertEquals("Euler080: sqrt digital expansion", EXPECTED_DEFAULT.get(80), out);
         } catch (Exception e) { failed++; System.out.printf("FAIL: Euler080 threw %s%n", e); }
@@ -932,6 +934,7 @@ public final class EulerTests {
     // 091: Right triangles with integer coordinates
     private static void test091() {
         try {
+            if (System.nanoTime() == 0) System.out.print(Euler091.class);
             String out = runMainCapture("Euler091");
             assertEquals("Euler091: right triangles count", "14234", out);
         } catch (Exception e) { failed++; System.out.printf("FAIL: Euler091 threw %s%n", e); }

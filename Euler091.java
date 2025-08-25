@@ -7,21 +7,24 @@ public final class Euler091 {
         if (args != null && args.length > 0) {
             try { N = Integer.parseInt(args[0]); } catch (Exception ignore) {}
         }
-    // Count right triangles with vertices at (0,0), (x1,y1), (x2,y2), 0<=x,y<=N.
-    // Correct count: N*N (axis-aligned with right angle at origin) + 2 * sum_{x=1..N} sum_{y=1..N} gcd(x,y)
-    long total = 1L * N * N;
-    long sum = 0;
+    long total = 1L * N * N; // right angle at origin (axis-aligned)
         for (int x = 1; x <= N; x++) {
             for (int y = 1; y <= N; y++) {
-        sum += gcd(x, y);
+                int g = gcd(x, y);
+                int dx = y / g;
+                int dy = x / g;
+                int k1 = Math.min(x / dx, (N - y) / dy);      // steps in (-dx,+dy)
+                int k2 = Math.min((N - x) / dx, y / dy);      // steps in (+dx,-dy)
+                total += (long)k1 + k2; // sum of both perpendicular directions
             }
         }
-    total += 2 * sum;
-        System.out.println(total);
+    // Add right triangles whose right angle lies on positive x-axis or y-axis (excluding origin)
+    // For each point (x,0), x=1..N there are N choices for the vertical point (x,y) with y>0 and origin forms the third vertex.
+    // Similarly for (0,y), y=1..N. These contribute 2*N^2 additional axis-aligned right triangles.
+    total += 2L * N * N;
+    System.out.println(total);
     }
 
-    private static int gcd(int a, int b) {
-        while (b != 0) { int t = a % b; a = b; b = t; }
-        return a;
-    }
+    private static int gcd(int a, int b) { while (b != 0) { int t = a % b; a = b; b = t; } return a; }
+
 }

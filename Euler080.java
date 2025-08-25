@@ -7,35 +7,44 @@ public final class Euler080 {
         for (int n = 1; n <= 100; n++) {
             int r = (int)Math.sqrt(n);
             if (r * r == n) continue; // skip perfect squares
-            java.math.BigInteger bi = java.math.BigInteger.valueOf(n);
-            java.math.BigInteger scale = java.math.BigInteger.TEN.pow(200); // 10^(2*100)
-            java.math.BigInteger N = bi.multiply(scale);
-            java.math.BigInteger s = isqrt(N);
-            String digits = s.toString();
-            // Sum only the first 100 decimal digits: the last 100 digits of s
-            int sum = 0;
-            int L = digits.length();
-            for (int i = Math.max(0, L - 100); i < L; i++) sum += digits.charAt(i) - '0';
-            total += sum;
+            total += digitSumFirst100Digits(n);
         }
         System.out.println(total);
     }
 
-    // Integer square root for BigInteger: floor(sqrt(x)) via binary search (robust)
-    private static java.math.BigInteger isqrt(java.math.BigInteger x) {
-        if (x.signum() <= 0) return java.math.BigInteger.ZERO;
-        java.math.BigInteger one = java.math.BigInteger.ONE;
-        int bl = x.bitLength();
-        java.math.BigInteger high = one.shiftLeft((bl + 1) / 2 + 1); // safe upper bound
-        java.math.BigInteger low = java.math.BigInteger.ZERO;
-        while (high.compareTo(low) > 0) {
-            java.math.BigInteger mid = low.add(high).add(one).shiftRight(1);
-            if (mid.multiply(mid).compareTo(x) <= 0) {
-                low = mid;
+    // Canonical longhand digit extraction: produce first 100 digits (integer part + 99 fractional)
+    // of sqrt(n) and return their digit sum. This matches Project Euler problem wording
+    // which counts the integer part as the first digit.
+    private static int digitSumFirst100Digits(int n) {
+        // Prepare pairs for integer part
+        String s = Integer.toString(n);
+        if ((s.length() & 1) == 1) s = "0" + s; // ensure even length
+        int pairIndex = 0;
+        java.math.BigInteger rem = java.math.BigInteger.ZERO;
+        java.math.BigInteger root = java.math.BigInteger.ZERO;
+        int sum = 0;
+        for (int produced = 0; produced < 100; produced++) {
+            int pair;
+            if (pairIndex < s.length()) {
+                pair = Integer.parseInt(s.substring(pairIndex, pairIndex + 2));
+                pairIndex += 2;
             } else {
-                high = mid.subtract(one);
+                pair = 0; // fractional extension adds "00"
             }
+            rem = rem.multiply(java.math.BigInteger.valueOf(100)).add(java.math.BigInteger.valueOf(pair));
+            java.math.BigInteger base = root.multiply(java.math.BigInteger.valueOf(20));
+            int x = 0;
+            // Ascending search (digits small so loop is fine)
+            while (x < 9) {
+                java.math.BigInteger test = base.add(java.math.BigInteger.valueOf(x + 1)).multiply(java.math.BigInteger.valueOf(x + 1));
+                if (test.compareTo(rem) > 0) break;
+                x++;
+            }
+            java.math.BigInteger sub = base.add(java.math.BigInteger.valueOf(x)).multiply(java.math.BigInteger.valueOf(x));
+            rem = rem.subtract(sub);
+            root = root.multiply(java.math.BigInteger.TEN).add(java.math.BigInteger.valueOf(x));
+            sum += x;
         }
-        return low;
+        return sum;
     }
 }

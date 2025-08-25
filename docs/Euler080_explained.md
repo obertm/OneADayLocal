@@ -26,10 +26,8 @@ For N=1..100, sum the first 100 decimal digits of √N for non-square N.
 
 ## Java implementation (Euler080.java)
 - Skips perfect squares quickly using integer sqrt check.
-- Scales n by 10^(2·100) and computes the integer square root via a custom BigInteger `isqrt` (Newton iteration). This yields floor(sqrt(n)·10^100) as an integer, so its decimal digits are exactly the integer part plus the first 100 fractional digits.
-- Sums all digits of that scaled root and accumulates across n = 1..100.
-- Key pieces:
-  - `isqrt(BigInteger x)`: Newton’s method with a bit-length based initial guess; ensures g^2 ≤ x before returning.
-  - Scale: `scale = 10^(200)`; compute `N = n * scale`, then `s = isqrt(N)` and sum `s.toString()` digits.
-- Output: the total sum for all non-squares in 1..100.
-- Complexity: dominated by 100 BigInteger square roots at ~O(M^2) word ops per root for M ≈ 200 digits; fast in practice.
+- Uses the classical longhand (digit-by-digit) square root extraction in base 100 (pairing digits) to generate exactly the first 100 digits (integer part + 99 fractional) of √n without floating point or rounding concerns.
+- For each iteration: bring down next two-digit pair (or 00 after the integer part), find the largest digit x such that (20*partialRoot + x)*x ≤ remainder, subtract, append x to the root, and add x to the running digit sum.
+- Repeat for 100 digits per non-square n; accumulate the digit sums.
+- Output: the total sum for all non-squares in 1..100 (expected answer 40886).
+- Complexity: 100 iterations × ~100 numbers = 10,000 small BigInteger operations (fast).
