@@ -3,31 +3,35 @@
 // https://projecteuler.net/problem=81
 public final class Euler081 {
     public static void main(String[] args) {
-        int[][] a = loadMatrix();
-        int n = a.length;
-        int[][] dp = new int[n][n];
-        dp[0][0] = a[0][0];
-        for (int i = 1; i < n; i++) dp[i][0] = dp[i-1][0] + a[i][0];
-        for (int j = 1; j < n; j++) dp[0][j] = dp[0][j-1] + a[0][j];
-        for (int i = 1; i < n; i++) for (int j = 1; j < n; j++) dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1]) + a[i][j];
-        System.out.println(dp[n-1][n-1]);
+        int[][] matrix = loadMatrix();
+        int n = matrix.length;
+        int[] dp = new int[n];
+        dp[0] = matrix[0][0];
+        // Initialize first row
+        for (int j = 1; j < n; j++) dp[j] = dp[j-1] + matrix[0][j];
+        // Process each row
+        for (int i = 1; i < n; i++) {
+            dp[0] += matrix[i][0];
+            for (int j = 1; j < n; j++) {
+                dp[j] = Math.min(dp[j], dp[j-1]) + matrix[i][j];
+            }
+        }
+        System.out.println(dp[n-1]);
     }
 
     private static int[][] loadMatrix() {
-        java.nio.file.Path p = java.nio.file.Path.of("p081_matrix.txt");
+        java.nio.file.Path path = java.nio.file.Path.of("p081_matrix.txt");
         try {
-            if (java.nio.file.Files.exists(p)) {
-                java.util.List<String> lines = java.nio.file.Files.readAllLines(p);
-                int n = lines.size();
-                int[][] a = new int[n][n];
-                for (int i = 0; i < n; i++) {
-                    String[] parts = lines.get(i).trim().split(",");
-                    for (int j = 0; j < n; j++) a[i][j] = Integer.parseInt(parts[j]);
-                }
-                return a;
+            if (java.nio.file.Files.exists(path)) {
+                return java.nio.file.Files.lines(path)
+                        .map(line -> java.util.Arrays.stream(line.trim().split(","))
+                                .mapToInt(Integer::parseInt).toArray())
+                        .toArray(int[][]::new);
             }
-        } catch (Exception ignore) {}
-        // Minimal fallback small matrix (not the Euler data, lets the program run)
+        } catch (Exception e) {
+            System.err.println("Failed to load matrix: " + e);
+        }
+        // Fallback: Project Euler example matrix
         return new int[][]{
             {131,673,234,103,18},
             {201,96,342,965,150},
